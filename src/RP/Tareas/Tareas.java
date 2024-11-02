@@ -27,7 +27,7 @@ public class Tareas extends JFrame{
             MMenu.setText("Main Menu");
             MMenu.setBackground(new Color(255,255,255));
             MMenu.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
-            MMenu.addActionListener(e -> {
+            MMenu.addActionListener(_ -> {
                 System.out.println("RP - Main Menu");
                 this.setVisible(false);
                 Main.main(null);
@@ -89,7 +89,7 @@ public class Tareas extends JFrame{
         Add.setText("Añadir");
         Add.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         Add.setBackground(new Color(80,255,80));
-        Add.addActionListener(e -> {
+        Add.addActionListener(_ -> {
             LTareas.setText(LTareas.getText() + TTarea.getText().replace(" ", "_") + " | " + ETarea.getText().replace(" ", "_") + "\n");
             TTarea.setText("");
             ETarea.setText("");

@@ -38,7 +38,6 @@ public class Calc {
 
     public String Calculate(String Operacion){
 
-        OP_D = new String[0];
         Operacion = Operacion.replace(",", ".");
         Space_Num /= 2;
         OP_D = Operacion.split(" ");
