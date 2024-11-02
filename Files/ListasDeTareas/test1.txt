@@ -1,0 +1,5 @@
+CTar = 4
+test1 | Pendiente
+test2 | En Proceso
+test3 | Finalizado
+test 4 | Pendiente de Revision
