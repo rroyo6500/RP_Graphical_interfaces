@@ -59,9 +59,7 @@ public class Error extends JFrame {
         Accept.setText("Aceptar");
         Accept.setBackground(new Color(255,255,255));
         Accept.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
-        Accept.addActionListener(e -> {
-            this.setVisible(false);
-        });
+        Accept.addActionListener(_ -> this.setVisible(false));
         add(Accept);
 
         setTitle("RP-Calculadora (ERROR)");

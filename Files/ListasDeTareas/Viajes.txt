@@ -1,0 +1,6 @@
+CTar = 5
+Madrid | En Proceso
+Cordoba | Finalizado
+a | Pendiente
+b | En Proceso
+c | Terminado
