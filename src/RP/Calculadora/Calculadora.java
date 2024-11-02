@@ -15,25 +15,31 @@ public class Calculadora extends JFrame{
         setLayout(null);
 
         /* Title & Return to Main Menu */{
+            JPanel CTitle = new JPanel();
+            CTitle.setBounds(-1,-1,502,36);
+            CTitle.setLayout(null);
+            CTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+            add(CTitle);
+
             JLabel Title = new JLabel();
             Title.setFont(new Font("Arial", Font.BOLD, 20));
             Title.setText("RP - Calculadora");
             Title.setBounds(10, 10, 160, 20);
-            add(Title);
+            CTitle.add(Title);
 
             JButton MMenu = new JButton();
             MMenu.setBounds(350, 10, 100, 20);
             MMenu.setFont(new Font("Arial", Font.BOLD, 10));
             MMenu.setText("Main Menu");
             MMenu.setBackground(new Color(255,255,255));
-            MMenu.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+            MMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             MMenu.addActionListener(e -> {
                 System.out.println("RP - Main Menu");
                 this.setVisible(false);
                 Main.main(null);
 
             });
-            add(MMenu);
+            CTitle.add(MMenu);
         }
 
         /* Calculadora */
@@ -57,7 +63,7 @@ public class Calculadora extends JFrame{
         Calculate.setBounds(10,60,90,20);
         Calculate.setText("Calcular");
         Calculate.setBackground(new Color(80,255,80));
-        Calculate.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Calculate.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Calculate.addActionListener(e -> {
             String OP = Operacion.getText();
             Comp = Calc.Comp(OP);
@@ -77,7 +83,7 @@ public class Calculadora extends JFrame{
         Clear.setBounds(100,60,80,20);
         Clear.setText("Clear");
         Clear.setBackground(new Color(255, 80, 80));
-        Clear.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Clear.addActionListener(e -> {
             Operacion.setBackground(new Color(255,255,255));
             Operacion.setText("");
@@ -86,13 +92,13 @@ public class Calculadora extends JFrame{
 
 
 
-        /* Botones Bumero / Operador */
+        /* Botones Numero / Operador */
 
         JButton N7 = new JButton();
         N7.setText("7");
         N7.setBounds(10,100, 50,50);
         N7.setBackground(new Color(255,255,255));
-        N7.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N7.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N7.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "7");
         });
@@ -102,7 +108,7 @@ public class Calculadora extends JFrame{
         N8.setText("8");
         N8.setBounds(60,100, 50,50);
         N8.setBackground(new Color(255,255,255));
-        N8.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N8.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N8.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "8");
         });
@@ -112,7 +118,7 @@ public class Calculadora extends JFrame{
         N9.setText("9");
         N9.setBounds(110,100, 50,50);
         N9.setBackground(new Color(255,255,255));
-        N9.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N9.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N9.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "9");
         });
@@ -122,7 +128,7 @@ public class Calculadora extends JFrame{
         N4.setText("4");
         N4.setBounds(10,150, 50,50);
         N4.setBackground(new Color(255,255,255));
-        N4.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N4.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "4");
         });
@@ -132,7 +138,7 @@ public class Calculadora extends JFrame{
         N5.setText("5");
         N5.setBounds(60,150, 50,50);
         N5.setBackground(new Color(255,255,255));
-        N5.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N5.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N5.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "5");
         });
@@ -142,7 +148,7 @@ public class Calculadora extends JFrame{
         N6.setText("6");
         N6.setBounds(110,150, 50,50);
         N6.setBackground(new Color(255,255,255));
-        N6.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N6.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N6.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "6");
         });
@@ -152,7 +158,7 @@ public class Calculadora extends JFrame{
         N1.setText("1");
         N1.setBounds(10,200, 50,50);
         N1.setBackground(new Color(255,255,255));
-        N1.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N1.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "1");
         });
@@ -162,7 +168,7 @@ public class Calculadora extends JFrame{
         N2.setText("2");
         N2.setBounds(60,200, 50,50);
         N2.setBackground(new Color(255,255,255));
-        N2.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N2.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "2");
         });
@@ -172,7 +178,7 @@ public class Calculadora extends JFrame{
         N3.setText("3");
         N3.setBounds(110,200, 50,50);
         N3.setBackground(new Color(255,255,255));
-        N3.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N3.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "3");
         });
@@ -182,7 +188,7 @@ public class Calculadora extends JFrame{
         N0.setText("0");
         N0.setBounds(10,250, 100,50);
         N0.setBackground(new Color(255,255,255));
-        N0.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        N0.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N0.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + "0");
         });
@@ -192,7 +198,7 @@ public class Calculadora extends JFrame{
         Coma.setText(",");
         Coma.setBounds(110,250, 50,50);
         Coma.setBackground(new Color(255,255,255));
-        Coma.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Coma.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Coma.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + ",");
         });
@@ -202,7 +208,7 @@ public class Calculadora extends JFrame{
         Division.setText("/");
         Division.setBounds(160,100, 50,50);
         Division.setBackground(new Color(255,255,255));
-        Division.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Division.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Division.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + " / ");
         });
@@ -212,7 +218,7 @@ public class Calculadora extends JFrame{
         Multiplicacion.setText("*");
         Multiplicacion.setBounds(160,150, 50,50);
         Multiplicacion.setBackground(new Color(255,255,255));
-        Multiplicacion.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Multiplicacion.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Multiplicacion.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + " * ");
         });
@@ -222,7 +228,7 @@ public class Calculadora extends JFrame{
         Resta.setText("-");
         Resta.setBounds(160,200, 50,50);
         Resta.setBackground(new Color(255,255,255));
-        Resta.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Resta.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Resta.addActionListener(e -> {
             if (Operacion.getText().matches(".*[+\\-*/] $") || Operacion.getText().matches("^$")){
                 Operacion.setText(Operacion.getText() + "-");
@@ -236,7 +242,7 @@ public class Calculadora extends JFrame{
         Suma.setText("+");
         Suma.setBounds(160,250, 50,50);
         Suma.setBackground(new Color(255,255,255));
-        Suma.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Suma.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Suma.addActionListener(e -> {
             Operacion.setText(Operacion.getText() + " + ");
         });

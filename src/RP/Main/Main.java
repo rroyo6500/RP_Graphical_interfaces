@@ -1,5 +1,6 @@
 package RP.Main;
 import RP.Calculadora.*;
+import RP.Tareas.Tareas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ class MainIG extends JFrame {
         Exit.setFont(new Font("Arial", Font.BOLD, 10));
         Exit.setText("Exit");
         Exit.setBackground(new Color(255,80,80));
-        Exit.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Exit.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         Exit.addActionListener(_ -> {
             System.out.println("EXIT");
             this.setVisible(false);
@@ -42,11 +43,30 @@ class MainIG extends JFrame {
             JButton BCalc = new JButton();
             BCalc.setBounds(120, 65, 40, 40);
             BCalc.setBackground(new Color(255,255,255));
-            BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+            BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
             BCalc.addActionListener(_ -> {
                 Calculadora Calc = new Calculadora();
                 System.out.println("RP - Calculadora");
                 Calc.setVisible(true);
+                this.setVisible(false);
+            });
+            add(BCalc);
+        }
+
+        /* Tareas */{
+            JLabel LCalc = new JLabel();
+            LCalc.setBounds(10, 120, 100, 10);
+            LCalc.setText("RP - Tareas");
+            add(LCalc);
+
+            JButton BCalc = new JButton();
+            BCalc.setBounds(120, 105, 40, 40);
+            BCalc.setBackground(new Color(255,255,255));
+            BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+            BCalc.addActionListener(_ -> {
+                Tareas Tareas = new Tareas();
+                System.out.println("RP - Tareas");
+                Tareas.setVisible(true);
                 this.setVisible(false);
             });
             add(BCalc);
