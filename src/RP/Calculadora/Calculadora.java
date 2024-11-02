@@ -44,8 +44,9 @@ public class Calculadora extends JFrame{
 
         /* Linea de tiempo Operaciones + Resultado */
         JTextArea LOp = new JTextArea();
+        LOp.setEditable(false);
         JScrollPane SLOp = new JScrollPane(LOp);
-        SLOp.setBounds(220,100,270,200);
+        SLOp.setBounds(220,100,270,180);
         SLOp.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         SLOp.setBackground(new Color(255,255,255));
         add(SLOp);
@@ -95,12 +96,23 @@ public class Calculadora extends JFrame{
         Clear.setBackground(new Color(255, 80, 80));
         Clear.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Clear.addActionListener(e -> {
-            Operacion.setBackground(new Color(255,255,255));
-            Operacion.setText("");
+            if (!Operacion.getText().equalsIgnoreCase("")){
+                Operacion.setBackground(new Color(255, 255, 255));
+                Operacion.setText("");
+                Resultado.setText("");
+            }
         });
         add(Clear);
 
-
+        JButton ClearTL = new JButton();
+        ClearTL.setBounds(220,280,270,20);
+        ClearTL.setText("Clear");
+        ClearTL.setBackground(new Color(255, 80, 80));
+        ClearTL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+        ClearTL.addActionListener(e -> {
+            LOp.setText("");
+        });
+        add(ClearTL);
 
         /* Botones Numero / Operador */
 
