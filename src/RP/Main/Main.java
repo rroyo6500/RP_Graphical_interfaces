@@ -22,7 +22,7 @@ class MainIG extends JFrame {
         add(Title);
 
         JButton Exit = new JButton();
-        Exit.setBounds(350, 10, 100, 20);
+        Exit.setBounds(390, 10, 100, 20);
         Exit.setFont(new Font("Arial", Font.BOLD, 10));
         Exit.setText("Exit");
         Exit.setBackground(new Color(255,80,80));

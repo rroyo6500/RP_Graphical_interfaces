@@ -22,7 +22,7 @@ public class Tareas extends JFrame{
             TTitle.add(Title);
 
             JButton MMenu = new JButton();
-            MMenu.setBounds(350, 10, 100, 20);
+            MMenu.setBounds(390, 10, 100, 20);
             MMenu.setFont(new Font("Arial", Font.BOLD, 10));
             MMenu.setText("Main Menu");
             MMenu.setBackground(new Color(255,255,255));

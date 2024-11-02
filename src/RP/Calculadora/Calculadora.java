@@ -28,7 +28,7 @@ public class Calculadora extends JFrame{
             CTitle.add(Title);
 
             JButton MMenu = new JButton();
-            MMenu.setBounds(350, 10, 100, 20);
+            MMenu.setBounds(390, 10, 100, 20);
             MMenu.setFont(new Font("Arial", Font.BOLD, 10));
             MMenu.setText("Main Menu");
             MMenu.setBackground(new Color(255,255,255));
@@ -41,6 +41,14 @@ public class Calculadora extends JFrame{
             });
             CTitle.add(MMenu);
         }
+
+        /* Linea de tiempo Operaciones + Resultado */
+        JTextArea LOp = new JTextArea();
+        JScrollPane SLOp = new JScrollPane(LOp);
+        SLOp.setBounds(220,100,270,200);
+        SLOp.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        SLOp.setBackground(new Color(255,255,255));
+        add(SLOp);
 
         /* Calculadora */
         JLabel Resultado = new JLabel();
@@ -75,6 +83,8 @@ public class Calculadora extends JFrame{
             }else {
                 Operacion.setBackground(new Color(150, 255, 150));
                 Resultado.setText(Calc.Calculate(OP));
+
+                LOp.setText(Operacion.getText() + "\n    - Resultado: " + Resultado.getText() + "\n" + LOp.getText());
             }
         });
         add(Calculate);
