@@ -224,7 +224,7 @@ public class Calculadora extends JFrame{
         Resta.setBackground(new Color(255,255,255));
         Resta.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
         Resta.addActionListener(e -> {
-            if (Operacion.getText().matches(".*[+\\-*/] $")){
+            if (Operacion.getText().matches(".*[+\\-*/] $") || Operacion.getText().matches("^$")){
                 Operacion.setText(Operacion.getText() + "-");
             }else {
                 Operacion.setText(Operacion.getText() + " - ");
