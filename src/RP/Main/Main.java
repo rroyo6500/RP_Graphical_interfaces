@@ -1,6 +1,6 @@
 package RP.Main;
 import RP.Calculadora.*;
-import RP.Tareas.Tareas;
+import RP.Tareas.*;
 
 import javax.swing.*;
 import java.awt.*;
