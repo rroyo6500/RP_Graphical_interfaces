@@ -45,9 +45,9 @@ public class Tar {
 
     public String getDirectoryLT(){
         if (var.getPath().matches("^[a-zA-Z]:")){
-            return "D:\\General\\Programacion\\Java Projects\\RP_Graphical interfaces\\Files\\ListasDeTareas\\";
+            return var.getPath() + "\\Files\\ListasDeTareas\\";
         }else {
-            return "/media/rroyo/Nuevo vol/General/Programacion/Java Projects/RP_Graphical interfaces/Files/ListasDeTareas/";
+            return var.getPath() + "/Files/ListasDeTareas/";
         }
     }
 

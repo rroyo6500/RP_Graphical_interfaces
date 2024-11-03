@@ -240,6 +240,20 @@ public class Calculadora extends JFrame{
         Suma.addActionListener(_ -> Operacion.setText(Operacion.getText() + " + "));
         add(Suma);
 
+        JButton BackSpace = new JButton();
+        BackSpace.setText("<-");
+        BackSpace.setBounds(10,300, 100,50);
+        BackSpace.setBackground(new Color(255,255,255));
+        BackSpace.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+        BackSpace.addActionListener(_ -> {
+            if (Operacion.getText().matches(".*-?\\d$")){
+                Operacion.setText(Operacion.getText().replaceAll("-?\\d$", ""));
+            } else if (Operacion.getText().matches(".* [+\\-*/] ?$")) {
+                Operacion.setText(Operacion.getText().replaceAll(" [+\\-*/] ?$", ""));
+            }
+        });
+        add(BackSpace);
+
 
         setTitle("RP-Calculadora");
         setBounds(0,0,500,500);
