@@ -23,6 +23,7 @@ public class FileList extends JFrame{
         for (int i = 1; i <= tar.getCant_Files(tar.getDirectoryLT()); i++){
             Files.setText(Files.getText() + " - " + tar.getDirectoryFiles(tar.getDirectoryLT(), i) + "\n");
         }
+        tar.ClearFiles();
         Files.setEditable(false);
         add(SFiles);
 
@@ -34,6 +35,23 @@ public class FileList extends JFrame{
         Accept.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
         Accept.addActionListener(_ -> this.setVisible(false));
         add(Accept);
+
+
+        JButton Update = new JButton();
+        Update.setBounds(320,410,40,40);
+        Update.setFont(new Font("Arial", Font.BOLD, 15));
+        Update.setBackground(new Color(255,255,255));
+        Update.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+        Update.setText("\uD83D\uDDD8");
+        Update.addActionListener(_ -> {
+            Files.setText("");
+            Files.setText(tar.getDirectoryFiles(tar.getDirectoryLT(), 0));
+            for (int i = 1; i <= tar.getCant_Files(tar.getDirectoryLT()); i++){
+                Files.setText(Files.getText() + " - " + tar.getDirectoryFiles(tar.getDirectoryLT(), i) + "\n");
+            }
+            tar.ClearFiles();
+        });
+        add(Update);
 
         setTitle("RP-Tareas - FileList");
         setBounds(0,0,500,500);

@@ -43,6 +43,12 @@ public class Tar {
         return Estado;
     }
 
+    /*
+    public String getPath(){
+        return var.getPath();
+    }
+    */
+
     public String getDirectoryLT(){
         if (var.getPath().matches("^[a-zA-Z]:")){
             return var.getPath() + "\\Files\\ListasDeTareas\\";
@@ -131,6 +137,10 @@ public class Tar {
     public int getCant_Files(String path){
         File file = new File(path);
         return Objects.requireNonNull(file.list()).length;
+    }
+
+    public void ClearFiles(){
+        ALF.clear();
     }
 
 }

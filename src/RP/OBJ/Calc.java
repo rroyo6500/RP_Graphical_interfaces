@@ -32,7 +32,12 @@ public class Calc {
                 Operacion.matches(".*[+\\-*/]$") || Operacion.matches("^[+*/].*") ||
                 (!Operacion.matches(".*\\d [+\\-*/] -?\\d.*")) ||
                 (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
-                Operacion.matches(".*[+*/]\\d.*")
+                Operacion.matches(".*[+*/]\\d.*") ||
+                Operacion.matches(".*[+\\-*/] [+*/].*") ||
+                Operacion.matches(".*- ?[+*/].*") ||
+                Operacion.matches(".*\\d[+\\-*/].*") ||
+                Operacion.matches(".*[+\\-*/]-.*") ||
+                Operacion.matches(".*\\d -\\d.*")
         );
     }
 
