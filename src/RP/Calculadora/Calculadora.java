@@ -250,6 +250,8 @@ public class Calculadora extends JFrame{
                 Operacion.setText(Operacion.getText().replaceAll("-?\\d$", ""));
             } else if (Operacion.getText().matches(".* [+\\-*/] ?$")) {
                 Operacion.setText(Operacion.getText().replaceAll(" [+\\-*/] ?$", ""));
+            } else if (Operacion.getText().matches(".*,$")) {
+                Operacion.setText(Operacion.getText().replaceAll(",$", ""));
             }
         });
         add(BackSpace);
