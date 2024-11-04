@@ -121,7 +121,7 @@ public class Calc {
         Posiblemmente en un Bucle (While) que compruebe si la operacion es valida o no.
         ** Importante que el bucle no se vuelva infinito
         ** Revisar Espacios
-        ** Buscar una forma de coreegir todo bien.
+        ** Buscar una forma de corregir bien la operacion.
          */
 
         Operacion = Operacion.replace(".", ",");
