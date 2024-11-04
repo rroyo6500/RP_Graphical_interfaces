@@ -21,24 +21,30 @@ public class Calc {
     public Boolean Comp(String Operacion){
         Operacion = Operacion.replace(",", ".");
         Space_Num = Operacion.length() - Operacion.replace(" ", "").length();
-        return  (
-                Space_Num < 2 ||
-                Operacion.matches(".*[a-zA-Z].*") ||
-                (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*"))) ||
-                Operacion.matches(".*[.]$") || Operacion.matches("^[.].*") ||
-                !Operacion.matches(".*[+\\-*/].*") ||
-                Operacion.matches(".* {2}.*") ||
-                (Operacion.matches(".* $") || Operacion.matches("^ .*")) ||
-                Operacion.matches(".*[+\\-*/]$") || Operacion.matches("^[+*/].*") ||
-                (!Operacion.matches(".*\\d [+\\-*/] -?\\d.*")) ||
-                (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
-                Operacion.matches(".*[+*/]\\d.*") ||
-                Operacion.matches(".*[+\\-*/] [+*/].*") ||
-                Operacion.matches(".*- ?[+*/].*") ||
-                Operacion.matches(".*\\d[+\\-*/].*") ||
-                Operacion.matches(".*[+\\-*/]-.*") ||
-                Operacion.matches(".*\\d -\\d.*")
-        );
+
+        if (Operacion.matches(".*<!?>.*")){
+            return false;
+        } else {
+            return (
+                    Space_Num < 2 ||
+                            Operacion.matches(".*[a-zA-Z].*") ||
+                            (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*"))) ||
+                            Operacion.matches(".*[.]$") || Operacion.matches("^[.].*") ||
+                            !Operacion.matches(".*[+\\-*/].*") ||
+                            Operacion.matches(".* {2}.*") ||
+                            (Operacion.matches(".* $") || Operacion.matches("^ .*")) ||
+                            Operacion.matches(".*[+\\-*/]$") || Operacion.matches("^[+*/].*") ||
+                            (!Operacion.matches(".*\\d [+\\-*/] -?\\d.*")) ||
+                            (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
+                            Operacion.matches(".*[+*/]\\d.*") ||
+                            Operacion.matches(".*[+\\-*/] [+*/].*") ||
+                            Operacion.matches(".*- ?[+*/].*") ||
+                            Operacion.matches(".*\\d[+\\-*/].*") ||
+                            Operacion.matches(".*[+\\-*/]-.*") ||
+                            Operacion.matches(".*\\d -\\d.*") ||
+                            Operacion.matches(".*\\d[.]\\d[.].*")
+            );
+        }
     }
 
     public String Calculate(String Operacion){
@@ -108,4 +114,18 @@ public class Calc {
         Operadores.clear();
         return ResultadoS;
     }
+
+    public String CorretcOP(String Operacion){
+        Operacion = Operacion.replace(",", ".");
+        /* Logica de la correccion
+        Posiblemmente en un Bucle (While) que compruebe si la operacion es valida o no.
+        ** Importante que el bucle no se vuelva infinito
+        ** Revisar Espacios
+        ** Buscar una forma de coreegir todo bien.
+         */
+
+        Operacion = Operacion.replace(".", ",");
+        return Operacion;
+    }
+
 }

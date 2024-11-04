@@ -252,9 +252,19 @@ public class Calculadora extends JFrame{
                 Operacion.setText(Operacion.getText().replaceAll(" [+\\-*/] ?$", ""));
             } else if (Operacion.getText().matches(".*,$")) {
                 Operacion.setText(Operacion.getText().replaceAll(",$", ""));
+            } else if (Operacion.getText().matches(".*<ERROR>.*")) {
+                Operacion.setText(Operacion.getText().replaceAll(" <ERROR> ", ""));
             }
         });
         add(BackSpace);
+
+        JButton Correct = new JButton();
+        Correct.setText("Corregir");
+        Correct.setBounds(110,300, 100,50);
+        Correct.setBackground(new Color(255,255,255));
+        Correct.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+        Correct.addActionListener(_ -> Operacion.setText(Calc.CorretcOP(Operacion.getText())));
+        add(Correct);
 
 
         setTitle("RP-Calculadora");

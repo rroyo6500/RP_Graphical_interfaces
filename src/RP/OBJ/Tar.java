@@ -98,6 +98,7 @@ public class Tar {
             for (int i = 0; i < Cant_Tar; i++){
                 Tareas.add(L.readLine());
             }
+            Leer.close();
         } catch (IOException e) {
             System.out.println("File dosen't exist");
         }
