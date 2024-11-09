@@ -8,23 +8,25 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainIG extends JFrame {
+
+    Var var = new Var();
+
     public MainIG(){
 
-        Var.Calc_.setBounds(0,0,500,500);
+        this.setLayout(null);
+
+        Var.Calc_.setBounds(0,0, var.Width(500), var.Height(500));
         Var.Calc_.setLayout(null);
         Var.Calc_.setVisible(false);
         add(Var.Calc_);
 
-        Var.Tar_.setBounds(0,0,500,500);
+        Var.Tar_.setBounds(0,0, var.Width(500), var.Height(500));
         Var.Tar_.setLayout(null);
         Var.Tar_.setVisible(false);
         add(Var.Tar_);
 
-
-        setLayout(null);
-
         JPanel MIG_ = new JPanel();
-        MIG_.setBounds(0,0,500,500);
+        MIG_.setBounds(0,0, var.Width(500), var.Height(500));
         MIG_.setLayout(null);
         add(MIG_);
 
@@ -47,50 +49,48 @@ public class MainIG extends JFrame {
         });
         MIG_.add(Exit);
 
-        /* Calculadora */{
-            JLabel LCalc = new JLabel();
-            LCalc.setBounds(10, 80, 100, 10);
-            LCalc.setText("RP - Calculadora");
-            MIG_.add(LCalc);
+        // Calculadora
+        JLabel LCalc = new JLabel();
+        LCalc.setBounds(10, 80, 100, 10);
+        LCalc.setText("RP - Calculadora");
+        MIG_.add(LCalc);
 
-            JButton BCalc = new JButton();
-            BCalc.setBounds(120, 65, 40, 40);
-            BCalc.setBackground(new Color(255,255,255));
-            BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
-            BCalc.addActionListener(_ -> {
-                Calculadora Calc = new Calculadora(Var.Calc_, MIG_);
-                Calc.ClearOP();
-                System.out.println("RP - Calculadora");
-                Var.Calc_.setVisible(true);
-                MIG_.setVisible(false);
-            });
-            MIG_.add(BCalc);
-        }
+        JButton BCalc = new JButton();
+        BCalc.setBounds(120, 65, 40, 40);
+        BCalc.setBackground(new Color(255,255,255));
+        BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        BCalc.addActionListener(_ -> {
+            Calculadora Calc = new Calculadora(Var.Calc_, MIG_);
+            Calc.ClearOP();
+            System.out.println("RP - Calculadora");
+            Var.Calc_.setVisible(true);
+            MIG_.setVisible(false);
+        });
+        MIG_.add(BCalc);
 
-        /* Tareas */{
-            JLabel LCalc = new JLabel();
-            LCalc.setBounds(10, 120, 100, 10);
-            LCalc.setText("RP - Tareas");
-            MIG_.add(LCalc);
+        // Tareas
+        JLabel LTar = new JLabel();
+        LTar.setBounds(10, 120, 100, 10);
+        LTar.setText("RP - Tareas");
+        MIG_.add(LTar);
 
-            JButton BCalc = new JButton();
-            BCalc.setBounds(120, 105, 40, 40);
-            BCalc.setBackground(new Color(255,255,255));
-            BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
-            BCalc.addActionListener(_ -> {
-                Tareas Tareas = new Tareas(Var.Tar_, MIG_);
-                Tareas.ClearAN();
-                System.out.println("RP - Tareas");
-                Var.Tar_.setVisible(true);
-                MIG_.setVisible(false);
-            });
-            MIG_.add(BCalc);
-        }
+        JButton BTar = new JButton();
+        BTar.setBounds(120, 105, 40, 40);
+        BTar.setBackground(new Color(255,255,255));
+        BTar.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        BTar.addActionListener(_ -> {
+            Tareas Tareas = new Tareas(Var.Tar_, MIG_);
+            Tareas.ClearAN();
+            System.out.println("RP - Tareas");
+            Var.Tar_.setVisible(true);
+            MIG_.setVisible(false);
+        });
+        MIG_.add(BTar);
 
-        setTitle("RP-Main");
-        setBounds(0,0,500,500);
-        setVisible(true);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        this.setTitle("RP-Main");
+        this.setBounds(0,0, var.Width(500), var.Height(500));
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 }

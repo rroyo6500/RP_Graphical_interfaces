@@ -16,9 +16,23 @@ public class Var extends JFrame{
     public static JPanel Calc_ = new JPanel();
     public static JPanel Tar_ = new JPanel();
 
+    // Window Size
+
     public Var(){}
 
     public String getPath(){
         return path;
     }
+
+    public int Width(int Width){
+        if (path.matches("[a-zA-Z]:.*")){
+            return Width + 20;
+        }else {
+            return Width;
+        }
+    }
+    public int Height(int Height){
+        return Height;
+    }
+
 }

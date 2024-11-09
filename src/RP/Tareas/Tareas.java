@@ -14,7 +14,7 @@ public class Tareas extends JFrame{
 
         /* Title & Return to Main Menu */{
             JPanel TTitle = new JPanel();
-            TTitle.setBounds(-1,-1,502,36);
+            TTitle.setBounds(-1,-1,Tar_.getWidth()+2,36);
             TTitle.setLayout(null);
             TTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             Tar_.add(TTitle);

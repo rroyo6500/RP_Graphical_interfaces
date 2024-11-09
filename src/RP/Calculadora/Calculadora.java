@@ -15,7 +15,7 @@ public class Calculadora extends JFrame{
 
         /* Title & Return to Main Menu */{
             JPanel CTitle = new JPanel();
-            CTitle.setBounds(-1,-1,502,36);
+            CTitle.setBounds(-1,-1,Calc_.getWidth()+2,36);
             CTitle.setLayout(null);
             CTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             Calc_.add(CTitle);
