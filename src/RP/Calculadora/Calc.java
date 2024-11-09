@@ -22,29 +22,25 @@ public class Calc {
         Operacion = Operacion.replace(",", ".");
         Space_Num = Operacion.length() - Operacion.replace(" ", "").length();
 
-        if (Operacion.matches(".*<!?>.*")){
-            return false;
-        } else {
-            return (
-                    Space_Num < 2 ||
-                            Operacion.matches(".*[a-zA-Z].*") ||
-                            (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*"))) ||
-                            Operacion.matches(".*[.]$") || Operacion.matches("^[.].*") ||
-                            !Operacion.matches(".*[+\\-*/].*") ||
-                            Operacion.matches(".* {2}.*") ||
-                            (Operacion.matches(".* $") || Operacion.matches("^ .*")) ||
-                            Operacion.matches(".*[+\\-*/]$") || Operacion.matches("^[+*/].*") ||
-                            (!Operacion.matches(".*\\d [+\\-*/] -?\\d.*")) ||
-                            (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
-                            Operacion.matches(".*[+*/]\\d.*") ||
-                            Operacion.matches(".*[+\\-*/] [+*/].*") ||
-                            Operacion.matches(".*- ?[+*/].*") ||
-                            Operacion.matches(".*\\d[+\\-*/].*") ||
-                            Operacion.matches(".*[+\\-*/]-.*") ||
-                            Operacion.matches(".*\\d -\\d.*") ||
-                            Operacion.matches(".*\\d[.]\\d[.].*")
-            );
-        }
+        return (
+                Space_Num < 2 ||
+                        Operacion.matches(".*[a-zA-Z].*") ||
+                        (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*"))) ||
+                        Operacion.matches(".*[.]$") || Operacion.matches("^[.].*") ||
+                        !Operacion.matches(".*[+\\-*/].*") ||
+                        Operacion.matches(".* {2}.*") ||
+                        (Operacion.matches(".* $") || Operacion.matches("^ .*")) ||
+                        Operacion.matches(".*[+\\-*/]$") || Operacion.matches("^[+*/].*") ||
+                        (!Operacion.matches(".*\\d [+\\-*/] -?\\d.*")) ||
+                        (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
+                        Operacion.matches(".*[+*/]\\d.*") ||
+                        Operacion.matches(".*[+\\-*/] [+*/].*") ||
+                        Operacion.matches(".*- ?[+*/].*") ||
+                        Operacion.matches(".*\\d[+\\-*/].*") ||
+                        Operacion.matches(".*[+\\-*/]-.*") ||
+                        Operacion.matches(".*\\d -\\d.*") ||
+                        Operacion.matches(".*\\d[.]\\d[.].*")
+        );
     }
 
     public String Calculate(String Operacion){
