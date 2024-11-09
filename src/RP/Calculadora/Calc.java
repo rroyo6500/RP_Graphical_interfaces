@@ -1,4 +1,4 @@
-package RP.OBJ;
+package RP.Calculadora;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

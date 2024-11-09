@@ -1,7 +1,5 @@
 package RP.Tareas;
 
-import RP.OBJ.Tar;
-
 import javax.swing.*;
 import java.awt.*;
 

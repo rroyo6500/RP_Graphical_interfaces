@@ -1,8 +1,5 @@
 package RP.Calculadora;
 
-import RP.Main.Main;
-import RP.OBJ.Calc;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,15 +8,17 @@ public class Calculadora extends JFrame{
     Calc Calc = new Calc();
     Boolean Comp;
 
-    public Calculadora(){
-        setLayout(null);
+    JTextField Operacion = new JTextField();
+    JLabel Resultado = new JLabel();
+
+    public Calculadora(JPanel Calc_, JPanel MM){
 
         /* Title & Return to Main Menu */{
             JPanel CTitle = new JPanel();
             CTitle.setBounds(-1,-1,502,36);
             CTitle.setLayout(null);
             CTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
-            add(CTitle);
+            Calc_.add(CTitle);
 
             JLabel Title = new JLabel();
             Title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -34,10 +33,10 @@ public class Calculadora extends JFrame{
             MMenu.setBackground(new Color(255,255,255));
             MMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             MMenu.addActionListener(_ -> {
+                ClearOP();
                 System.out.println("RP - Main Menu");
-                this.setVisible(false);
-                Main.main(null);
-
+                Calc_.setVisible(false);
+                MM.setVisible(true);
             });
             CTitle.add(MMenu);
         }
@@ -49,24 +48,22 @@ public class Calculadora extends JFrame{
         SLOp.setBounds(220,100,270,180);
         SLOp.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         SLOp.setBackground(new Color(255,255,255));
-        add(SLOp);
+        Calc_.add(SLOp);
 
         /* Calculadora */
-        JLabel Resultado = new JLabel();
         Resultado.setBounds(255,60,200,20);
         //Resultado.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
-        add(Resultado);
+        Calc_.add(Resultado);
 
         JLabel ResultT = new JLabel();
         ResultT.setBounds(185, 60, 100, 20);
         ResultT.setText("Resultado:");
-        add(ResultT);
+        Calc_.add(ResultT);
 
-        JTextField Operacion = new JTextField();
         Operacion.setBounds(10, 40, 480, 20);
         Operacion.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
         Operacion.setBackground(new Color(255,255,255));
-        add(Operacion);
+        Calc_.add(Operacion);
 
         JButton Calculate = new JButton();
         Calculate.setBounds(10,60,90,20);
@@ -88,7 +85,7 @@ public class Calculadora extends JFrame{
                 LOp.setText(Operacion.getText() + "\n    - Resultado: " + Resultado.getText() + "\n" + LOp.getText());
             }
         });
-        add(Calculate);
+        Calc_.add(Calculate);
 
         JButton Clear = new JButton();
         Clear.setBounds(100,60,80,20);
@@ -102,7 +99,7 @@ public class Calculadora extends JFrame{
                 Resultado.setText("");
             }
         });
-        add(Clear);
+        Calc_.add(Clear);
 
         JButton ClearTL = new JButton();
         ClearTL.setBounds(220,280,270,20);
@@ -110,7 +107,7 @@ public class Calculadora extends JFrame{
         ClearTL.setBackground(new Color(255, 80, 80));
         ClearTL.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         ClearTL.addActionListener(_ -> LOp.setText(""));
-        add(ClearTL);
+        Calc_.add(ClearTL);
 
         /* Botones Numero / Operador */
 
@@ -120,7 +117,7 @@ public class Calculadora extends JFrame{
         N7.setBackground(new Color(255,255,255));
         N7.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N7.addActionListener(_ -> Operacion.setText(Operacion.getText() + "7"));
-        add(N7);
+        Calc_.add(N7);
 
         JButton N8 = new JButton();
         N8.setText("8");
@@ -128,7 +125,7 @@ public class Calculadora extends JFrame{
         N8.setBackground(new Color(255,255,255));
         N8.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N8.addActionListener(_ -> Operacion.setText(Operacion.getText() + "8"));
-        add(N8);
+        Calc_.add(N8);
 
         JButton N9 = new JButton();
         N9.setText("9");
@@ -136,7 +133,7 @@ public class Calculadora extends JFrame{
         N9.setBackground(new Color(255,255,255));
         N9.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N9.addActionListener(_ -> Operacion.setText(Operacion.getText() + "9"));
-        add(N9);
+        Calc_.add(N9);
 
         JButton N4 = new JButton();
         N4.setText("4");
@@ -144,7 +141,7 @@ public class Calculadora extends JFrame{
         N4.setBackground(new Color(255,255,255));
         N4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N4.addActionListener(_ -> Operacion.setText(Operacion.getText() + "4"));
-        add(N4);
+        Calc_.add(N4);
 
         JButton N5 = new JButton();
         N5.setText("5");
@@ -152,7 +149,7 @@ public class Calculadora extends JFrame{
         N5.setBackground(new Color(255,255,255));
         N5.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N5.addActionListener(_ -> Operacion.setText(Operacion.getText() + "5"));
-        add(N5);
+        Calc_.add(N5);
 
         JButton N6 = new JButton();
         N6.setText("6");
@@ -160,7 +157,7 @@ public class Calculadora extends JFrame{
         N6.setBackground(new Color(255,255,255));
         N6.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N6.addActionListener(_ -> Operacion.setText(Operacion.getText() + "6"));
-        add(N6);
+        Calc_.add(N6);
 
         JButton N1 = new JButton();
         N1.setText("1");
@@ -168,7 +165,7 @@ public class Calculadora extends JFrame{
         N1.setBackground(new Color(255,255,255));
         N1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N1.addActionListener(_ -> Operacion.setText(Operacion.getText() + "1"));
-        add(N1);
+        Calc_.add(N1);
 
         JButton N2 = new JButton();
         N2.setText("2");
@@ -176,7 +173,7 @@ public class Calculadora extends JFrame{
         N2.setBackground(new Color(255,255,255));
         N2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N2.addActionListener(_ -> Operacion.setText(Operacion.getText() + "2"));
-        add(N2);
+        Calc_.add(N2);
 
         JButton N3 = new JButton();
         N3.setText("3");
@@ -184,7 +181,7 @@ public class Calculadora extends JFrame{
         N3.setBackground(new Color(255,255,255));
         N3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N3.addActionListener(_ -> Operacion.setText(Operacion.getText() + "3"));
-        add(N3);
+        Calc_.add(N3);
 
         JButton N0 = new JButton();
         N0.setText("0");
@@ -192,7 +189,7 @@ public class Calculadora extends JFrame{
         N0.setBackground(new Color(255,255,255));
         N0.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         N0.addActionListener(_ -> Operacion.setText(Operacion.getText() + "0"));
-        add(N0);
+        Calc_.add(N0);
 
         JButton Coma = new JButton();
         Coma.setText(",");
@@ -200,7 +197,7 @@ public class Calculadora extends JFrame{
         Coma.setBackground(new Color(255,255,255));
         Coma.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Coma.addActionListener(_ -> Operacion.setText(Operacion.getText() + ","));
-        add(Coma);
+        Calc_.add(Coma);
 
         JButton Division = new JButton();
         Division.setText("/");
@@ -208,7 +205,7 @@ public class Calculadora extends JFrame{
         Division.setBackground(new Color(255,255,255));
         Division.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Division.addActionListener(_ -> Operacion.setText(Operacion.getText() + " / "));
-        add(Division);
+        Calc_.add(Division);
 
         JButton Multiplicacion = new JButton();
         Multiplicacion.setText("*");
@@ -216,7 +213,7 @@ public class Calculadora extends JFrame{
         Multiplicacion.setBackground(new Color(255,255,255));
         Multiplicacion.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Multiplicacion.addActionListener(_ -> Operacion.setText(Operacion.getText() + " * "));
-        add(Multiplicacion);
+        Calc_.add(Multiplicacion);
 
         JButton Resta = new JButton();
         Resta.setText("-");
@@ -230,7 +227,7 @@ public class Calculadora extends JFrame{
                 Operacion.setText(Operacion.getText() + " - ");
             }
         });
-        add(Resta);
+        Calc_.add(Resta);
 
         JButton Suma = new JButton();
         Suma.setText("+");
@@ -238,7 +235,7 @@ public class Calculadora extends JFrame{
         Suma.setBackground(new Color(255,255,255));
         Suma.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Suma.addActionListener(_ -> Operacion.setText(Operacion.getText() + " + "));
-        add(Suma);
+        Calc_.add(Suma);
 
         JButton BackSpace = new JButton();
         BackSpace.setText("<-");
@@ -256,7 +253,7 @@ public class Calculadora extends JFrame{
                 Operacion.setText(Operacion.getText().replaceAll(" <ERROR> ", ""));
             }
         });
-        add(BackSpace);
+        Calc_.add(BackSpace);
 
         JButton Correct = new JButton();
         Correct.setText("Corregir");
@@ -264,13 +261,13 @@ public class Calculadora extends JFrame{
         Correct.setBackground(new Color(255,255,255));
         Correct.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Correct.addActionListener(_ -> Operacion.setText(Calc.CorretcOP(Operacion.getText())));
-        add(Correct);
-
-
-        setTitle("RP-Calculadora");
-        setBounds(0,0,500,500);
-        setVisible(true);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        Calc_.add(Correct);
     }
+
+    public void ClearOP(){
+        Operacion.setBackground(new Color(255, 255, 255));
+        Operacion.setText("");
+        Resultado.setText("");
+    }
+
 }

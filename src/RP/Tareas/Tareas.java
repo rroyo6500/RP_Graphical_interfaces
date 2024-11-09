@@ -1,23 +1,23 @@
 package RP.Tareas;
-import RP.Main.Main;
-import RP.OBJ.Tar;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Tareas extends JFrame{
-    public Tareas(){
 
-        Tar tar = new Tar();
+    Tar tar = new Tar();
 
-        setLayout(null);
+    JTextField AName = new JTextField();
+    JTextArea LTareas = new JTextArea();
+
+    public Tareas(JPanel Tar_, JPanel MM){
 
         /* Title & Return to Main Menu */{
             JPanel TTitle = new JPanel();
             TTitle.setBounds(-1,-1,502,36);
             TTitle.setLayout(null);
             TTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
-            add(TTitle);
+            Tar_.add(TTitle);
 
             JLabel Title = new JLabel();
             Title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -32,40 +32,39 @@ public class Tareas extends JFrame{
             MMenu.setBackground(new Color(255,255,255));
             MMenu.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
             MMenu.addActionListener(_ -> {
+                ClearAN();
                 System.out.println("RP - Main Menu");
-                this.setVisible(false);
-                Main.main(null);
-
+                Tar_.setVisible(false);
+                MM.setVisible(true);
             });
             TTitle.add(MMenu);
         }
 
         // Lista de Tareas
-        JTextArea LTareas = new JTextArea();
         JScrollPane SLTareas = new JScrollPane(LTareas);
         SLTareas.setBounds(10,150,480,300);
         SLTareas.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         SLTareas.setBackground(new Color(255,255,255));
-        add(SLTareas);
+        Tar_.add(SLTareas);
 
         // Tareas
         JTextField TTarea = new JTextField();
         TTarea.setBounds(10,100,230,20);
         TTarea.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         TTarea.setBackground(new Color(255,255,255));
-        add(TTarea);
+        Tar_.add(TTarea);
 
         JTextField ETarea = new JTextField();
         ETarea.setBounds(260,100,230,20);
         ETarea.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         ETarea.setBackground(new Color(255,255,255));
-        add(ETarea);
+        Tar_.add(ETarea);
 
         JLabel Separador = new JLabel();
         Separador.setBounds(245,98,20,20);
         Separador.setFont(new Font("Arial", Font.BOLD, 20));
         Separador.setText("|");
-        add(Separador);
+        Tar_.add(Separador);
 
         JButton Add = new JButton();
         Add.setBounds(10,125,480,20);
@@ -77,14 +76,13 @@ public class Tareas extends JFrame{
             TTarea.setText("");
             ETarea.setText("");
         });
-        add(Add);
+        Tar_.add(Add);
 
         // Archivo
-        JTextField AName = new JTextField();
         AName.setBounds(10,40,480,20);
         AName.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
         AName.setBackground(new Color(255,255,255));
-        add(AName);
+        Tar_.add(AName);
 
         JButton Save = new JButton();
         Save.setBounds(10,60,100,20);
@@ -97,7 +95,7 @@ public class Tareas extends JFrame{
             tar.setArrayL(tar.ConvertLT(LTareas.getText()));
             tar.Save(tar.getDirectoryLT());
         });
-        add(Save);
+        Tar_.add(Save);
 
         JButton Open = new JButton();
         Open.setBounds(110,60,100,20);
@@ -117,7 +115,7 @@ public class Tareas extends JFrame{
                 System.out.print("");
             }
         });
-        add(Open);
+        Tar_.add(Open);
 
         JButton FileList = new JButton();
         FileList.setBounds(210,60,150,20);
@@ -128,7 +126,7 @@ public class Tareas extends JFrame{
             FileList FL = new FileList();
             FL.setVisible(true);
         });
-        add(FileList);
+        Tar_.add(FileList);
 
         JButton Remove = new JButton();
         Remove.setBounds(360,60,100,20);
@@ -141,24 +139,20 @@ public class Tareas extends JFrame{
             AName.setText("");
             LTareas.setText("");
         });
-        add(Remove);
+        Tar_.add(Remove);
 
         JButton Clear = new JButton();
         Clear.setBounds(460,60,30,20);
         Clear.setText("C");
         Clear.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         Clear.setBackground(new Color(255, 80, 80));
-        Clear.addActionListener(_ -> {
-            AName.setText("");
-            LTareas.setText("");
-        });
-        add(Clear);
-
-
-        setTitle("RP-Tareas");
-        setBounds(0,0,500,500);
-        setVisible(true);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        Clear.addActionListener(_ -> ClearAN());
+        Tar_.add(Clear);
     }
+
+    public void ClearAN(){
+        AName.setText("");
+        LTareas.setText("");
+    }
+
 }

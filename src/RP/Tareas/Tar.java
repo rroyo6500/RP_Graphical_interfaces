@@ -1,4 +1,4 @@
-package RP.OBJ;
+package RP.Tareas;
 
 import RP.Var.Var;
 
