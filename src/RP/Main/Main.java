@@ -6,7 +6,3 @@ public class Main {
         MainIG_.setVisible(true);
     }
 }
-
-
-
-
