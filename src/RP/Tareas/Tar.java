@@ -129,7 +129,6 @@ public class Tar {
         for (String s : Objects.requireNonNull(SFile)) {
             files.append("¡").append(s);
         }
-        System.out.println(files);
         files = new StringBuilder(files.toString().replaceAll("[.]txt$", ""));
         files = new StringBuilder(files.toString().replaceAll("[.]txt¡", "¡"));
         AF = files.toString().split("¡");

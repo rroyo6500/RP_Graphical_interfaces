@@ -1,9 +1,14 @@
 package RP.Calculadora;
 
+import RP.Var.Var;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Error extends JFrame {
+
+    Var var = new Var();
+
     public Error(){
         setLayout(null);
 
@@ -63,7 +68,7 @@ public class Error extends JFrame {
         add(Accept);
 
         setTitle("RP-Calculadora (ERROR)");
-        setBounds(0,0,600,300);
+        setBounds(0,0, var.Width(600), var.Height(300));
         setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null);

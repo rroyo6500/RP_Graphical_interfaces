@@ -1,14 +1,17 @@
 package RP.Tareas;
 
+import RP.Var.Var;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class FileList extends JFrame{
 
     Tar tar = new Tar();
+    Var var = new Var();
 
     public FileList(){
-        setLayout(null);
+        this.setLayout(null);
 
         JTextArea Files = new JTextArea();
         Files.setFont(new Font("Arial", Font.BOLD, 15));
@@ -51,11 +54,11 @@ public class FileList extends JFrame{
         });
         add(Update);
 
-        setTitle("RP-Tareas - FileList");
-        setBounds(0,0,500,500);
-        setResizable(false);
-        setVisible(true);
-        setLocationRelativeTo(null);
+        this.setTitle("RP-Tareas - FileList");
+        this.setBounds(0,0,var.Width(500),var.Height(500));
+        this.setResizable(false);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
 }
