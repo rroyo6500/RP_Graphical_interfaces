@@ -26,7 +26,7 @@ public class Var extends JFrame{
 
     public int Width(int Width){
         if (path.matches("[a-zA-Z]:.*")){
-            return Width + 20;
+            return Width + 15;
         }else {
             return Width;
         }
