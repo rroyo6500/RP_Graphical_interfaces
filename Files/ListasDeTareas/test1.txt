@@ -1,2 +1,0 @@
-CTar = 1
-test | Pendiente

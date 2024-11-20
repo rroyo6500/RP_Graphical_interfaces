@@ -11,10 +11,12 @@ public class Calc {
     ArrayList<String> Operadores = new ArrayList<>();
     String[] OP_D;
     int PosA = 0;
+    String Operacion_O;
 
     BigDecimal Residual;
     BigDecimal Resultado;
     String ResultadoS;
+
 
     public Calc(){}
 
@@ -113,6 +115,8 @@ public class Calc {
 
     public String CorretcOP(String Operacion){
         Operacion = Operacion.replace(",", ".");
+        Operacion_O = Operacion;
+        Space_Num = Operacion.length() - Operacion.replace(" ", "").length();
         /* Logica de la correccion
         Posiblemmente en un Bucle (While) que compruebe si la operacion es valida o no.
         ** Importante que el bucle no se vuelva infinito
@@ -120,8 +124,51 @@ public class Calc {
         ** Buscar una forma de corregir bien la operacion.
          */
 
+        if (Space_Num < 2 || !Operacion.matches(".*[+\\-*/].*")){
+            Operacion = "";
+        }else {
+            int Count = 0;
+            while (Comp(Operacion)){
+                Operacion = Operacion.replaceAll("[a-zA-Z]", "");
+                if (Operacion.contains(".")){
+                    if (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")){
+                        Operacion = Operacion.replaceAll("[+\\-*/][.]", "¡010");
+                    }else if (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*")){
+                        Operacion = Operacion.replaceAll(" ?[.] ?", ".");
+                    }
+                    Operacion = Operacion.replaceAll("^[.]", ""); Operacion = Operacion.replaceAll("[.]$", "");
+                }
+                Operacion = Operacion.replaceAll(" {2}", "");
+                Operacion = Operacion.replaceAll("^ ", ""); Operacion = Operacion.replaceAll(" $", "");
+                Operacion = Operacion.replaceAll("^[+*/]", ""); Operacion = Operacion.replaceAll("[+\\-*/]$", "");
+                Operacion = Operacion.replaceAll("- ?[+*/]", "");
+                if (Operacion.matches(".*[+*/]\\d.*")){
+                    Operacion = Operacion.replaceAll("[+*/]\\d", "¡129");
+                }
+                if (Operacion.matches(".*[+\\-*/] [+*/].*")){
+                    Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
+                }
+                if (Operacion.matches(".*\\d[+\\-*/].*")){
+                    Operacion = Operacion.replaceAll("\\d[+\\-*/]", "¡219");
+                }
+                if (Operacion.matches(".*[+\\-*/]-.*")){
+                    Operacion = Operacion.replaceAll("[+\\-*/]-", "¡119");
+                }
+                if (Operacion.matches(".*\\d -\\d.*")){
+                    Operacion = Operacion.replaceAll("\\d -\\d", "¡212");
+                }
+                if (Operacion.matches(".*\\d[.]\\d[.]\\d.*")){
+                    Operacion = Operacion.replaceAll("\\d[.]\\d[.]\\d", "¡020");
+                }
+
+
+                if (Count == 100000){
+                    break;
+                }Count++;
+            }
+        }
+
         Operacion = Operacion.replace(".", ",");
         return Operacion;
     }
-
 }

@@ -260,7 +260,7 @@ public class Calculadora extends JFrame{
         Correct.setBounds(110,300, 100,50);
         Correct.setBackground(new Color(255,255,255));
         Correct.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
-        Correct.addActionListener(_ -> Operacion.setText(Calc.CorretcOP(Operacion.getText())));
+        Correct.addActionListener(_ -> new Thread(() -> Operacion.setText(Calc.CorretcOP(Operacion.getText()))){}.start());
         Calc_.add(Correct);
     }
 
@@ -271,3 +271,19 @@ public class Calculadora extends JFrame{
     }
 
 }
+//             * *          (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")) ||
+//             * *          Operacion.matches(".*[+*/]\\d.*") ||
+//             * *          Operacion.matches(".*[+\\-*/] [+*/].*") ||
+//             * *          Operacion.matches(".*\\d[+\\-*/].*") ||
+//             * *          Operacion.matches(".*[+\\-*/]-.*") ||
+//             * *          Operacion.matches(".*\\d -\\d.*") ||
+//             * *          Operacion.matches(".*\\d[.]\\d[.].*")
+
+/*
+    Error Codes:
+        0 -> ' . '
+        1 -> ' + | - | * | / '
+        2 -> ' \\d '
+        3 -> ' '
+        9 -> <Relleno>
+ */
