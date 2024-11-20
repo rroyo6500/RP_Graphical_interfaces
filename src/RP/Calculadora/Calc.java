@@ -3,6 +3,7 @@ package RP.Calculadora;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Calc {
 
@@ -133,10 +134,15 @@ public class Calc {
                 if (Operacion.contains(".")){
                     if (Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*")){
                         Operacion = Operacion.replaceAll("[+\\-*/][.]", "¡010");
+                        Operacion = ErrorCodes(Operacion, Operacion_O, "010");
                     }else if (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*")){
                         Operacion = Operacion.replaceAll(" ?[.] ?", ".");
                     }
                     Operacion = Operacion.replaceAll("^[.]", ""); Operacion = Operacion.replaceAll("[.]$", "");
+                }
+                if (Operacion.matches(".*[+\\-*/]  ?[+*/].*")){
+                    Operacion = Operacion.replaceAll(" {2}", " ");
+                    Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
                 }
                 Operacion = Operacion.replaceAll(" {2}", "");
                 Operacion = Operacion.replaceAll("^ ", ""); Operacion = Operacion.replaceAll(" $", "");
@@ -144,9 +150,7 @@ public class Calc {
                 Operacion = Operacion.replaceAll("- ?[+*/]", "");
                 if (Operacion.matches(".*[+*/]\\d.*")){
                     Operacion = Operacion.replaceAll("[+*/]\\d", "¡129");
-                }
-                if (Operacion.matches(".*[+\\-*/] [+*/].*")){
-                    Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
+                    Operacion = ErrorCodes(Operacion, Operacion_O, "129");
                 }
                 if (Operacion.matches(".*\\d[+\\-*/].*")){
                     Operacion = Operacion.replaceAll("\\d[+\\-*/]", "¡219");
@@ -170,5 +174,68 @@ public class Calc {
 
         Operacion = Operacion.replace(".", ",");
         return Operacion;
+    }
+
+    ArrayList<String> Operacion_E = new ArrayList<>();
+    ArrayList<String> Operacion_E_O = new ArrayList<>();
+
+    public String ErrorCodes(String Operacion, String Operacion_O, String errorCode){
+
+        boolean pass = false;
+        StringBuilder OperacionA = new StringBuilder();
+        Operacion_E.clear(); Operacion_E.addAll(Arrays.asList(Operacion.split("")));
+        Operacion_E_O.clear(); Operacion_E_O.addAll(Arrays.asList(Operacion_O.split("")));
+
+        switch (errorCode){
+            case "010":
+                for (int i = 0; i < Operacion_E.size(); i++) {
+                    if (Operacion_E.get(i).equals("¡")){
+                        if (Operacion_E.get(i + 1).equals("0") && Operacion_E.get(i + 2).equals("1") && Operacion_E.get(i + 3).equals("0")){
+                            pass = true;
+                            for (int j = 0; j < 3; j++) {
+                                Operacion_E.remove(i + 1);
+                            }
+                        }
+                    }
+                }
+                if (pass){
+                    for (String s : Operacion_E_O) {
+                        OperacionA.append(s);
+                    }
+                }
+                break;
+            case "129":
+                for (int i = 0; i < Operacion_E.size(); i++) {
+                    if (Operacion_E.get(i).equals("¡")){
+                        if (Operacion_E.get(i + 1).equals("1") && Operacion_E.get(i + 2).equals("2") && Operacion_E.get(i + 3).equals("9")){
+                            pass = true;
+                            for (int j = 0; j < 3; j++) {
+                                Operacion_E.remove(i + 1);
+                            }
+                            Operacion_E_O.add((i + 1), " ");
+                        }
+                    }
+                }
+                System.out.println(Operacion_E);
+                System.out.println(Operacion_E_O);
+                if (pass){
+                    for (String s : Operacion_E_O) {
+                        OperacionA.append(s);
+                    }
+                }
+                break;
+            case "131":
+                break;
+            case "219":
+                break;
+            case "119":
+                break;
+            case "212":
+                break;
+            case "020":
+                break;
+        }
+
+        return OperacionA.toString();
     }
 }
