@@ -42,7 +42,10 @@ public class Calc {
                         Operacion.matches(".*\\d[+\\-*/].*") ||
                         Operacion.matches(".*[+\\-*/]-.*") ||
                         Operacion.matches(".*\\d -\\d.*") ||
-                        Operacion.matches(".*\\d[.]\\d[.].*")
+                        !Operacion.matches(".*\\d[.]\\d.*") ||
+                        Operacion.matches(".*\\d[.]\\d[.].*") ||
+                        Operacion.matches(".*[+\\-*/][+\\-*/].*") ||
+                        Operacion.matches(".*[+\\-*/] [+\\-*/] .*")
         );
     }
 
@@ -125,7 +128,7 @@ public class Calc {
         ** Buscar una forma de corregir bien la operacion.
          */
 
-        if (Space_Num < 2 || !Operacion.matches(".*[+\\-*/].*")){
+        if (Space_Num < 2 || !Operacion.matches(".*[+\\-*/].*") || Operacion.matches(".*\\d -\\d.*") || Operacion.matches(".*\\d[.]\\d[.]\\d.*")){
             Operacion = "";
         }else {
             int Count = 0;
@@ -134,13 +137,20 @@ public class Calc {
                 if (Operacion.contains(".") || Operacion.matches(".*¡010.*")){ //
                     if ((Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*") || Operacion.matches(".*¡010.*"))){
                         Operacion = Operacion.replaceAll("[+\\-*/][.]", "¡010");
+                        Operacion = Operacion.replaceAll("[.][+\\-*/]", "¡010");
                         Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "010");
                     }else if (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*")){
-                        Operacion = Operacion.replaceAll(" ?[.] ?", ".");
+                        Operacion = Operacion.replaceAll(" [.] ", ".");
+                        Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll(" [.] ", "."));
+                        Operacion = Operacion.replaceAll(" [.]", ".");
+                        Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll(" [.]", "."));
+                        Operacion = Operacion.replaceAll("[.] ", ".");
+                        Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("[.] ", "."));
                     }
                     Operacion = Operacion.replaceAll("^[.]", ""); Operacion = Operacion.replaceAll("[.]$", "");
-                }else if (Operacion.matches(".*[+\\-*/] [+*/].*") || Operacion.matches(".*¡131.*")){ //
+                }else if (Operacion.matches(".*[+\\-*/] [+*/].*") || Operacion.matches(".*[+\\-*/] [+\\-*/] .*") || Operacion.matches(".*¡131.*")){ //
                     Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
+                    Operacion = Operacion.replaceAll("[+\\-*/] [+\\-*/] ", "¡131");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "131");
                 }else if (Operacion.matches(".*[+*/]\\d.*") || Operacion.matches(".*¡129.*")){ //
                     Operacion = Operacion.replaceAll("[+*/]\\d", "¡129");
@@ -148,18 +158,20 @@ public class Calc {
                 }else if (Operacion.matches(".*\\d[+\\-*/].*") || Operacion.matches(".*¡219.*")){ //
                     Operacion = Operacion.replaceAll("\\d[+\\-*/]", "¡219");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "219");
-                }else if (Operacion.matches(".*[+\\-*/]-.*") || Operacion.matches(".*¡119.*")){ //
-                    Operacion = Operacion.replaceAll("[+\\-*/]-", "¡119");
+                }else if (Operacion.matches(".*[+\\-*/][+\\-*/].*") || Operacion.matches(".*¡119.*")){ //
+                    Operacion = Operacion.replaceAll("[+\\-*/][+\\-*/]", "¡119");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "119");
-                }else if (Operacion.matches(".*\\d -\\d.*")){
-                    Operacion = Operacion.replaceAll("\\d -\\d", "¡212");
-                }else if (Operacion.matches(".*\\d[.]\\d[.]\\d.*")){
-                    Operacion = Operacion.replaceAll("\\d[.]\\d[.]\\d", "¡020");
                 }
                 Operacion = Operacion.replaceAll(" {2}", " ");
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll(" {2}", " "));
                 Operacion = Operacion.replaceAll("^ ", ""); Operacion = Operacion.replaceAll(" $", "");
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("^ ", ""));
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll(" $", ""));
                 Operacion = Operacion.replaceAll("^[+*/]", ""); Operacion = Operacion.replaceAll("[+\\-*/]$", "");
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("^[+*/]", ""));
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("[+\\-*/]$", ""));
                 Operacion = Operacion.replaceAll("- ?[+*/]", "");
+                Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("- ?[+*/]", ""));
 
 
                 if (Count == 100000){
@@ -168,7 +180,6 @@ public class Calc {
                 System.out.println(Count);
             }
         }
-
         Operacion = Operacion.replace(".", ",");
         return Operacion;
     }
@@ -183,119 +194,68 @@ public class Calc {
         Operacion_E.clear(); Operacion_E.addAll(Arrays.asList(Operacion.split("")));
         Operacion_E_O.clear(); Operacion_E_O.addAll(Arrays.asList(Operacion_O.split("")));
 
-        switch (errorCode){
-            case "010":
-                for (int i = 0; i < Operacion_E.size(); i++) {
-                    if (Operacion_E.get(i).equals("¡")){
-                        if (Operacion_E.get(i + 1).equals("0") && Operacion_E.get(i + 2).equals("1") && Operacion_E.get(i + 3).equals("0")){
-                            pass = true;
-                            for (int j = 0; j < 3; j++) {
-                                Operacion_E.remove(i + 1);
-                            }
+        for (int i = 0; i < Operacion_E_O.size(); i++) {
+            if (Operacion_E_O.get(i).matches("\\d")){
+                if (Operacion_E_O.get((i+1)).matches("\\d")){
+                    Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i+1)));
+                }
+            }
+        }
+
+        for (int i = 0; i < Operacion_E.size(); i++) {
+            if (Operacion_E.get(i).equals("¡")){
+                pass = true;
+                for (int j = 0; j < 3; j++) {
+                    Operacion_E.remove((i + 1));
+                }
+                System.out.println("1" + Operacion_E);
+                System.out.println("1" + Operacion_E_O);
+                switch (errorCode){
+                    case "010":
+                        if (Operacion_E_O.get(i).matches("[+\\-*/]")){
                             Operacion_E.set(i, Operacion_E_O.get(i));
                             Operacion_E_O.remove((i+1));
-                            i = Operacion_E.size() + 10;
+                        } else if (Operacion_E_O.get(i).matches("[.]")) {
+                            Operacion_E.set(i, Operacion_E_O.get((i+1)));
+                            Operacion_E_O.remove((i));
                         }
-                    }
-                }
-                if (pass){
-                    for (String s : Operacion_E) {
-                        OperacionA.append(s);
-                    }
-                    this.Operacion_O = new StringBuilder();
-                    for (String s : Operacion_E_O){
-                        this.Operacion_O.append(s);
-                    }
-                }
-                break;
-            case "129", "219":
-                for (int i = 0; i < Operacion_E.size(); i++) {
-                    if (Operacion_E.get(i).equals("¡")){
-                        if ((Operacion_E.get(i + 1).equals("1") && Operacion_E.get(i + 2).equals("2") && Operacion_E.get(i + 3).equals("9")) ||
-                            (Operacion_E.get(i + 1).equals("2") && Operacion_E.get(i + 2).equals("1") && Operacion_E.get(i + 3).equals("9")) ){
-                            pass = true;
-                            for (int j = 0; j < 3; j++) {
-                                Operacion_E.remove(i + 1);
-                            }
-                            System.out.println(Operacion_E);
-                            System.out.println(Operacion_E_O);
-                            Operacion_E.set(i, Operacion_E_O.get(i));
-                            Operacion_E.add(i+1, " ");
-                            Operacion_E.add(i+2, Operacion_E_O.get(i+1));
-                            Operacion_E_O.add((i+1), " ");
-                            System.out.println(Operacion_E);
-                            System.out.println(Operacion_E_O);
-                            i = Operacion_E.size() + 10;
+                        break;
+                    case "129", "219":
+                        Operacion_E.set(i, Operacion_E_O.get(i));
+                        Operacion_E.add((i+1), " ");
+                        Operacion_E.add((i+2), Operacion_E_O.get(i+1));
+                        Operacion_E_O.add((i+1), " ");
+                        break;
+                    case "131":
+                        Operacion_E.set(i, Operacion_E_O.get(i));
+                        for (int j = 0; j < 2; j++) {
+                            Operacion_E_O.remove((i+1));
                         }
-                    }
-                }
-                if (pass){
-                    for (String s : Operacion_E) {
-                        OperacionA.append(s);
-                    }
-                    this.Operacion_O = new StringBuilder();
-                    for (String s : Operacion_E_O){
-                        this.Operacion_O.append(s);
-                    }
-                }
-                break;
-            case "131":
-                for (int i = 0; i < Operacion_E.size(); i++) {
-                    if (Operacion_E.get(i).equals("¡")){
-                        if (Operacion_E.get(i + 1).equals("1") && Operacion_E.get(i + 2).equals("3") && Operacion_E.get(i + 3).equals("1")){
-                            pass = true;
-                            for (int j = 0; j < 3; j++) {
-                                Operacion_E.remove(i + 1);
-                            }
-                            Operacion_E.set(i, Operacion_E_O.get(i));
-                            Operacion_E_O.remove((i+1)); Operacion_E_O.remove((i+1));
-                            i = Operacion_E.size() + 10;
+                        if (Operacion_E_O.get((i+1)).matches("[+\\-*/]")){
+                            Operacion_E_O.remove((i+1));
                         }
-                    }
-                }
-                if (pass){
-                    for (String s : Operacion_E) {
-                        OperacionA.append(s);
-                    }
-                    this.Operacion_O = new StringBuilder();
-                    for (String s : Operacion_E_O){
-                        this.Operacion_O.append(s);
-                    }
-                }
-                break;
-            case "119":
-                for (int i = 0; i < Operacion_E.size(); i++) {
-                    if (Operacion_E.get(i).equals("¡")){
-                        if (Operacion_E.get(i + 1).equals("1") && Operacion_E.get(i + 2).equals("1") && Operacion_E.get(i + 3).equals("9")){
-                            pass = true;
-                            for (int j = 0; j < 3; j++) {
-                                Operacion_E.remove(i + 1);
-                            }
-                            System.out.println(Operacion_E);
-                            System.out.println(Operacion_E_O);
-                            Operacion_E.set(i, Operacion_E_O.get(i));
-                            Operacion_E.add((i+1), " "); Operacion_E.add((i+2), Operacion_E_O.get((i+1)));
-                            Operacion_E_O.add((i+1), " ");
-                            System.out.println(Operacion_E);
-                            System.out.println(Operacion_E_O);
-                            i = Operacion_E.size() + 10;
+                        if (Operacion_E.get((i+1)).matches("\\d")){
+                            Operacion_E.add((i+1), " ");
                         }
-                    }
+                        break;
+                    case "119":
+                        Operacion_E.set(i, Operacion_E_O.get(i));
+                        Operacion_E_O.remove((i+1));
+                        break;
                 }
-                if (pass){
-                    for (String s : Operacion_E) {
-                        OperacionA.append(s);
-                    }
-                    this.Operacion_O = new StringBuilder();
-                    for (String s : Operacion_E_O){
-                        this.Operacion_O.append(s);
-                    }
-                }
-                break;
-            case "212":
-                break;
-            case "020":
-                break;
+                System.out.println("2" + Operacion_E);
+                System.out.println("2" + Operacion_E_O);
+                i = Operacion_E.size() + 10;
+            }
+        }
+        if (pass){
+            for (String s : Operacion_E) {
+                OperacionA.append(s);
+            }
+            this.Operacion_O = new StringBuilder();
+            for (String s : Operacion_E_O){
+                this.Operacion_O.append(s);
+            }
         }
 
         return OperacionA.toString();
