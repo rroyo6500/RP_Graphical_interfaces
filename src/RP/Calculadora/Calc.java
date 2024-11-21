@@ -28,7 +28,7 @@ public class Calc {
         return (
                 Space_Num < 2 || Operacion.contains("¡") ||
                         Operacion.matches(".*[a-zA-Z].*") ||
-                        (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*"))) ||
+                        (Operacion.contains(".") && (Operacion.matches(".* [.].*") || Operacion.matches(".* [.] .*") || Operacion.matches(".*[.] .*") || !Operacion.matches(".*\\d[.]\\d.*"))) ||
                         Operacion.matches(".*[.]$") || Operacion.matches("^[.].*") ||
                         !Operacion.matches(".*[+\\-*/].*") ||
                         Operacion.matches(".* {2}.*") ||
@@ -42,7 +42,6 @@ public class Calc {
                         Operacion.matches(".*\\d[+\\-*/].*") ||
                         Operacion.matches(".*[+\\-*/]-.*") ||
                         Operacion.matches(".*\\d -\\d.*") ||
-                        !Operacion.matches(".*\\d[.]\\d.*") ||
                         Operacion.matches(".*\\d[.]\\d[.].*") ||
                         Operacion.matches(".*[+\\-*/][+\\-*/].*") ||
                         Operacion.matches(".*[+\\-*/] [+\\-*/] .*")
@@ -128,13 +127,26 @@ public class Calc {
         ** Buscar una forma de corregir bien la operacion.
          */
 
-        if (Space_Num < 2 || !Operacion.matches(".*[+\\-*/].*") || Operacion.matches(".*\\d -\\d.*") || Operacion.matches(".*\\d[.]\\d[.]\\d.*")){
+        if (Space_Num < 2 || !Operacion.matches(".*[+\\-*/].*") || Operacion.matches(".*\\d[.]\\d[.]\\d.*")){
             Operacion = "";
         }else {
             int Count = 0;
             while (Comp(Operacion)){
                 Operacion = Operacion.replaceAll("[a-zA-Z]", "");
-                if (Operacion.contains(".") || Operacion.matches(".*¡010.*")){ //
+                if (Operacion.matches(".*[+\\-*/] [+*/].*") || Operacion.matches(".*[+\\-*/] [+\\-*/] .*") || Operacion.matches(".*¡131.*")){ //
+                    Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
+                    Operacion = Operacion.replaceAll("[+\\-*/] [+\\-*/] ", "¡131");
+                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "131");
+                }else if (Operacion.matches(".*[+*/]\\d.*") || Operacion.matches(".*¡129.*")){ //
+                    Operacion = Operacion.replaceAll("[+*/]\\d[.]?\\d?", "¡129");
+                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "129");
+                }else if (Operacion.matches(".*\\d[+\\-*/].*") || Operacion.matches(".*¡219.*")){ //
+                    Operacion = Operacion.replaceAll("\\d[.]?\\d?[+\\-*/]", "¡219");
+                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "219");
+                }else if (Operacion.matches(".*\\d -\\d.*")) {
+                    Operacion = Operacion.replaceAll("\\d[.]?\\d? -\\d[.]?\\d?", "¡229");
+                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "229");
+                }else if (Operacion.contains(".") || Operacion.matches(".*¡010.*")){ //
                     if ((Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*") || Operacion.matches(".*¡010.*"))){
                         Operacion = Operacion.replaceAll("[+\\-*/][.]", "¡010");
                         Operacion = Operacion.replaceAll("[.][+\\-*/]", "¡010");
@@ -148,16 +160,6 @@ public class Calc {
                         Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("[.] ", "."));
                     }
                     Operacion = Operacion.replaceAll("^[.]", ""); Operacion = Operacion.replaceAll("[.]$", "");
-                }else if (Operacion.matches(".*[+\\-*/] [+*/].*") || Operacion.matches(".*[+\\-*/] [+\\-*/] .*") || Operacion.matches(".*¡131.*")){ //
-                    Operacion = Operacion.replaceAll("[+\\-*/] [+*/]", "¡131");
-                    Operacion = Operacion.replaceAll("[+\\-*/] [+\\-*/] ", "¡131");
-                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "131");
-                }else if (Operacion.matches(".*[+*/]\\d.*") || Operacion.matches(".*¡129.*")){ //
-                    Operacion = Operacion.replaceAll("[+*/]\\d", "¡129");
-                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "129");
-                }else if (Operacion.matches(".*\\d[+\\-*/].*") || Operacion.matches(".*¡219.*")){ //
-                    Operacion = Operacion.replaceAll("\\d[+\\-*/]", "¡219");
-                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "219");
                 }else if (Operacion.matches(".*[+\\-*/][+\\-*/].*") || Operacion.matches(".*¡119.*")){ //
                     Operacion = Operacion.replaceAll("[+\\-*/][+\\-*/]", "¡119");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "119");
@@ -172,7 +174,6 @@ public class Calc {
                 Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("[+\\-*/]$", ""));
                 Operacion = Operacion.replaceAll("- ?[+*/]", "");
                 Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("- ?[+*/]", ""));
-
 
                 if (Count == 100000){
                     break;
@@ -194,71 +195,88 @@ public class Calc {
         Operacion_E.clear(); Operacion_E.addAll(Arrays.asList(Operacion.split("")));
         Operacion_E_O.clear(); Operacion_E_O.addAll(Arrays.asList(Operacion_O.split("")));
 
-        /*System.out.println(Operacion_E_O);
         for (int i = 0; i < Operacion_E_O.size(); i++) {
-            if (Operacion_E_O.get(i).matches("\\d")){
-                try {
-                    if (Operacion_E_O.get((i + 1)).matches("\\d")) {
-                        Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)));
-                        Operacion_E_O.remove((i+1));
-                        i--;
-                    } else if (Operacion_E_O.get((i + 1)).matches("[.]")) {
-                        if (Operacion_E_O.get((i + 2)).matches("\\d")) {
-                            Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)) + Operacion_E_O.get((i + 2)));
-                            Operacion_E_O.remove((i+1)); Operacion_E_O.remove((i+1));
+            if ((i+1) < Operacion_E_O.size()){
+                if (Operacion_E_O.get(i).matches("\\d")) {
+                    try {
+                        if (Operacion_E_O.get((i + 1)).matches("\\d")) {
+                            Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)));
+                            Operacion_E_O.remove((i + 1));
                             i--;
+                        } else if (Operacion_E_O.get((i + 1)).matches("[.]")) {
+                            if (Operacion_E_O.get((i + 2)).matches("\\d")) {
+                                Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)) + Operacion_E_O.get((i + 2)));
+                                Operacion_E_O.remove((i + 1));
+                                Operacion_E_O.remove((i + 1));
+                                i--;
+                            }
                         }
+                    } catch (Exception e) {
+                        i = Operacion_E_O.size();
                     }
-                } catch (Exception e) {
-                    i = Operacion_E_O.size();
                 }
             }
         }
-        System.out.println(Operacion_E_O);*/
-
+        for (int i = 0; i < Operacion_E.size(); i++) {
+            if ((i+1) < Operacion_E.size()){
+                if (Operacion_E.get(i).matches("¡")){
+                    Operacion_E.set((i+1), errorCode);
+                    for (int j = 0; j < 2; j++) {
+                        Operacion_E.remove((i + 2));
+                    }
+                    i++;
+                }else if (Operacion_E.get(i).matches("\\d")) {
+                    try {
+                        if (Operacion_E.get((i + 1)).matches("\\d")) {
+                            Operacion_E.set(i, Operacion_E.get(i) + Operacion_E.get((i + 1)));
+                            Operacion_E.remove((i + 1));
+                            i--;
+                        } else if (Operacion_E.get((i + 1)).matches("[.]")) {
+                            if (Operacion_E.get((i + 2)).matches("\\d")) {
+                                Operacion_E.set(i, Operacion_E.get(i) + Operacion_E.get((i + 1)) + Operacion_E.get((i + 2)));
+                                Operacion_E.remove((i + 1));
+                                Operacion_E.remove((i + 1));
+                                i--;
+                            }
+                        }
+                    } catch (Exception e) {
+                        i = Operacion_E.size();
+                    }
+                }
+            }
+        }
         for (int i = 0; i < Operacion_E.size(); i++) {
             if (Operacion_E.get(i).equals("¡")){
                 pass = true;
-                for (int j = 0; j < 3; j++) {
-                    Operacion_E.remove((i + 1));
-                }
-                System.out.println("1" + Operacion_E);
-                System.out.println("1" + Operacion_E_O);
+                Operacion_E.remove((i+1));
+                /*System.out.println("1" + Operacion_E);
+                System.out.println("1" + Operacion_E_O);*/
+                Operacion_E.set(i, Operacion_E_O.get(i));
                 switch (errorCode){
-                    case "010":
-                        if (Operacion_E_O.get(i).matches("[+\\-*/]")){
-                            Operacion_E.set(i, Operacion_E_O.get(i));
-                            Operacion_E_O.remove((i+1));
-                        } else if (Operacion_E_O.get(i).matches("[.]")) {
-                            Operacion_E.set(i, Operacion_E_O.get((i+1)));
-                            Operacion_E_O.remove((i));
-                        }
+                    case "010", "119":
+                        Operacion_E_O.remove((i+1));
                         break;
                     case "129", "219":
-                        Operacion_E.set(i, Operacion_E_O.get(i));
                         Operacion_E.add((i+1), " ");
-                        Operacion_E.add((i+2), Operacion_E_O.get(i+1));
+                        Operacion_E.add((i+2), Operacion_E_O.get((i+1)));
                         Operacion_E_O.add((i+1), " ");
                         break;
                     case "131":
-                        Operacion_E.set(i, Operacion_E_O.get(i));
                         for (int j = 0; j < 2; j++) {
                             Operacion_E_O.remove((i+1));
                         }
-                        if (Operacion_E_O.get((i+1)).matches("[+\\-*/]")){
-                            Operacion_E_O.remove((i+1));
-                        }
-                        if (Operacion_E.get((i+1)).matches("\\d")){
+                        break;
+                    case "229":
+                        Operacion_E.add((i+1), Operacion_E_O.get((i+3)));
+                        for (int j = 0; j < 2; j++) {
                             Operacion_E.add((i+1), " ");
                         }
-                        break;
-                    case "119":
-                        Operacion_E.set(i, Operacion_E_O.get(i));
-                        Operacion_E_O.remove((i+1));
+                        Operacion_E.add((i+2), Operacion_E_O.get((i+2)));
+                        Operacion_E_O.add((i+3), " ");
                         break;
                 }
-                System.out.println("2" + Operacion_E);
-                System.out.println("2" + Operacion_E_O);
+                /*System.out.println("2" + Operacion_E);
+                System.out.println("2" + Operacion_E_O);*/
                 i = Operacion_E.size() + 10;
             }
         }

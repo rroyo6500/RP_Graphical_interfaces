@@ -262,11 +262,6 @@ public class Calculadora extends JFrame{
         Correct.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Correct.addActionListener(_ -> new Thread(() -> Operacion.setText(Calc.CorretcOP(Operacion.getText()))){}.start());
         Calc_.add(Correct);
-
-        JLabel TextCorrect = new JLabel();
-        TextCorrect.setBounds(10, 360, 480, 20);
-        TextCorrect.setText("Si una operacion tiene demasiados ERRORES puede que se elimine completa");
-        Calc_.add(TextCorrect);
     }
 
     public void ClearOP(){
