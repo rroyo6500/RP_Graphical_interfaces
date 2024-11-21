@@ -194,13 +194,27 @@ public class Calc {
         Operacion_E.clear(); Operacion_E.addAll(Arrays.asList(Operacion.split("")));
         Operacion_E_O.clear(); Operacion_E_O.addAll(Arrays.asList(Operacion_O.split("")));
 
+        /*System.out.println(Operacion_E_O);
         for (int i = 0; i < Operacion_E_O.size(); i++) {
             if (Operacion_E_O.get(i).matches("\\d")){
-                if (Operacion_E_O.get((i+1)).matches("\\d")){
-                    Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i+1)));
+                try {
+                    if (Operacion_E_O.get((i + 1)).matches("\\d")) {
+                        Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)));
+                        Operacion_E_O.remove((i+1));
+                        i--;
+                    } else if (Operacion_E_O.get((i + 1)).matches("[.]")) {
+                        if (Operacion_E_O.get((i + 2)).matches("\\d")) {
+                            Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)) + Operacion_E_O.get((i + 2)));
+                            Operacion_E_O.remove((i+1)); Operacion_E_O.remove((i+1));
+                            i--;
+                        }
+                    }
+                } catch (Exception e) {
+                    i = Operacion_E_O.size();
                 }
             }
         }
+        System.out.println(Operacion_E_O);*/
 
         for (int i = 0; i < Operacion_E.size(); i++) {
             if (Operacion_E.get(i).equals("¡")){
