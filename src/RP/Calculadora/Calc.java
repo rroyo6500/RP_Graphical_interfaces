@@ -138,14 +138,19 @@ public class Calc {
                     Operacion = Operacion.replaceAll("[+\\-*/] [+\\-*/] ", "¡131");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "131");
                 }else if (Operacion.matches(".*[+*/]\\d.*") || Operacion.matches(".*¡129.*")){ //
-                    Operacion = Operacion.replaceAll("[+*/]\\d[.]?\\d?", "¡129");
+                    Operacion = Operacion.replaceAll("[+*/]\\d+[.]?\\d*?", "¡129");
+                    //Operacion = Operacion.replaceAll("[+*/]\\d", "¡129");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "129");
                 }else if (Operacion.matches(".*\\d[+\\-*/].*") || Operacion.matches(".*¡219.*")){ //
-                    Operacion = Operacion.replaceAll("\\d[.]?\\d?[+\\-*/]", "¡219");
+                    Operacion = Operacion.replaceAll("\\d+[.]?\\d*?[+\\-*/]", "¡219");
+                    //Operacion = Operacion.replaceAll("\\d*[+\\-*/]", "¡219");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "219");
-                }else if (Operacion.matches(".*\\d -\\d.*")) {
-                    Operacion = Operacion.replaceAll("\\d[.]?\\d? -\\d[.]?\\d?", "¡229");
+                }else if (Operacion.matches(".*\\d+[.]?\\d*? -\\d+[.]?\\d*?.*") || Operacion.matches(".*¡229.*")) {
+                    Operacion = Operacion.replaceAll("\\d+[.]?\\d*? -\\d+[.]?\\d*?", "¡229");
                     Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "229");
+                }else if (Operacion.matches(".*[+\\-*/][+\\-*/].*") || Operacion.matches(".*¡119.*")){ //
+                    Operacion = Operacion.replaceAll("[+\\-*/][+\\-*/]", "¡119");
+                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "119");
                 }else if (Operacion.contains(".") || Operacion.matches(".*¡010.*")){ //
                     if ((Operacion.matches(".*[+\\-*/][.].*") || Operacion.matches(".*[.][+\\-*/].*") || Operacion.matches(".*¡010.*"))){
                         Operacion = Operacion.replaceAll("[+\\-*/][.]", "¡010");
@@ -160,9 +165,6 @@ public class Calc {
                         Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll("[.] ", "."));
                     }
                     Operacion = Operacion.replaceAll("^[.]", ""); Operacion = Operacion.replaceAll("[.]$", "");
-                }else if (Operacion.matches(".*[+\\-*/][+\\-*/].*") || Operacion.matches(".*¡119.*")){ //
-                    Operacion = Operacion.replaceAll("[+\\-*/][+\\-*/]", "¡119");
-                    Operacion = ErrorCodes(Operacion, Operacion_O.toString(), "119");
                 }
                 Operacion = Operacion.replaceAll(" {2}", " ");
                 Operacion_O = new StringBuilder(Operacion_O.toString().replaceAll(" {2}", " "));
@@ -181,6 +183,11 @@ public class Calc {
                 System.out.println(Count);
             }
         }
+
+        if (!Operacion.equalsIgnoreCase(Operacion_O.toString())){
+            Operacion = Operacion_O.toString();
+        }
+
         Operacion = Operacion.replace(".", ",");
         return Operacion;
     }
@@ -197,14 +204,14 @@ public class Calc {
 
         for (int i = 0; i < Operacion_E_O.size(); i++) {
             if ((i+1) < Operacion_E_O.size()){
-                if (Operacion_E_O.get(i).matches("\\d")) {
+                if (Operacion_E_O.get(i).matches(".*\\d.*")) {
                     try {
-                        if (Operacion_E_O.get((i + 1)).matches("\\d")) {
+                        if (Operacion_E_O.get((i + 1)).matches(".*\\d.*")) {
                             Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)));
                             Operacion_E_O.remove((i + 1));
                             i--;
-                        } else if (Operacion_E_O.get((i + 1)).matches("[.]")) {
-                            if (Operacion_E_O.get((i + 2)).matches("\\d")) {
+                        } else if (Operacion_E_O.get((i + 1)).matches(".*[.].*")) {
+                            if (Operacion_E_O.get((i + 2)).matches(".*\\d.*")) {
                                 Operacion_E_O.set(i, Operacion_E_O.get(i) + Operacion_E_O.get((i + 1)) + Operacion_E_O.get((i + 2)));
                                 Operacion_E_O.remove((i + 1));
                                 Operacion_E_O.remove((i + 1));
@@ -225,14 +232,14 @@ public class Calc {
                         Operacion_E.remove((i + 2));
                     }
                     i++;
-                }else if (Operacion_E.get(i).matches("\\d")) {
+                }else if (Operacion_E.get(i).matches(".*\\d.*")) {
                     try {
-                        if (Operacion_E.get((i + 1)).matches("\\d")) {
+                        if (Operacion_E.get((i + 1)).matches(".*\\d.*")) {
                             Operacion_E.set(i, Operacion_E.get(i) + Operacion_E.get((i + 1)));
                             Operacion_E.remove((i + 1));
                             i--;
-                        } else if (Operacion_E.get((i + 1)).matches("[.]")) {
-                            if (Operacion_E.get((i + 2)).matches("\\d")) {
+                        } else if (Operacion_E.get((i + 1)).matches(".*[.].*")) {
+                            if (Operacion_E.get((i + 2)).matches(".*\\d.*")) {
                                 Operacion_E.set(i, Operacion_E.get(i) + Operacion_E.get((i + 1)) + Operacion_E.get((i + 2)));
                                 Operacion_E.remove((i + 1));
                                 Operacion_E.remove((i + 1));
@@ -245,6 +252,8 @@ public class Calc {
                 }
             }
         }
+        /*System.out.println(Operacion_E);
+        System.out.println(Operacion_E_O);*/
         for (int i = 0; i < Operacion_E.size(); i++) {
             if (Operacion_E.get(i).equals("¡")){
                 pass = true;
@@ -280,6 +289,13 @@ public class Calc {
                 i = Operacion_E.size() + 10;
             }
         }
+
+        if (!Operacion_E.equals(Operacion_E_O) && !Operacion_E.contains("¡")){
+            Operacion_E = Operacion_E_O;
+            /*System.out.println(Operacion_E);
+            System.out.println(Operacion_E_O);*/
+        }
+
         if (pass){
             for (String s : Operacion_E) {
                 OperacionA.append(s);
