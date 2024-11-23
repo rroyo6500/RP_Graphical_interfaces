@@ -3,6 +3,7 @@ package RP.Main;
 import RP.Calculadora.Calculadora;
 import RP.Tareas.Tareas;
 import RP.Var.Var;
+import RP.MusicPlay.MusicPlay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,11 @@ public class MainIG extends JFrame {
         Var.Tar_.setLayout(null);
         Var.Tar_.setVisible(false);
         add(Var.Tar_);
+
+        Var.MP_.setBounds(0,0, var.Width(500), var.Height(500));
+        Var.MP_.setLayout(null);
+        Var.MP_.setVisible(false);
+        add(Var.MP_);
 
         JPanel MIG_ = new JPanel();
         MIG_.setBounds(0,0, var.Width(500), var.Height(500));
@@ -51,7 +57,7 @@ public class MainIG extends JFrame {
 
         // Calculadora
         JLabel LCalc = new JLabel();
-        LCalc.setBounds(10, 80, 100, 10);
+        LCalc.setBounds(10, 80, 100, 20);
         LCalc.setText("RP - Calculadora");
         MIG_.add(LCalc);
 
@@ -70,7 +76,7 @@ public class MainIG extends JFrame {
 
         // Tareas
         JLabel LTar = new JLabel();
-        LTar.setBounds(10, 120, 100, 10);
+        LTar.setBounds(10, 120, 100, 20);
         LTar.setText("RP - Tareas");
         MIG_.add(LTar);
 
@@ -86,6 +92,24 @@ public class MainIG extends JFrame {
             MIG_.setVisible(false);
         });
         MIG_.add(BTar);
+
+        // MusicPlay
+        JLabel LMusicPlat = new JLabel();
+        LMusicPlat.setBounds(10, 160, 100, 20);
+        LMusicPlat.setText("RP - Music Play");
+        MIG_.add(LMusicPlat);
+
+        JButton BMusicPlay = new JButton();
+        BMusicPlay.setBounds(120, 145, 40, 40);
+        BMusicPlay.setBackground(new Color(255,255,255));
+        BMusicPlay.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        BMusicPlay.addActionListener(_ -> {
+            MusicPlay MusicPlay = new MusicPlay(Var.MP_, MIG_);
+            System.out.println("RP - MusicPlay");
+            Var.MP_.setVisible(true);
+            MIG_.setVisible(false);
+        });
+        MIG_.add(BMusicPlay);
 
         this.setTitle("RP-Main");
         this.setBounds(0,0, var.Width(500), var.Height(500));

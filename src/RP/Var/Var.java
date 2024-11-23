@@ -15,6 +15,7 @@ public class Var extends JFrame{
     // Paneles
     public static JPanel Calc_ = new JPanel();
     public static JPanel Tar_ = new JPanel();
+    public static JPanel MP_ = new JPanel();
 
     // Window Size
 
