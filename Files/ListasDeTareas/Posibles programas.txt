@@ -1,5 +1,5 @@
 CTar = 4
-Alarma | Pendiente (Aun no se como se podria hacer)
+*Alarma | Pendiente (Se me ocurren ideas)
 Reproductor de Musica | Pendiente (Se me ocurren Ideas)
-Inicio de sesion | Pendiente (Por pensar)
+*Inicio de sesion | Pendiente (Por pensar)
 Actualizacion de calculadora (Add '(' ')'  ) | Pendiente
