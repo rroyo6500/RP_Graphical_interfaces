@@ -4,6 +4,7 @@ import RP.Calculadora.Calculadora;
 import RP.Tareas.Tareas;
 import RP.Var.Var;
 import RP.MusicPlay.MusicPlay;
+import RP.Games.Games;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,11 @@ public class MainIG extends JFrame {
         Var.MP_.setLayout(null);
         Var.MP_.setVisible(false);
         add(Var.MP_);
+
+        Var.Games_.setBounds(0,0, var.Width(500), var.Height(500));
+        Var.Games_.setLayout(null);
+        Var.Games_.setVisible(false);
+        add(Var.Games_);
 
         JPanel MIG_ = new JPanel();
         MIG_.setBounds(0,0, var.Width(500), var.Height(500));
@@ -94,10 +100,10 @@ public class MainIG extends JFrame {
         MIG_.add(BTar);
 
         // MusicPlay
-        JLabel LMusicPlat = new JLabel();
-        LMusicPlat.setBounds(10, 160, 100, 20);
-        LMusicPlat.setText("RP - Music Play");
-        MIG_.add(LMusicPlat);
+        JLabel LMusicPlay = new JLabel();
+        LMusicPlay.setBounds(10, 160, 100, 20);
+        LMusicPlay.setText("RP - Music Play");
+        MIG_.add(LMusicPlay);
 
         JButton BMusicPlay = new JButton();
         BMusicPlay.setBounds(120, 145, 40, 40);
@@ -110,6 +116,24 @@ public class MainIG extends JFrame {
             MIG_.setVisible(false);
         });
         MIG_.add(BMusicPlay);
+
+        // Games
+        JLabel LGames = new JLabel();
+        LGames.setBounds(10, 200, 100, 20);
+        LGames.setText("RP - Games");
+        MIG_.add(LGames);
+
+        JButton BGames = new JButton();
+        BGames.setBounds(120, 185, 40, 40);
+        BGames.setBackground(new Color(255,255,255));
+        BGames.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        BGames.addActionListener(_ -> {
+            Games Games = new Games(Var.Games_, MIG_);
+            System.out.println("RP - Games");
+            Var.Games_.setVisible(true);
+            MIG_.setVisible(false);
+        });
+        MIG_.add(BGames);
 
         this.setTitle("RP-Main");
         this.setBounds(0,0, var.Width(500), var.Height(500));
