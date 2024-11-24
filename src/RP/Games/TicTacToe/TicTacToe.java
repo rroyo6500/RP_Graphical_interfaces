@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class TicTacToe {
 	Var var = new Var();
 
+	JLabel[] PosicionesTablero = new JLabel[9];
 	ArrayList<ArrayList<String>> Tablero = new ArrayList<>(){{
 		for (int i = 0; i < 3; i++) {
 			add(new ArrayList<>(){{
@@ -31,8 +32,6 @@ public class TicTacToe {
 		this.TTT = Panel;
 		this.TTT.setLayout(null);
 
-		JLabel[] PosicionesTablero = new JLabel[9];
-
 		for (int i = 0; i < PosicionesTablero.length; i++) {
 			PosicionesTablero[i] = new JLabel("", SwingConstants.CENTER);
 			PosicionesTablero[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
@@ -49,5 +48,12 @@ public class TicTacToe {
 
 		this.TTT.setTitle("Tic Tac Toe");
 		this.TTT.setResizable(false);
+	}
+
+	public void XPlayer(){
+
+	}
+	public void YPlayer(){
+
 	}
 }
