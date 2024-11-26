@@ -1,16 +1,13 @@
 package RP.Games;
 
-import RP.Games.TicTacToe.TicTacToe;
+import RP.Games.TicTacToe.TTTGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Games extends JFrame{
-    public Games(JPanel Games_, JPanel MM){
-
-        final int[] CountTTT_3 = {0};
-
-        JFrame PanelTTT_3 = new JFrame();
+    public Games(JPanel Games_, JPanel MM, ArrayList<JPanel> Games){
 
         /* Title & Return to Main Menu */{
             JPanel GTitle = new JPanel();
@@ -40,6 +37,8 @@ public class Games extends JFrame{
             GTitle.add(MMenu);
         }
 
+        TTTGame TicTacToe = new TTTGame(Games.getFirst() ,Games_);
+
         JLabel TTT_3Title = new JLabel();
         TTT_3Title.setBounds(10, 80, 100, 20);
         TTT_3Title.setText("Tic Tac Toe");
@@ -50,14 +49,9 @@ public class Games extends JFrame{
         TTT_3Button.setBackground(new Color(255,255,255));
         TTT_3Button.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         TTT_3Button.addActionListener(_ -> {
-            TicTacToe TTT_3 = new TicTacToe(PanelTTT_3);
-            if (CountTTT_3[0] == 0){
-                TTT_3.Visible(true);
-                CountTTT_3[0]++;
-            } else if (CountTTT_3[0] == 1) {
-                TTT_3.Visible(false);
-                CountTTT_3[0]--;
-            }
+            Games.getFirst().setVisible(true);
+            TicTacToe.TicTacToeGameStart();
+            Games_.setVisible(false);
         });
         Games_.add(TTT_3Button);
 

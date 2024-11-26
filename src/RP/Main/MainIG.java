@@ -42,6 +42,13 @@ public class MainIG extends JFrame {
         MIG_.setLayout(null);
         add(MIG_);
 
+        for (JPanel Game : Var.GamesPanel){
+            Game.setBounds(0,0, var.Width(500), var.Height(500));
+            Game.setLayout(null);
+            Game.setVisible(false);
+            add(Game);
+        }
+
         JLabel Title = new JLabel();
         Title.setFont(new Font("Arial", Font.BOLD, 20));
         Title.setText("RP - Main Menu");
@@ -61,6 +68,11 @@ public class MainIG extends JFrame {
         });
         MIG_.add(Exit);
 
+        Calculadora Calc = new Calculadora(Var.Calc_, MIG_);
+        Tareas Tareas = new Tareas(Var.Tar_, MIG_);
+        MusicPlay MusicPlay = new MusicPlay(Var.MP_, MIG_);
+        Games Games = new Games(Var.Games_, MIG_, Var.GamesPanel);
+
         // Calculadora
         JLabel LCalc = new JLabel();
         LCalc.setBounds(10, 80, 100, 20);
@@ -72,7 +84,6 @@ public class MainIG extends JFrame {
         BCalc.setBackground(new Color(255,255,255));
         BCalc.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         BCalc.addActionListener(_ -> {
-            Calculadora Calc = new Calculadora(Var.Calc_, MIG_);
             Calc.ClearOP();
             System.out.println("RP - Calculadora");
             Var.Calc_.setVisible(true);
@@ -91,7 +102,6 @@ public class MainIG extends JFrame {
         BTar.setBackground(new Color(255,255,255));
         BTar.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         BTar.addActionListener(_ -> {
-            Tareas Tareas = new Tareas(Var.Tar_, MIG_);
             Tareas.ClearAN();
             System.out.println("RP - Tareas");
             Var.Tar_.setVisible(true);
@@ -110,7 +120,6 @@ public class MainIG extends JFrame {
         BMusicPlay.setBackground(new Color(255,255,255));
         BMusicPlay.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         BMusicPlay.addActionListener(_ -> {
-            MusicPlay MusicPlay = new MusicPlay(Var.MP_, MIG_);
             System.out.println("RP - MusicPlay");
             Var.MP_.setVisible(true);
             MIG_.setVisible(false);
@@ -128,7 +137,6 @@ public class MainIG extends JFrame {
         BGames.setBackground(new Color(255,255,255));
         BGames.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         BGames.addActionListener(_ -> {
-            Games Games = new Games(Var.Games_, MIG_);
             System.out.println("RP - Games");
             Var.Games_.setVisible(true);
             MIG_.setVisible(false);

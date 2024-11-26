@@ -3,6 +3,7 @@ package RP.Var;
 import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
 //import java.util.Scanner;
 
 public class Var extends JFrame{
@@ -17,6 +18,10 @@ public class Var extends JFrame{
     public static JPanel Tar_ = new JPanel();
     public static JPanel MP_ = new JPanel();
     public static JPanel Games_ = new JPanel();
+
+    public static ArrayList<JPanel> GamesPanel = new ArrayList<>(){{
+        add(new JPanel()); //0 -> Tic Tac Toe
+    }};
 
     // Window Size
 
