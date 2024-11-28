@@ -1,6 +1,6 @@
 package RP.Games;
 
-import RP.Games.TicTacToe.TTTGame;
+import RP.Games.TicTacToe.Tetris;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ public class Games extends JFrame{
             GTitle.add(MMenu);
         }
 
-        TTTGame TicTacToe = new TTTGame(Games.getFirst() ,Games_);
+        Tetris TicTacToe = new Tetris(Games.getFirst() ,Games_);
 
         JLabel TTT_3Title = new JLabel();
         TTT_3Title.setBounds(10, 80, 100, 20);
@@ -50,7 +50,7 @@ public class Games extends JFrame{
         TTT_3Button.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         TTT_3Button.addActionListener(_ -> {
             Games.getFirst().setVisible(true);
-            TicTacToe.TicTacToeGameStart();
+            TicTacToe.TetrisGameControl();
             Games_.setVisible(false);
         });
         Games_.add(TTT_3Button);
