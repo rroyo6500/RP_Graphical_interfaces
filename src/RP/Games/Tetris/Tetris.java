@@ -195,6 +195,8 @@ public class Tetris extends JFrame {
 		Tablero.setVisible(true);
 		TableroJuego.add(Tablero);
 
+		new Thread(this::Ficha).start();
+
 		new Thread(() -> {
 			while (true){
 				for (int i = (Tablero_.size() - 1); i >= 0; i--) {
@@ -227,6 +229,7 @@ public class Tetris extends JFrame {
 					if (Tablero_.get(i).equals(FC_V.get(0))) {
 						Tablero_.remove(i);
 						Tablero_.addFirst(FC_V.get(1));
+						Ficha();
 					}
 				}
 				try {
@@ -236,6 +239,10 @@ public class Tetris extends JFrame {
 				}
 			}
 		}).start();
+	}
+
+	public void Ficha(){
+
 	}
 
 	public void MoveDown() {
