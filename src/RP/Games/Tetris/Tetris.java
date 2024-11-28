@@ -122,7 +122,6 @@ public class Tetris extends JFrame {
 		Tablero_.get(29).set(14, 2);
 
 		for (ArrayList<Integer> Filas : Tablero_) System.out.println(Filas);
-		for (ArrayList<Integer> Filas : FC_V) System.out.println(Filas);
 
 		Tablero = new JPanel() {
 			@Override
@@ -142,7 +141,7 @@ public class Tetris extends JFrame {
 					x = 10;
 					y += 32;
 				}
-
+				Tablero.repaint();
 			}
 		};
 		Tablero.setBounds(0, 0, TableroJuego.getWidth(), TableroJuego.getHeight());
@@ -188,7 +187,6 @@ public class Tetris extends JFrame {
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
-				Tablero.repaint();
 			}
 		}).start();
 	}
@@ -223,7 +221,6 @@ public class Tetris extends JFrame {
 					}
 				}
 			}
-			Tablero.repaint();
 		}).start();
 	}
 
@@ -241,7 +238,6 @@ public class Tetris extends JFrame {
 					}
 				}
 			}
-			Tablero.repaint();
 		}).start();
 	}
 
@@ -259,7 +255,6 @@ public class Tetris extends JFrame {
 					}
 				}
 			}
-			Tablero.repaint();
 		}).start();
 	}
 
