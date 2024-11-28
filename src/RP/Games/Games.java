@@ -1,6 +1,6 @@
 package RP.Games;
 
-import RP.Games.TicTacToe.Tetris;
+import RP.Games.Tetris.Tetris;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,23 +37,23 @@ public class Games extends JFrame{
             GTitle.add(MMenu);
         }
 
-        Tetris TicTacToe = new Tetris(Games.getFirst() ,Games_);
+        Tetris Tetris = new Tetris(Games.getFirst() ,Games_);
 
-        JLabel TTT_3Title = new JLabel();
-        TTT_3Title.setBounds(10, 80, 100, 20);
-        TTT_3Title.setText("Tic Tac Toe");
-        Games_.add(TTT_3Title);
+        JLabel T_Title = new JLabel();
+        T_Title.setBounds(10, 80, 100, 20);
+        T_Title.setText("Tetris");
+        Games_.add(T_Title);
 
-        JButton TTT_3Button = new JButton();
-        TTT_3Button.setBounds(120, 65, 40, 40);
-        TTT_3Button.setBackground(new Color(255,255,255));
-        TTT_3Button.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
-        TTT_3Button.addActionListener(_ -> {
+        JButton T_Button = new JButton();
+        T_Button.setBounds(120, 65, 40, 40);
+        T_Button.setBackground(new Color(255,255,255));
+        T_Button.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
+        T_Button.addActionListener(_ -> {
             Games.getFirst().setVisible(true);
-            TicTacToe.TetrisGameControl();
+            Tetris.TetrisGameControl();
             Games_.setVisible(false);
         });
-        Games_.add(TTT_3Button);
+        Games_.add(T_Button);
 
     }
 }

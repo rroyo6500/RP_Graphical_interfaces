@@ -1,4 +1,4 @@
-package RP.Games.TicTacToe;
+package RP.Games.Tetris;
 
 import RP.Var.Var;
 
