@@ -10,6 +10,8 @@ public class Tetris extends JFrame {
 
 	Var var = new Var();
 
+	Thread Print;
+
 	JPanel Tetoris, GamesMenu;
 	JFrame TableroJuego = new JFrame() {{
 		setBounds(0, 0, var.Width(500), var.Height(1020));
@@ -177,16 +179,35 @@ public class Tetris extends JFrame {
 
 				int x = 10, y = 10;
 
-				for (ArrayList<Integer> integers : Tablero_) {
-					for (Integer integer : integers) {
-						if (integer == 0) g.setColor(Color.GRAY);
-						if (integer == 1) g.setColor(Color.RED);
-						if (integer == 2) g.setColor(Color.BLUE);
-						g.fillRect(x, y, 32, 32);
-						x += 32;
+				for (int i = (Tablero_.size()-1); i >= 0; i--) {
+					if (Tablero_.get(i).equals(FC_V.getFirst())){
+						Tablero_.remove(i);
+						Tablero_.addFirst(FC_V.get(1));
 					}
-					x = 10;
-					y += 32;
+				}
+
+				for (ArrayList<Integer> Filas : Tablero_){
+					for (Integer Col : Filas){
+						if (!(Col == 1)){
+							Ficha();
+						}
+					}
+				}
+
+				try {
+					for (ArrayList<Integer> Filas : Tablero_) {
+						for (Integer Col : Filas) {
+							if (Col == 0) g.setColor(Color.GRAY);
+							if (Col == 1) g.setColor(Color.RED);
+							if (Col == 2) g.setColor(Color.BLUE);
+							g.fillRect(x, y, 32, 32);
+							x += 32;
+						}
+						x = 10;
+						y += 32;
+					}
+				} catch (Exception e) {
+					System.out.println("Error-Tablero");
 				}
 				Tablero.repaint();
 			}
@@ -195,10 +216,112 @@ public class Tetris extends JFrame {
 		Tablero.setVisible(true);
 		TableroJuego.add(Tablero);
 
-		new Thread(this::Ficha).start();
-
 		new Thread(() -> {
 			while (true){
+				if (CompDer() || CompIzq()){
+					for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+						for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+							if (Tablero_.get(i).get(j) == 1){
+								Tablero_.get(i).set(j, 2);
+							}
+						}
+					}
+				}else {
+					for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+						for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+							if (Tablero_.get(i).get(j) == 1) {
+								if (!((i + 1) >= Tablero_.size())) {
+									if (Tablero_.get((i + 1)).get(j) == 0) {
+										Tablero_.get((i + 1)).set(j, 1);
+										Tablero_.get(i).set(j, 0);
+									} else if (Tablero_.get((i + 1)).get(j) == 2) {
+										for (int k = (Tablero_.size() - 1); k >= 0; k--) {
+											for (int l = (Tablero_.getFirst().size() - 1); l >= 0; l--) {
+												if (Tablero_.get(k).get(l) == 1){
+													Tablero_.get(k).set(l, 2);
+												}
+											}
+										}
+									}
+								} else {
+									for (int k = (Tablero_.size() - 1); k >= 0; k--) {
+										for (int l = (Tablero_.getFirst().size() - 1); l >= 0; l--) {
+											if (Tablero_.get(k).get(l) == 1){
+												Tablero_.get(k).set(l, 2);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}).start();
+	}
+
+	public void Ficha(){
+		int NoPieza = (int) (Math.random()*Piezas.size());
+		int PosAparicion = (int) (Math.random()*15);
+		while (NoPieza > Tablero_.getFirst().size() || NoPieza < 0){
+			NoPieza = (int) (Math.random()*Piezas.size());
+		}
+
+
+	}
+
+	public boolean CompIzq(){
+		boolean r = false;
+		for (int i = (Tablero_.size()-1); i >= 0 ; i--) {
+			for (int j = 0; j < Tablero_.get(i).size() ; j++) {
+				if (!(((i+1)) >= Tablero_.size())){
+					if (Tablero_.get(i).get(j) == 1) {
+						if (Tablero_.get((i + 1)).get(j) == 2) {
+							r = true;
+							i = -1;
+							j = -1;
+						}
+					}
+				}
+			}
+		}
+		return r;
+	}
+
+	public boolean CompDer(){
+		boolean r = false;
+		for (int i = (Tablero_.size()-1); i >= 0 ; i--) {
+			for (int j = (Tablero_.get(i).size()-1); j >= 0 ; j--) {
+				if (!(((i+1)) >= Tablero_.size())){
+					if (Tablero_.get(i).get(j) == 1) {
+						if (Tablero_.get((i + 1)).get(j) == 2) {
+							r = true;
+							i = -1;
+							j = -1;
+						}
+					}
+				}
+			}
+		}
+		return r;
+	}
+
+	public void MoveDown() {
+		new Thread(() -> {
+			if (CompDer() || CompIzq()){
+				for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+					for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+						if (Tablero_.get(i).get(j) == 1){
+							Tablero_.get(i).set(j, 2);
+						}
+					}
+				}
+			}else {
 				for (int i = (Tablero_.size() - 1); i >= 0; i--) {
 					for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
 						if (Tablero_.get(i).get(j) == 1) {
@@ -221,53 +344,6 @@ public class Tetris extends JFrame {
 										if (Tablero_.get(k).get(l) == 1){
 											Tablero_.get(k).set(l, 2);
 										}
-									}
-								}
-							}
-						}
-					}
-					if (Tablero_.get(i).equals(FC_V.get(0))) {
-						Tablero_.remove(i);
-						Tablero_.addFirst(FC_V.get(1));
-						Ficha();
-					}
-				}
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		}).start();
-	}
-
-	public void Ficha(){
-
-	}
-
-	public void MoveDown() {
-		new Thread(() -> {
-			for (int i = (Tablero_.size() - 1); i >= 0; i--) {
-				for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-					if (Tablero_.get(i).get(j) == 1) {
-						if (!((i + 1) >= Tablero_.size())) {
-							if (Tablero_.get((i + 1)).get(j) == 0) {
-								Tablero_.get((i + 1)).set(j, 1);
-								Tablero_.get(i).set(j, 0);
-							} else if (Tablero_.get((i + 1)).get(j) == 2) {
-								for (int k = (Tablero_.size() - 1); k >= 0; k--) {
-									for (int l = (Tablero_.getFirst().size() - 1); l >= 0; l--) {
-										if (Tablero_.get(k).get(l) == 1){
-											Tablero_.get(k).set(l, 2);
-										}
-									}
-								}
-							}
-						} else {
-							for (int k = (Tablero_.size() - 1); k >= 0; k--) {
-								for (int l = (Tablero_.getFirst().size() - 1); l >= 0; l--) {
-									if (Tablero_.get(k).get(l) == 1){
-										Tablero_.get(k).set(l, 2);
 									}
 								}
 							}
@@ -311,5 +387,4 @@ public class Tetris extends JFrame {
 			}
 		}).start();
 	}
-
 }
