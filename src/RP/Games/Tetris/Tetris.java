@@ -10,7 +10,7 @@ public class Tetris extends JFrame {
 
 	Var var = new Var();
 
-	Thread Print;
+	public static int NoPieza;
 
 	JPanel Tetoris, GamesMenu;
 	JFrame TableroJuego = new JFrame() {{
@@ -112,6 +112,11 @@ public class Tetris extends JFrame {
 				add(new ArrayList<>(){{add(1);add(1);add(0);}});
 				add(new ArrayList<>(){{add(0);add(1);add(1);}});
 			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(0);}});
+			}});
 		}});
 		// Z (Invertida)
 		add(new ArrayList<>(){{
@@ -119,12 +124,31 @@ public class Tetris extends JFrame {
 				add(new ArrayList<>(){{add(0);add(1);add(1);}});
 				add(new ArrayList<>(){{add(1);add(1);add(0);}});
 			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);}});
+			}});
 		}});
 		// T (Invertida)
 		add(new ArrayList<>(){{
 			add(new ArrayList<>(){{
 				add(new ArrayList<>(){{add(0);add(1);add(0);}});
 				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(0);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);add(0);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);}});
 			}});
 		}});
 		// L
@@ -134,6 +158,19 @@ public class Tetris extends JFrame {
 				add(new ArrayList<>(){{add(1);add(0);}});
 				add(new ArrayList<>(){{add(1);add(1);}});
 			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(0);add(0);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(0);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+			}});
 		}});
 		// L (Invertida)
 		add(new ArrayList<>(){{
@@ -142,6 +179,31 @@ public class Tetris extends JFrame {
 				add(new ArrayList<>(){{add(0);add(1);}});
 				add(new ArrayList<>(){{add(1);add(1);}});
 			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(0);add(0);}});
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(0);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+				add(new ArrayList<>(){{add(0);add(0);add(1);}});
+			}});
+		}});
+		// I
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);}});
+				add(new ArrayList<>(){{add(1);}});
+				add(new ArrayList<>(){{add(1);}});
+				add(new ArrayList<>(){{add(1);}});
+			}});
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);add(1);add(1);}});
+			}});
 		}});
 	}};
 
@@ -149,28 +211,6 @@ public class Tetris extends JFrame {
 		TableroJuego.setLayout(null);
 		TableroJuego.setLocationRelativeTo(null);
 		TableroJuego.setResizable(false);
-
-		Tablero_.get(15).set(6, 1);
-		Tablero_.get(15).set(7, 1);
-		Tablero_.get(14).set(6, 1);
-		Tablero_.get(14).set(5, 1);
-
-
-		Tablero_.get(29).set(0, 2);
-		Tablero_.get(29).set(1, 2);
-		Tablero_.get(29).set(2, 2);
-		Tablero_.get(29).set(3, 2);
-		Tablero_.get(29).set(4, 2);
-		Tablero_.get(29).set(5, 2);
-		Tablero_.get(29).set(8, 2);
-		Tablero_.get(29).set(9, 2);
-		Tablero_.get(29).set(10, 2);
-		Tablero_.get(29).set(11, 2);
-		Tablero_.get(29).set(12, 2);
-		Tablero_.get(29).set(13, 2);
-		Tablero_.get(29).set(14, 2);
-
-		for (ArrayList<Integer> Filas : Tablero_) System.out.println(Filas);
 
 		Tablero = new JPanel() {
 			@Override
@@ -186,13 +226,19 @@ public class Tetris extends JFrame {
 					}
 				}
 
-				for (ArrayList<Integer> Filas : Tablero_){
-					for (Integer Col : Filas){
-						if (!(Col == 1)){
-							Ficha();
+				int Count_1 = 0;
+
+				for (int i = 0; i < Tablero_.size(); i++) {
+					for (int j = 0; j < Tablero_.getFirst().size(); j++) {
+						if ((Tablero_.get(i).get(j) == 1)){
+							Count_1++;
 						}
 					}
 				}
+				if (Count_1 < 1){
+					Ficha();
+				}
+
 
 				try {
 					for (ArrayList<Integer> Filas : Tablero_) {
@@ -257,7 +303,7 @@ public class Tetris extends JFrame {
 					}
 				}
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(750);
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
@@ -266,14 +312,28 @@ public class Tetris extends JFrame {
 	}
 
 	public void Ficha(){
-		int NoPieza = (int) (Math.random()*Piezas.size());
+		NoPieza = (int) (Math.random()*Piezas.size());
 		int PosAparicion = (int) (Math.random()*15);
-		while (NoPieza > Tablero_.getFirst().size() || NoPieza < 0){
-			NoPieza = (int) (Math.random()*Piezas.size());
+
+		while (true){
+			if ((Tablero_.getFirst().size() - PosAparicion) < Piezas.get(NoPieza).getFirst().getFirst().size()){
+				PosAparicion = (int) (Math.random()*15);
+			}else if ((PosAparicion + Piezas.get(NoPieza).getFirst().size()) >= Tablero_.getFirst().size()){
+				PosAparicion = (int) (Math.random()*15);
+			}else break;
 		}
 
+		for (int i = 0; i < Piezas.get(NoPieza).getFirst().size(); i++) {
+			for (int j = 0; j < Piezas.get(NoPieza).getFirst().getFirst().size(); j++) {
+				Tablero_.get(i).set((PosAparicion + j), Piezas.get(NoPieza).getFirst().get(i).get(j));
+			}
+		}
 
 	}
+
+	/*public void Rotar(){
+
+	}*/
 
 	public boolean CompIzq(){
 		boolean r = false;
