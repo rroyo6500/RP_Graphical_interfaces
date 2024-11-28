@@ -96,6 +96,53 @@ public class Tetris extends JFrame {
 		}
 	}};
 
+	public static ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> Piezas = new ArrayList<>(){{
+		// Cuadrado
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+			}});
+		}});
+		// Z
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(1);add(0);}});
+				add(new ArrayList<>(){{add(0);add(1);add(1);}});
+			}});
+		}});
+		// Z (Invertida)
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(1);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);add(0);}});
+			}});
+		}});
+		// T (Invertida)
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(1);add(1);}});
+			}});
+		}});
+		// L
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(0);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+			}});
+		}});
+		// L (Invertida)
+		add(new ArrayList<>(){{
+			add(new ArrayList<>(){{
+				add(new ArrayList<>(){{add(0);add(1);}});
+				add(new ArrayList<>(){{add(0);add(1);}});
+				add(new ArrayList<>(){{add(1);add(1);}});
+			}});
+		}});
+	}};
+
 	public void TableroJuego(JFrame TableroJuego) {
 		TableroJuego.setLayout(null);
 		TableroJuego.setLocationRelativeTo(null);
