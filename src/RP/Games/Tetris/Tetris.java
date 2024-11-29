@@ -10,6 +10,8 @@ public class Tetris extends JFrame {
 
     Var var = new Var();
 
+    int Velocidad = 750;
+
     public static int NoPieza;
 
     JPanel Tetoris, GamesMenu;
@@ -458,7 +460,7 @@ public class Tetris extends JFrame {
                     }
                 }
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(Velocidad);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
