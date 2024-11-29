@@ -10,7 +10,7 @@ public class Tetris extends JFrame {
 
     Var var = new Var();
 
-    int Velocidad = 750;
+    int Velocidad = 250;
 
     public static int NoPieza;
 
@@ -104,262 +104,107 @@ public class Tetris extends JFrame {
         // Cuadrado
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
             }});
         }});
         // Z
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);add(0);}});
+                add(new ArrayList<>() {{add(0);add(1);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(0);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(0);}});
             }});
         }});
         // Z (Invertida)
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(0);add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);add(0);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);}});
             }});
         }});
         // T (Invertida)
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(0);add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(0);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);add(0);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(0);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);}});
             }});
         }});
         // L
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(0);add(0);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(0);add(0);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
             }});
         }});
         // L (Invertida)
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(0);add(1);}});
+                add(new ArrayList<>() {{add(0);add(1);}});
+                add(new ArrayList<>() {{add(1);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(0);add(0);}});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(0);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);}});
+                add(new ArrayList<>() {{add(1);add(0);}});
+                add(new ArrayList<>() {{add(1);add(0);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(0);
-                    add(0);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);add(1);}});
+                add(new ArrayList<>() {{add(0);add(0);add(1);}});
             }});
         }});
         // I
         add(new ArrayList<>() {{
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                }});
-                add(new ArrayList<>() {{
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);}});
+                add(new ArrayList<>() {{add(1);}});
+                add(new ArrayList<>() {{add(1);}});
+                add(new ArrayList<>() {{add(1);}});
             }});
             add(new ArrayList<>() {{
-                add(new ArrayList<>() {{
-                    add(1);
-                    add(1);
-                    add(1);
-                    add(1);
-                }});
+                add(new ArrayList<>() {{add(1);add(1);add(1);add(1);}});
             }});
         }});
     }};
