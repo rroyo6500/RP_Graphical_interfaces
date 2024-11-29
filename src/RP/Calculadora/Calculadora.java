@@ -73,7 +73,7 @@ public class Calculadora extends JFrame{
         Calculate.addActionListener(_ -> {
             String OP = Operacion.getText();
             Comp = Calc.Comp(OP);
-            //Resultado.setText(String.valueOf(Comp));
+            //Resultado.setText(String.valueOf(CompRRD));
             if (Comp){
                 Error error = new Error();
                 error.setVisible(true);
