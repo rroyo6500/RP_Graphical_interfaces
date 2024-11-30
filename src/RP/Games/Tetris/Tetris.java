@@ -15,6 +15,9 @@ public class Tetris extends JFrame {
     public static int NoPieza;
     public static int NoRotacion;
 
+    Thread Movimiento_Down;
+    boolean Ejecucion = true;
+
     JPanel Tetoris, GamesMenu;
     JFrame TableroJuego = new JFrame() {{
         setBounds(0, 0, var.Width(500), var.Height(1020));
@@ -66,13 +69,19 @@ public class Tetris extends JFrame {
         JButton Right = new JButton();
         Right.setBounds(200, 100, 100, 50);
         Right.setText("Right");
-        Right.addActionListener(_ -> MoveRight());
+        Right.addActionListener(_ -> {
+            System.out.println(CompRightD() + " | " + CompRightU());
+            MoveRight();
+        });
         Tetoris.add(Right);
 
         JButton Left = new JButton();
         Left.setBounds(300, 100, 100, 50);
         Left.setText("Left");
-        Left.addActionListener(_ -> MoveLeft());
+        Left.addActionListener(_ -> {
+            System.out.println(CompLeftD() + " | " + CompLeftU());
+            MoveLeft();
+        });
         Tetoris.add(Left);
 
         TableroJuego(TableroJuego);
@@ -289,12 +298,11 @@ public class Tetris extends JFrame {
                 Tablero.repaint();
             }
         };
-        Tablero.setBounds(0, 0, TableroJuego.getWidth(), TableroJuego.getHeight());
-        Tablero.setVisible(true);
-        TableroJuego.add(Tablero);
 
-        new Thread(() -> {
-            while (true) {
+
+        Movimiento_Down = new Thread(() -> {
+            Ejecucion = true;
+            while (Ejecucion) {
                 if (CompDownR() || CompDownL()){
                     for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
                         for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
@@ -312,24 +320,6 @@ public class Tetris extends JFrame {
                             }
                         }
                     }
-                    /*new Thread(() -> {
-                        int Count_1 = 0;
-                        for (int i = 0; i < Tablero_.size(); i++) {
-                            for (int j = 0; j < Tablero_.getFirst().size(); j++) {
-                                if ((Tablero_.get(i).get(j) == 1)) {
-                                    Count_1++;
-                                }
-                            }
-                        }
-                        if (Count_1 < 1) {
-                            try {
-                                Thread.sleep(5);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            Ficha();
-                        }
-                    }).start();*/
                 }
                 try {
                     Thread.sleep(Velocidad + 10);
@@ -337,11 +327,16 @@ public class Tetris extends JFrame {
                     throw new RuntimeException(e);
                 }
             }
-        }).start();
+        });
+
+        Tablero.setBounds(0, 0, TableroJuego.getWidth(), TableroJuego.getHeight());
+        Tablero.setVisible(true);
+        TableroJuego.add(Tablero);
     }
 
     public void Ficha() {
-        NoPieza = (int) (Math.random() * Piezas.size());
+        NoPieza = 3;
+        //NoPieza = (int) (Math.random() * Piezas.size());
         NoRotacion = (int) (Math.random() * Piezas.get(NoPieza).size());
         int PosAparicion = (int) (Math.random() * 15);
 
@@ -353,6 +348,7 @@ public class Tetris extends JFrame {
             } else break;
         }
 
+        Ejecucion = false;
         for (int i = 0; i < Piezas.get(NoPieza).get(NoRotacion).size(); i++) {
             for (int j = 0; j < Piezas.get(NoPieza).get(NoRotacion).getFirst().size(); j++) {
                 if (Tablero_.get(i).get((PosAparicion + j)) == 0) {
@@ -387,6 +383,7 @@ public class Tetris extends JFrame {
                 }
             }
         }
+        Ejecucion = true;
     }
 
 	/*public void Rotar(){
