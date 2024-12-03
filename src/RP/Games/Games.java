@@ -50,7 +50,7 @@ public class Games extends JFrame{
         T_Button.setBorder(BorderFactory.createLineBorder(Color.black, 1, false));
         T_Button.addActionListener(_ -> {
             Games.getFirst().setVisible(true);
-            Tetris.TetrisGameControl();
+            Tetris.TetrisControler();
             Games_.setVisible(false);
         });
         Games_.add(T_Button);

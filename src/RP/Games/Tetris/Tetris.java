@@ -6,16 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Tetris extends JFrame {
+public class Tetris extends JFrame{
 
+    Piezas piezas = new Piezas();
     Var var = new Var();
-
-    int Velocidad = 50; // +20
-
-    public static int NoPieza;
-    public static int NoRotacion;
-
-    boolean Ejecucion = true;
 
     JPanel Tetoris, GamesMenu;
     JFrame TableroJuego = new JFrame() {{
@@ -29,7 +23,7 @@ public class Tetris extends JFrame {
         this.GamesMenu = GamesMenu;
     }
 
-    public void TetrisGameControl() {
+    public void TetrisControler(){
         /* Title & Return to Main Menu */
         {
             JPanel Tetoris_Title = new JPanel();
@@ -40,7 +34,7 @@ public class Tetris extends JFrame {
 
             JLabel Title = new JLabel();
             Title.setFont(new Font("Arial", Font.BOLD, 20));
-            Title.setText("Tic Tac Toe");
+            Title.setText("Tetris");
             Title.setBounds(10, 10, 300, 20);
             Tetoris_Title.add(Title);
 
@@ -59,204 +53,25 @@ public class Tetris extends JFrame {
             Tetoris_Title.add(MMenu);
         }
 
-        JButton Down = new JButton();
-        Down.setBounds(100, 100, 100, 50);
-        Down.setText("Down");
-        Down.addActionListener(_ -> MoveDown());
-        Tetoris.add(Down);
-
-        JButton Right = new JButton();
-        Right.setBounds(200, 100, 100, 50);
-        Right.setText("Right");
-        Right.addActionListener(_ -> {
-            //System.out.println(CompRightD() + " | " + CompRightU());
-            MoveRight();
-        });
-        Tetoris.add(Right);
-
-        JButton Left = new JButton();
-        Left.setBounds(300, 100, 100, 50);
-        Left.setText("Left");
-        Left.addActionListener(_ -> {
-            //System.out.println(CompLeftD() + " | " + CompLeftU());
-            MoveLeft();
-        });
-        Tetoris.add(Left);
-
         TableroJuego(TableroJuego);
         TableroJuego.setVisible(true);
     }
 
-    public static ArrayList<Integer> CompFilas = new ArrayList<>();
-
-    public static ArrayList<Integer> FC_V = new ArrayList<>() {{
-        for (int j = 0; j < 15; j++) {
-            add(0);
-        }
-    }};
-    public static ArrayList<ArrayList<Integer>> Tablero_ = new ArrayList<>() {{
-        for (int i = 0; i < 30; i++) {
-            add(new ArrayList<>() {{
-                for (int j = 0; j < 15; j++) {
-                    add(0);
-                }
-            }});
-        }
-    }};
-
-    public static ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> Piezas = new ArrayList<>() {{
-        // Cuadrado
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(1);add(1);}});
-                add(new ArrayList<>() {{add(1);add(1);}});
-            }});
-        }});
-        // Z
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(3);add(3);add(0);}});
-                add(new ArrayList<>() {{add(0);add(3);add(3);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(3);}});
-                add(new ArrayList<>() {{add(3);add(3);}});
-                add(new ArrayList<>() {{add(3);add(0);}});
-            }});
-        }});
-        // Z (Invertida)
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(5);add(5);}});
-                add(new ArrayList<>() {{add(5);add(5);add(0);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(5);add(0);}});
-                add(new ArrayList<>() {{add(5);add(5);}});
-                add(new ArrayList<>() {{add(0);add(5);}});
-            }});
-        }});
-        // T (Invertida)
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(7);add(0);}});
-                add(new ArrayList<>() {{add(7);add(7);add(7);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(7);add(0);}});
-                add(new ArrayList<>() {{add(7);add(7);}});
-                add(new ArrayList<>() {{add(7);add(0);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(7);add(7);add(7);}});
-                add(new ArrayList<>() {{add(0);add(7);add(0);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(7);}});
-                add(new ArrayList<>() {{add(7);add(7);}});
-                add(new ArrayList<>() {{add(0);add(7);}});
-            }});
-        }});
-        // L
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(9);add(0);}});
-                add(new ArrayList<>() {{add(9);add(0);}});
-                add(new ArrayList<>() {{add(9);add(9);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(9);add(9);add(9);}});
-                add(new ArrayList<>() {{add(9);add(0);add(0);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(9);add(9);}});
-                add(new ArrayList<>() {{add(0);add(9);}});
-                add(new ArrayList<>() {{add(0);add(9);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(0);add(9);}});
-                add(new ArrayList<>() {{add(9);add(9);add(9);}});
-            }});
-        }});
-        // L (Invertida)
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(0);add(11);}});
-                add(new ArrayList<>() {{add(0);add(11);}});
-                add(new ArrayList<>() {{add(11);add(11);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(11);add(0);add(0);}});
-                add(new ArrayList<>() {{add(11);add(11);add(11);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(11);add(11);}});
-                add(new ArrayList<>() {{add(11);add(0);}});
-                add(new ArrayList<>() {{add(11);add(0);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(11);add(11);add(11);}});
-                add(new ArrayList<>() {{add(0);add(0);add(11);}});
-            }});
-        }});
-        // I
-        add(new ArrayList<>() {{
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(13);}});
-                add(new ArrayList<>() {{add(13);}});
-                add(new ArrayList<>() {{add(13);}});
-                add(new ArrayList<>() {{add(13);}});
-            }});
-            add(new ArrayList<>() {{
-                add(new ArrayList<>() {{add(13);add(13);add(13);add(13);}});
-            }});
-        }});
-    }};
-
-    public void TableroJuego(JFrame TableroJuego) {
+    public void TableroJuego(JFrame TableroJuego){
         TableroJuego.setLayout(null);
         TableroJuego.setLocationRelativeTo(null);
         TableroJuego.setResizable(false);
 
-        for (ArrayList<Integer> Filas : Tablero_){
-            System.out.println(Filas);
+        for (ArrayList<Integer> Fila : piezas.getPart(7, 3)){
+            System.out.println(Fila);
         }
 
         Tablero = new JPanel() {
             @Override
-            protected void paintComponent(Graphics g) {
+            protected void paintComponent(Graphics g){
                 super.paintComponent(g);
 
                 int x = 10, y = 10;
-
-
-                //¡ Revision Importante
-                //  --> Codigo eliminacion de lineas al completarlas
-                for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-                    for (int j = 0; j < Tablero_.getFirst().size(); j++) {
-                        if (Tablero_.get(i).get(j) != 0){
-                            CompFilas.add((Tablero_.get(i).get(j) % 2));
-                        }else CompFilas.clear();
-                    }
-                }
-
-                int Count_1 = 0;
-                for (int i = 0; i < Tablero_.size(); i++) {
-                    for (int j = 0; j < Tablero_.getFirst().size(); j++) {
-                        if (((Tablero_.get(i).get(j) % 2) == 1)) {
-                            Count_1++;
-                        }
-                    }
-                }
-                if (Count_1 < 1) {
-                    Ficha();
-                }
-
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
 
                 try {
                     for (ArrayList<Integer> Filas : Tablero_) {
@@ -269,6 +84,7 @@ public class Tetris extends JFrame {
                             if (Col == 9 || Col == 10) g.setColor(Color.YELLOW);
                             if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
                             if (Col == 13 || Col == 14) g.setColor(Color.BLACK);
+                            if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
 
                             g.fillRect(x, y, 32, 32);
                             x += 32;
@@ -280,300 +96,30 @@ public class Tetris extends JFrame {
                     System.out.println("Error-Tablero");
                 }
                 Tablero.repaint();
+
             }
         };
-
-        new Thread(this::Movimiento_D).start();
 
         Tablero.setBounds(0, 0, TableroJuego.getWidth(), TableroJuego.getHeight());
         Tablero.setVisible(true);
         TableroJuego.add(Tablero);
     }
 
-    public void Movimiento_D(){
-        while (true){
-            try {
-                Thread.sleep(Velocidad + 10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if (Ejecucion) {
-                if (CompDownR() || CompDownL()) {
-                    for (int i = (Tablero_.size() - 1); i >= 0; i--) {
-                        for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-                            if ((Tablero_.get(i).get(j) % 2) == 1) {
-                                Tablero_.get(i).set(j, (Tablero_.get(i).get(j) + 1));
-                            }
-                        }
-                    }
-                } else {
-                    for (int i = (Tablero_.size() - 1); i >= 0; i--) {
-                        for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-                            if ((Tablero_.get(i).get(j) % 2) == 1) {
-                                Tablero_.get((i + 1)).set(j, Tablero_.get(i).get(j));
-                                Tablero_.get(i).set(j, 0);
-                            }
-                        }
-                    }
+    // Arrays [Tablero_, CompFTablero]
+    public static ArrayList<ArrayList<Integer>> Tablero_ = new ArrayList<>(){{
+        for (int i = 0; i < 30; i++) {
+            add(new ArrayList<>() {{
+                for (int j = 0; j < 15; j++) {
+                    add(0);
                 }
-                try {
-                    Thread.sleep(Velocidad + 10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                Movimiento_D();
-
+            }});
+        }
+    }};
+    public static ArrayList<ArrayList<Integer>> CompFTablero = new ArrayList<>() {{
+        add(new ArrayList<>() {{
+            for (int i = 0; i < 15; i++) {
+                add(0);
             }
-        }
-    }
-
-    public void Ficha() {
-        Ejecucion = false;
-
-        if ((int) (Math.random()*2) == 0){
-            NoPieza = 0;
-        }else if ((int) (Math.random()*2) == 1){
-            NoPieza = 6;
-        }
-
-        //NoPieza = (int) (Math.random() * Piezas.size());
-        NoRotacion = (int) (Math.random() * Piezas.get(NoPieza).size());
-        int PosAparicion = (int) (Math.random() * 15);
-
-        while (true) {
-            if ((Tablero_.getFirst().size() - PosAparicion) < Piezas.get(NoPieza).getFirst().getFirst().size()) {
-                PosAparicion = (int) (Math.random() * 15);
-            } else if ((PosAparicion + Piezas.get(NoPieza).getFirst().size()) >= Tablero_.getFirst().size()) {
-                PosAparicion = (int) (Math.random() * 15);
-            } else break;
-        }
-
-        for (int i = 0; i < Piezas.get(NoPieza).get(NoRotacion).size(); i++) {
-            for (int j = 0; j < Piezas.get(NoPieza).get(NoRotacion).getFirst().size(); j++) {
-                if (Tablero_.get(i).get((PosAparicion + j)) == 0) {
-                    Tablero_.get(i).set((PosAparicion + j), Piezas.get(NoPieza).get(NoRotacion).get(i).get(j));
-                }else {
-                    i = Piezas.get(NoPieza).get(NoRotacion).size();
-                    j = Piezas.get(NoPieza).get(NoRotacion).getFirst().size();
-                    Tablero_.clear();
-                    Tablero_ = new ArrayList<>() {{
-                        for (int i = 0; i < 30; i++) {
-                            add(new ArrayList<>() {{
-                                for (int j = 0; j < 15; j++) {
-                                    add(0);
-                                }
-                            }});
-                        }
-                    }};
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        Ejecucion = true;
-
-    }
-
-	/*public void Rotar(){
-
-	}*/
-
-    public boolean CompLeftU(){
-        boolean Return = false;
-
-        for (int i = 0; i < Tablero_.size() ; i++) {
-            for (int j = 0; j < Tablero_.getFirst().size() ; j++) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get(i).get((j-1)) % 2) == 0 && Tablero_.get(i).get((j-1)) != 0){
-                            Return = false;
-                            i = Tablero_.size();
-                            j = Tablero_.getFirst().size();
-                        }else {
-                            Return = (Tablero_.get(i).get((j-1)) == 0 || (Tablero_.get(i).get((j-1)) % 2) == 1);
-                        }
-                    } catch (Exception e) {
-                        Return = false;
-                        i = Tablero_.size();
-                        j = Tablero_.getFirst().size();
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public boolean CompLeftD(){
-        boolean Return = false;
-
-        for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-            for (int j = 0; j < Tablero_.getFirst().size() ; j++) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get(i).get((j-1)) % 2) == 0 && Tablero_.get(i).get((j-1)) != 0){
-                            Return = false;
-                            i = -1;
-                            j = Tablero_.getFirst().size();
-                        }else {
-                            Return = (Tablero_.get(i).get((j-1)) == 0 || (Tablero_.get(i).get((j-1)) % 2) == 1);
-                        }
-                    } catch (Exception e) {
-                        Return = false;
-                        i = -1;
-                        j = Tablero_.getFirst().size();
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public boolean CompRightU(){
-        boolean Return = false;
-
-        for (int i = 0; i < Tablero_.size() ; i++) {
-            for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get(i).get((j+1)) % 2) == 0 && Tablero_.get(i).get((j+1)) != 0){
-                            Return = false;
-                            i = Tablero_.size();
-                            j = -1;
-                        }else {
-                            Return = (Tablero_.get(i).get((j+1)) == 0 || (Tablero_.get(i).get((j+1)) % 2) == 1);
-                        }
-                    } catch (Exception e) {
-                        Return = false;
-                        i = Tablero_.size();
-                        j = -1;
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public boolean CompRightD(){
-        boolean Return = false;
-
-        for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-            for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get(i).get((j+1)) % 2) == 0 && Tablero_.get(i).get((j+1)) != 0){
-                            Return = false;
-                            i = -1;
-                            j = -1;
-                        }else {
-                            Return = (Tablero_.get(i).get((j+1)) == 0 || (Tablero_.get(i).get((j+1)) % 2) == 1);
-                        }
-                    } catch (Exception e) {
-                        Return = false;
-                        i = -1;
-                        j = -1;
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public boolean CompDownL(){
-        boolean Return = false;
-
-        for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-            for (int j = 0; j < Tablero_.getFirst().size() ; j++) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get((i+1)).get(j) % 2) == 0 && Tablero_.get((i+1)).get(j) != 0){
-                            Return = true;
-                        }
-                    } catch (Exception e) {
-                        Return = true;
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public boolean CompDownR(){
-        boolean Return = false;
-
-        for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-            for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                if ((Tablero_.get(i).get(j) % 2) == 1){
-                    try {
-                        if ((Tablero_.get((i+1)).get(j) % 2) == 0 && Tablero_.get((i+1)).get(j) != 0){
-                            Return = true;
-                        }
-                    } catch (Exception e) {
-                        Return = true;
-                    }
-                }
-            }
-        }
-
-        return Return;
-    }
-
-    public void MoveDown(){
-        if (CompDownR() || CompDownL()){
-            for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-                for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                    if ((Tablero_.get(i).get(j) % 2) == 1){
-                        Tablero_.get(i).set(j, (Tablero_.get(i).get(j) + 1));
-                    }
-                }
-            }
-        }else {
-            for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-                for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                    if ((Tablero_.get(i).get(j) % 2) == 1){
-                        Tablero_.get((i+1)).set(j, Tablero_.get(i).get(j));
-                        Tablero_.get(i).set(j, 0);
-                    }
-                }
-            }
-        }
-    }
-
-    public void MoveRight(){
-        if (CompRightD() && CompRightU()){
-            for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-                for (int j = (Tablero_.getFirst().size() - 1); j >= 0 ; j--) {
-                    if ((Tablero_.get(i).get(j) % 2) == 1){
-                        if (((Tablero_.get(i).get((j + 1))) == 0)){
-                            Tablero_.get(i).set((j + 1), Tablero_.get(i).get(j));
-                            Tablero_.get(i).set(j, 0);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void MoveLeft(){
-        if (CompLeftD() && CompLeftU()){
-            for (int i = (Tablero_.size() - 1); i >= 0 ; i--) {
-                for (int j = 0; j < Tablero_.getFirst().size() ; j++) {
-                    if ((Tablero_.get(i).get(j) % 2) == 1){
-                        if (((Tablero_.get(i).get((j - 1))) == 0)){
-                            Tablero_.get(i).set((j - 1), Tablero_.get(i).get(j));
-                            Tablero_.get(i).set(j, 0);
-                        }
-                    }
-                }
-            }
-        }
-    }
+        }});
+    }};
 }
