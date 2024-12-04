@@ -48,7 +48,6 @@ public class Logica {
             }
             Residual.clear();
         }
-        System.out.println(Return);
 
         return Return;
     }

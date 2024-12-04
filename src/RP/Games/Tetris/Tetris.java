@@ -99,8 +99,12 @@ public class Tetris extends JFrame{
 
                 int x = 10, y = 10;
 
+                if (Tablero_.size() == 30){
+                    TableroResidual = Tablero_;
+                }
+
                 try {
-                    for (ArrayList<Integer> Filas : Tablero_) {
+                    for (ArrayList<Integer> Filas : TableroResidual) {
                         for (Integer Col : Filas) {
                             if (Col == 0) g.setColor(Color.GRAY);
                             if (Col == 1 || Col == 2) g.setColor(Color.RED);
@@ -113,7 +117,6 @@ public class Tetris extends JFrame{
                             if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
                             if (Col == 17 || Col == 18) g.setColor(Color.PINK);
 
-
                             g.fillRect(x, y, 32, 32);
                             x += 32;
                         }
@@ -122,6 +125,12 @@ public class Tetris extends JFrame{
                     }
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
+                    for (ArrayList<Integer> Filas : Tablero_){
+                        System.out.println(Filas);
+                    }System.out.println(" ");
+                    for (ArrayList<Integer> Filas : TableroResidual){
+                        System.out.println(Filas);
+                    }
                 }
             }
         };
@@ -149,9 +158,7 @@ public class Tetris extends JFrame{
         Tetris_Principal.schedule(new TimerTask() {
             @Override
             public void run() {
-                Tetris_Draw.cancel();
                 NewPart();
-                IniciarTablero();
             }
         }, 0, Velocidad);
     }
@@ -211,4 +218,5 @@ public class Tetris extends JFrame{
 
     // Arrays [Tablero_, CompFTablero]
     public static ArrayList<ArrayList<Integer>> Tablero_;
+    public static ArrayList<ArrayList<Integer>> TableroResidual;
 }
