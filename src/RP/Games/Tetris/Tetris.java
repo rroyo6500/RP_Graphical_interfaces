@@ -5,11 +5,20 @@ import RP.Var.Var;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
+    int Velocidad = 500;        // +5
+    int C = 0;
+
     Piezas piezas = new Piezas();
+    Logica logica = new Logica();
     Var var = new Var();
+
+    Timer Tetris_Principal;
+    Timer Tetris_Draw;
 
     JPanel Tetoris, GamesMenu;
     JFrame TableroJuego = new JFrame() {{
@@ -45,7 +54,10 @@ public class Tetris extends JFrame{
             MMenu.setBackground(new Color(255, 255, 255));
             MMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             MMenu.addActionListener(_ -> {
-                //ClearOP();
+                Tablero_.clear();
+                if (Tetris_Principal != null){
+                    Tetris_Principal.cancel();
+                }
                 Tetoris.setVisible(false);
                 GamesMenu.setVisible(true);
                 TableroJuego.setVisible(false);
@@ -53,7 +65,25 @@ public class Tetris extends JFrame{
             Tetoris_Title.add(MMenu);
         }
 
-        TableroJuego(TableroJuego);
+        JButton Down = new JButton();
+        Down.setBounds(100, 100, 100, 50);
+        Down.setText("Down");
+        Down.addActionListener(_ -> logica.PartDown(Tablero_));
+        Tetoris.add(Down);
+
+        JButton Right = new JButton();
+        Right.setBounds(200, 100, 100, 50);
+        Right.setText("Right");
+        Right.addActionListener(_ -> logica.PartRight(Tablero_));
+        Tetoris.add(Right);
+
+        JButton Left = new JButton();
+        Left.setBounds(300, 100, 100, 50);
+        Left.setText("Left");
+        Left.addActionListener(_ -> logica.PartLeft(Tablero_));
+        Tetoris.add(Left);
+
+        new Thread(() -> TableroJuego(TableroJuego)).start();
         TableroJuego.setVisible(true);
     }
 
@@ -61,10 +91,6 @@ public class Tetris extends JFrame{
         TableroJuego.setLayout(null);
         TableroJuego.setLocationRelativeTo(null);
         TableroJuego.setResizable(false);
-
-        for (ArrayList<Integer> Fila : piezas.getPart(7, 3)){
-            System.out.println(Fila);
-        }
 
         Tablero = new JPanel() {
             @Override
@@ -85,6 +111,8 @@ public class Tetris extends JFrame{
                             if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
                             if (Col == 13 || Col == 14) g.setColor(Color.BLACK);
                             if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
+                            if (Col == 17 || Col == 18) g.setColor(Color.PINK);
+
 
                             g.fillRect(x, y, 32, 32);
                             x += 32;
@@ -95,31 +123,92 @@ public class Tetris extends JFrame{
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
                 }
-                Tablero.repaint();
-
             }
         };
+
+        IniciarTablero();
+        IniciarJuego();
 
         Tablero.setBounds(0, 0, TableroJuego.getWidth(), TableroJuego.getHeight());
         Tablero.setVisible(true);
         TableroJuego.add(Tablero);
     }
 
-    // Arrays [Tablero_, CompFTablero]
-    public static ArrayList<ArrayList<Integer>> Tablero_ = new ArrayList<>(){{
-        for (int i = 0; i < 30; i++) {
-            add(new ArrayList<>() {{
-                for (int j = 0; j < 15; j++) {
-                    add(0);
-                }
-            }});
-        }
-    }};
-    public static ArrayList<ArrayList<Integer>> CompFTablero = new ArrayList<>() {{
-        add(new ArrayList<>() {{
-            for (int i = 0; i < 15; i++) {
-                add(0);
+    public void IniciarTablero(){
+        Tetris_Draw = new Timer();
+        Tetris_Draw.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Tablero.repaint();
             }
-        }});
-    }};
+        }, 0, 10);
+    }
+
+    public void IniciarJuego(){
+        Tetris_Principal = new Timer();
+        Tetris_Principal.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Tetris_Draw.cancel();
+                NewPart();
+                IniciarTablero();
+            }
+        }, 0, Velocidad);
+    }
+
+    public void NewPart(){
+        if (!Tablero_.isEmpty()){
+
+            int NoPieza = (int) (Math.random()*2);
+            if (NoPieza == 1) {
+                NoPieza = 6;
+            }
+
+            //int NoPieza = (int) (Math.random() * piezas.CantPiezas());
+            int NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
+            int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
+
+            int CountMParts = 0;
+
+            for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+                for (int j = 0; j < Tablero_.getFirst().size(); j++) {
+                    if ((Tablero_.get(i).get(j) % 2) == 1) {
+                        CountMParts++;
+                    }
+                }
+            }
+
+            if (CountMParts < 1) {
+                while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
+                    PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
+                }
+            } else logica.PartDown_A(Tablero_);
+        }else {
+            Tablero_ = new ArrayList<>(){{
+                for (int i = 0; i < 30; i++) {
+                    add(new ArrayList<>() {{
+                        for (int j = 0; j < 15; j++) {
+                            add(0);
+                        }
+                    }});
+                }
+            }};
+        }
+    }
+
+    public void Restart(){
+        C = 0;
+        Tablero_ = new ArrayList<>(){{
+            for (int i = 0; i < 30; i++) {
+                add(new ArrayList<>() {{
+                    for (int j = 0; j < 15; j++) {
+                        add(0);
+                    }
+                }});
+            }
+        }};
+    }
+
+    // Arrays [Tablero_, CompFTablero]
+    public static ArrayList<ArrayList<Integer>> Tablero_;
 }

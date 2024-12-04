@@ -10,6 +10,14 @@ public class Piezas {
         return Piezas_.get(NoPieza).get(NoRotacion);
     }
 
+    public Integer CantPiezas(){
+        return Piezas_.size();
+    }
+
+    public Integer CantRPieza(int NoPieza){
+        return Piezas_.get(NoPieza).size();
+    }
+
     public static ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> Piezas_ = new ArrayList<>(){{
         // Cuadrado
         add(new ArrayList<>() {{
@@ -161,6 +169,15 @@ public class Piezas {
                 add(new ArrayList<>() {{add(15);add(0);add(0);}});
                 add(new ArrayList<>() {{add(15);add(15);add(15);}});
                 add(new ArrayList<>() {{add(15);add(0);add(0);}});
+            }});
+        }});
+        // Cuadrado
+        add(new ArrayList<>() {{
+            //Rotacion 0
+            add(new ArrayList<>() {{
+                add(new ArrayList<>() {{add(0);add(17);add(0);}});
+                add(new ArrayList<>() {{add(17);add(17);add(17);}});
+                add(new ArrayList<>() {{add(0);add(17);add(0);}});
             }});
         }});
     }};
