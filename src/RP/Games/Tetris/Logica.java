@@ -6,34 +6,33 @@ public class Logica {
 
     public Logica(){}
 
-    //ArrayList<ArrayList<Integer>> Tablero;
+    int Repeticiones = 0;
 
     public boolean NewPart(ArrayList<ArrayList<Integer>> Tablero, int x, ArrayList<ArrayList<Integer>> Pieza){
         boolean Return = false;
-        int CountMParts = 0;
-        // Ubicado dentro de un while para que en caso de que la pieza no entre en la posicion seleccionada aleatoriamente 'X' se seleccione una pieza y posicion diferente.
-
+        int C_0 = 0;
         if (CompFilas(Tablero)){
             if ((Tablero.getFirst().size() - x) < Pieza.getFirst().size()) Return = true;
             else {
-                for (int i = (Tablero.size() - 1); i >= 0; i--) {
-                    for (int j = 0; j < Tablero.getFirst().size(); j++) {
-                        if ((Tablero.get(i).get(j) % 2) == 1) {
-                            CountMParts++;
+                for (int i = 0; i < Pieza.size(); i++) {
+                    for (int j = 0; j < Pieza.getFirst().size(); j++) {
+                        if (Tablero.get(i).get(j + x) != 0) {
+                            C_0++;
                         }
                     }
                 }
-                if (CountMParts < 1){
+                if (C_0 > 0) {
+                    if (Repeticiones > 10){
+                        Tablero_Restart(Tablero);
+                    }else {
+                        Return = true;
+                        Repeticiones++;
+                    }
+                }
+                else {
                     for (int i = 0; i < Pieza.size(); i++) {
                         for (int j = 0; j < Pieza.getFirst().size(); j++) {
-                            if (Tablero.get(i).get((j + x)) == 0){
-                                Tablero.get(i).set((j + x), Pieza.get(i).get(j));
-                            }else {
-                                System.out.println("aaaa");
-                                i = Pieza.size();
-                                Tablero.clear();
-                                break;
-                            }
+                            Tablero.get(i).set((j + x), Pieza.get(i).get(j));
                         }
                     }
                 }
@@ -45,7 +44,6 @@ public class Logica {
     public boolean CompFilas(ArrayList<ArrayList<Integer>> Tablero){
         boolean Return = true;
         ArrayList<Integer> Residual = new ArrayList<>();
-        // Ubicado en un IF (si una fila se elimina devuelve false) para evitar añadir nuevas piezas si se elimina una fila.
         for (int i = (Tablero.size() - 1); i >= 0 ; i--) {
             for (int j = 0; j < Tablero.get(i).size(); j++) {
                 if ((Tablero.get(i).get(j) % 2) == 0 && Tablero.get(i).get(j) != 0) Residual.add(0);
@@ -60,6 +58,11 @@ public class Logica {
         }
 
         return Return;
+    }
+
+    public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
+        Tablero.clear();
+        System.out.println("Tablero reiniciado");
     }
 
     public void PartDown_A(ArrayList<ArrayList<Integer>> Tablero){

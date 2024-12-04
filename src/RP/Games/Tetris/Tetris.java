@@ -158,7 +158,7 @@ public class Tetris extends JFrame{
             public void run() {
                 NewPart();
             }
-        }, 0, Velocidad);
+        }, 0, Velocidad + 5);
     }
 
     public void NewPart(){
