@@ -99,9 +99,7 @@ public class Tetris extends JFrame{
 
                 int x = 10, y = 10;
 
-                if (Tablero_.size() == 30){
-                    TableroResidual = Tablero_;
-                }
+                if (Tablero_.size() == 30) TableroResidual = (ArrayList<ArrayList<Integer>>) Tablero_.clone();
 
                 try {
                     for (ArrayList<Integer> Filas : TableroResidual) {
@@ -190,6 +188,7 @@ public class Tetris extends JFrame{
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 }
             } else logica.PartDown_A(Tablero_);
+
         }else {
             Tablero_ = new ArrayList<>(){{
                 for (int i = 0; i < 30; i++) {

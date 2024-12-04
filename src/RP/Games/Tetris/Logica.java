@@ -10,20 +10,30 @@ public class Logica {
 
     public boolean NewPart(ArrayList<ArrayList<Integer>> Tablero, int x, ArrayList<ArrayList<Integer>> Pieza){
         boolean Return = false;
+        int CountMParts = 0;
         // Ubicado dentro de un while para que en caso de que la pieza no entre en la posicion seleccionada aleatoriamente 'X' se seleccione una pieza y posicion diferente.
 
         if (CompFilas(Tablero)){
             if ((Tablero.getFirst().size() - x) < Pieza.getFirst().size()) Return = true;
             else {
-                for (int i = 0; i < Pieza.size(); i++) {
-                    for (int j = 0; j < Pieza.getFirst().size(); j++) {
-                        if (Tablero.get(i).get((j + x)) == 0){
-                            Tablero.get(i).set((j + x), Pieza.get(i).get(j));
-                        }else {
-                            System.out.println("aaaa");
-                            i = Pieza.size();
-                            Tablero.clear();
-                            break;
+                for (int i = (Tablero.size() - 1); i >= 0; i--) {
+                    for (int j = 0; j < Tablero.getFirst().size(); j++) {
+                        if ((Tablero.get(i).get(j) % 2) == 1) {
+                            CountMParts++;
+                        }
+                    }
+                }
+                if (CountMParts < 1){
+                    for (int i = 0; i < Pieza.size(); i++) {
+                        for (int j = 0; j < Pieza.getFirst().size(); j++) {
+                            if (Tablero.get(i).get((j + x)) == 0){
+                                Tablero.get(i).set((j + x), Pieza.get(i).get(j));
+                            }else {
+                                System.out.println("aaaa");
+                                i = Pieza.size();
+                                Tablero.clear();
+                                break;
+                            }
                         }
                     }
                 }
