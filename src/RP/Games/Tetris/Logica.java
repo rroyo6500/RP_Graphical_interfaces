@@ -51,9 +51,9 @@ public class Logica {
                 else break;
             }
             if (Residual.size() == CompFTablero.getFirst().size()){
-                Tablero.addFirst(CompFTablero.getFirst());
-                Tablero.remove(i + 1);
                 i++;
+                Tablero.addFirst(CompFTablero.getFirst());
+                Tablero.remove(i);
                 Return = false;
             }
             Residual.clear();
@@ -64,10 +64,10 @@ public class Logica {
 
     public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
         Tablero.clear();
-        System.out.println("Tablero reiniciado");
     }
 
-    public void PartDown_A(ArrayList<ArrayList<Integer>> Tablero){
+    public void PartDown(ArrayList<ArrayList<Integer>> Tablero){
+        int Residual;
         if (CompDownR(Tablero) || CompDownL(Tablero)) {
             for (int i = (Tablero.size() - 1); i >= 0; i--) {
                 for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
@@ -80,29 +80,9 @@ public class Logica {
             for (int i = (Tablero.size() - 1); i >= 0; i--) {
                 for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
                     if ((Tablero.get(i).get(j) % 2) == 1) {
-                        Tablero.get((i + 1)).set(j, Tablero.get(i).get(j));
+                        Residual = Tablero.get(i).get(j);
                         Tablero.get(i).set(j, 0);
-                    }
-                }
-            }
-        }
-    }
-
-    public void PartDown(ArrayList<ArrayList<Integer>> Tablero){
-        if (CompDownR(Tablero) || CompDownL(Tablero)){
-            for (int i = (Tablero.size() - 1); i >= 0 ; i--) {
-                for (int j = (Tablero.getFirst().size() - 1); j >= 0 ; j--) {
-                    if ((Tablero.get(i).get(j) % 2) == 1){
-                        Tablero.get(i).set(j, (Tablero.get(i).get(j) + 1));
-                    }
-                }
-            }
-        }else {
-            for (int i = (Tablero.size() - 1); i >= 0 ; i--) {
-                for (int j = (Tablero.getFirst().size() - 1); j >= 0 ; j--) {
-                    if ((Tablero.get(i).get(j) % 2) == 1){
-                        Tablero.get((i+1)).set(j, Tablero.get(i).get(j));
-                        Tablero.get(i).set(j, 0);
+                        Tablero.get((i + 1)).set(j, Residual);
                     }
                 }
             }

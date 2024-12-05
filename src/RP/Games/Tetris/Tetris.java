@@ -186,15 +186,11 @@ public class Tetris extends JFrame{
                 }
             }
 
-            if (CountMParts < 1) {
+            if (CountMParts == 0) {
+                C_Time+=1;
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 }
-                C_Time+=1;
-            } else {
-                if (C_Time == 0){
-                    logica.PartDown_A(Tablero_);
-                }else C_Time--;
             }
 
             for (int i = 0; i < Tablero_.size(); i++) {
@@ -215,6 +211,12 @@ public class Tetris extends JFrame{
                         }
                     }
                 }
+            }
+
+            if (CountMParts > 0){
+                if (C_Time == 0){
+                    logica.PartDown(Tablero_);
+                }else C_Time--;
             }
 
         }else {
