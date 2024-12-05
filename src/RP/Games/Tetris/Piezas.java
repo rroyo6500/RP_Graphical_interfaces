@@ -145,7 +145,7 @@ public class Piezas {
             }});
         }});
         // T
-        add(new ArrayList<>() {{
+        /*add(new ArrayList<>() {{
             //Rotacion 0
             add(new ArrayList<>() {{
                 add(new ArrayList<>() {{add(15);add(15);add(15);}});
@@ -171,7 +171,7 @@ public class Piezas {
                 add(new ArrayList<>() {{add(15);add(0);add(0);}});
             }});
         }});
-        // Cuadrado
+        // Cruz
         add(new ArrayList<>() {{
             //Rotacion 0
             add(new ArrayList<>() {{
@@ -179,6 +179,6 @@ public class Piezas {
                 add(new ArrayList<>() {{add(17);add(17);add(17);}});
                 add(new ArrayList<>() {{add(0);add(17);add(0);}});
             }});
-        }});
+        }});*/
     }};
 }

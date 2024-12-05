@@ -1,3 +1,10 @@
+/*
+        Rotar Piezas:
+            Idea:
+                Localizar las partes de las piezas que se pueden mover y comparar con la pieza para conseguir la esquena superior izquierda.
+                Una vez conseguida se eliminan las partes le pa pieza en movimiento y se reescriben con la nueva rotacion.
+ */
+
 package RP.Games.Tetris;
 
 import RP.Var.Var;
@@ -101,10 +108,10 @@ public class Tetris extends JFrame{
 
                 int x = 10, y = 10;
 
-                if (Tablero_.size() == 30) TableroResidual = (ArrayList<ArrayList<Integer>>) Tablero_.clone();
+                //if (Tablero_.size() == 30) TableroResidual = (ArrayList<ArrayList<Integer>>) Tablero_.clone();
 
                 try {
-                    for (ArrayList<Integer> Filas : TableroResidual) {
+                    for (ArrayList<Integer> Filas : Tablero_) {
                         for (Integer Col : Filas) {
                             if (Col == 0) g.setColor(Color.GRAY);
                             if (Col == 1 || Col == 2) g.setColor(Color.RED);
@@ -125,12 +132,6 @@ public class Tetris extends JFrame{
                     }
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
-                    for (ArrayList<Integer> Filas : Tablero_){
-                        System.out.println(Filas);
-                    }System.out.println(" ");
-                    for (ArrayList<Integer> Filas : TableroResidual){
-                        System.out.println(Filas);
-                    }
                 }
             }
         };
@@ -179,8 +180,6 @@ public class Tetris extends JFrame{
             int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
 
             int CountMParts = 0;
-            int C_1G = 0;
-            int C_1P = 0;
 
             for (int i = (Tablero_.size() - 1); i >= 0; i--) {
                 for (int j = 0; j < Tablero_.getFirst().size(); j++) {
@@ -194,26 +193,6 @@ public class Tetris extends JFrame{
                 C_Time+=1;
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
-                }
-            }
-
-            for (int i = 0; i < Tablero_.size(); i++) {
-                for (int j = 0; j < Tablero_.getFirst().size(); j++) {
-                    if ((Tablero_.get(i).get(j) % 2) == 1) C_1G++;
-                }
-            }
-            for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
-                for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
-                    if ((piezas.getPart(NoPieza, NoRotacion).get(i).get(j) % 2) == 1) C_1P++;
-                }
-            }
-            if (C_1G != C_1P){
-                for (int i = (Tablero_.size() - 1); i >= 0; i--) {
-                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-                        if ((Tablero_.get(i).get(j) % 2) == 1) {
-                            Tablero_.get(i).set(j, 0);
-                        }
-                    }
                 }
             }
 
@@ -253,5 +232,4 @@ public class Tetris extends JFrame{
 
     // Arrays [Tablero_, CompFTablero]
     public static ArrayList<ArrayList<Integer>> Tablero_;
-    public static ArrayList<ArrayList<Integer>> TableroResidual;
 }
