@@ -191,7 +191,7 @@ public class Tetris extends JFrame{
             }
 
             if (CountMParts == 0) {
-                C_Time+=2;
+                C_Time+=1;
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 }

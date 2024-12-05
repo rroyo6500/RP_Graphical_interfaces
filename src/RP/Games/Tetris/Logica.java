@@ -54,10 +54,12 @@ public class Logica {
             }
             if (Residual.size() == CompFTablero.size()){
                 for (int j = (Tablero.size() - 1); j >= 0 ; j--) {
-                    try {
-                        Tablero.set(j, Tablero.get((j-1)));
-                    } catch (Exception e) {
-                        Tablero.set(j, CompFTablero);
+                    for (int k = 0; k < Tablero.get(i).size(); k++) {
+                        try {
+                            Tablero.get(j).set(k, Tablero.get((j-1)).get(k));
+                        } catch (Exception e) {
+                            Tablero.get(j).set(k, 0);
+                        }
                     }
                 }
                 i++;
