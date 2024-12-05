@@ -12,6 +12,7 @@ public class Tetris extends JFrame{
 
     int Velocidad = 500;        // +5
     int C = 0;
+    int C_Time = 0;
 
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
@@ -174,6 +175,8 @@ public class Tetris extends JFrame{
             int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
 
             int CountMParts = 0;
+            int C_1G = 0;
+            int C_1P = 0;
 
             for (int i = (Tablero_.size() - 1); i >= 0; i--) {
                 for (int j = 0; j < Tablero_.getFirst().size(); j++) {
@@ -187,7 +190,32 @@ public class Tetris extends JFrame{
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 }
-            } else logica.PartDown_A(Tablero_);
+                C_Time+=1;
+            } else {
+                if (C_Time == 0){
+                    logica.PartDown_A(Tablero_);
+                }else C_Time--;
+            }
+
+            for (int i = 0; i < Tablero_.size(); i++) {
+                for (int j = 0; j < Tablero_.getFirst().size(); j++) {
+                    if ((Tablero_.get(i).get(j) % 2) == 1) C_1G++;
+                }
+            }
+            for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
+                for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
+                    if ((piezas.getPart(NoPieza, NoRotacion).get(i).get(j) % 2) == 1) C_1P++;
+                }
+            }
+            if (C_1G != C_1P){
+                for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+                        if ((Tablero_.get(i).get(j) % 2) == 1) {
+                            Tablero_.get(i).set(j, 0);
+                        }
+                    }
+                }
+            }
 
         }else {
             Tablero_ = new ArrayList<>(){{

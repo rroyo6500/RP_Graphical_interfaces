@@ -44,6 +44,7 @@ public class Logica {
     public boolean CompFilas(ArrayList<ArrayList<Integer>> Tablero){
         boolean Return = true;
         ArrayList<Integer> Residual = new ArrayList<>();
+
         for (int i = (Tablero.size() - 1); i >= 0 ; i--) {
             for (int j = 0; j < Tablero.get(i).size(); j++) {
                 if ((Tablero.get(i).get(j) % 2) == 0 && Tablero.get(i).get(j) != 0) Residual.add(0);
@@ -52,6 +53,7 @@ public class Logica {
             if (Residual.size() == CompFTablero.getFirst().size()){
                 Tablero.addFirst(CompFTablero.getFirst());
                 Tablero.remove(i + 1);
+                i++;
                 Return = false;
             }
             Residual.clear();
