@@ -4,11 +4,21 @@ import java.util.ArrayList;
 
 public class Logica {
 
+    Piezas piezas = new Piezas();
+
     public Logica(){}
 
-    //public ArrayList<ArrayList<Integer>> Tablero_G;
-
     int Repeticiones = 0;
+
+    /*
+        Rotar Piezas:
+            Idea:
+                Localizar las partes de las piezas que se pueden mover y comparar con la pieza para conseguir la esquena superior izquierda.
+                Una vez conseguida se eliminan las partes le pa pieza en movimiento y se reescriben con la nueva rotacion.
+    */
+    public void RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
+
+    }
 
     public boolean NewPart(ArrayList<ArrayList<Integer>> Tablero, int x, ArrayList<ArrayList<Integer>> Pieza){
         boolean Return = false;
@@ -24,7 +34,7 @@ public class Logica {
                     }
                 }
                 if (C_0 > 0) {
-                    if (Repeticiones > 10){
+                    if (Repeticiones > 25){
                         Tablero_Restart(Tablero);
                     }else {
                         Return = true;
@@ -71,12 +81,12 @@ public class Logica {
     }
 
     public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
-        Tablero.clear();
+        for (int i = 0; i < Tablero.size(); i++) {
+            for (int j = 0; j < Tablero.getFirst().size(); j++) {
+                Tablero.get(i).set(j, 0);
+            }
+        }
     }
-
-    /*public ArrayList<ArrayList<Integer>> Tablero_Update(){
-        return Tablero_G;
-    }*/
 
     public void PartDown(ArrayList<ArrayList<Integer>> Tablero){
         int Residual;

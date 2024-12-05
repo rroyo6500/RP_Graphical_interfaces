@@ -1,10 +1,3 @@
-/*
-        Rotar Piezas:
-            Idea:
-                Localizar las partes de las piezas que se pueden mover y comparar con la pieza para conseguir la esquena superior izquierda.
-                Una vez conseguida se eliminan las partes le pa pieza en movimiento y se reescriben con la nueva rotacion.
- */
-
 package RP.Games.Tetris;
 
 import RP.Var.Var;
@@ -17,10 +10,13 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 500;        // +5
+    int Velocidad = 0;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
+
+    int NoPieza;
+    int NoRotacion;
 
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
@@ -113,16 +109,16 @@ public class Tetris extends JFrame{
                 try {
                     for (ArrayList<Integer> Filas : Tablero_) {
                         for (Integer Col : Filas) {
-                            if (Col == 0) g.setColor(Color.GRAY);
+                            if (Col == 0) g.setColor(Color.BLACK);
                             if (Col == 1 || Col == 2) g.setColor(Color.RED);
                             if (Col == 3 || Col == 4) g.setColor(Color.BLUE);
                             if (Col == 5 || Col == 6) g.setColor(Color.GREEN);
                             if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
                             if (Col == 9 || Col == 10) g.setColor(Color.YELLOW);
                             if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
-                            if (Col == 13 || Col == 14) g.setColor(Color.BLACK);
+                            if (Col == 13 || Col == 14) g.setColor(Color.WHITE);
                             if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
-                            if (Col == 17 || Col == 18) g.setColor(Color.PINK);
+                            if (Col == 17 || Col == 18) g.setColor(Color.GRAY);
 
                             g.fillRect(x, y, 32, 32);
                             x += 32;
@@ -170,13 +166,13 @@ public class Tetris extends JFrame{
     public void NewPart(){
         if (!Tablero_.isEmpty()){
 
-            int NoPieza = (int) (Math.random()*2);
+            /*int NoPieza = (int) (Math.random()*2);
             if (NoPieza == 1) {
                 NoPieza = 6;
-            }
+            }*/
 
-            //int NoPieza = (int) (Math.random() * piezas.CantPiezas());
-            int NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
+            NoPieza = (int) (Math.random() * piezas.CantPiezas());
+            NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
             int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
 
             int CountMParts = 0;
