@@ -6,6 +6,8 @@ public class Logica {
 
     public Logica(){}
 
+    //public ArrayList<ArrayList<Integer>> Tablero_G;
+
     int Repeticiones = 0;
 
     public boolean NewPart(ArrayList<ArrayList<Integer>> Tablero, int x, ArrayList<ArrayList<Integer>> Pieza){
@@ -50,21 +52,29 @@ public class Logica {
                 if ((Tablero.get(i).get(j) % 2) == 0 && Tablero.get(i).get(j) != 0) Residual.add(0);
                 else break;
             }
-            if (Residual.size() == CompFTablero.getFirst().size()){
+            if (Residual.size() == CompFTablero.size()){
+                for (int j = (Tablero.size() - 1); j >= 0 ; j--) {
+                    try {
+                        Tablero.set(j, Tablero.get((j-1)));
+                    } catch (Exception e) {
+                        Tablero.set(j, CompFTablero);
+                    }
+                }
                 i++;
-                Tablero.addFirst(CompFTablero.getFirst());
-                Tablero.remove(i);
                 Return = false;
             }
             Residual.clear();
         }
-
         return Return;
     }
 
     public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
         Tablero.clear();
     }
+
+    /*public ArrayList<ArrayList<Integer>> Tablero_Update(){
+        return Tablero_G;
+    }*/
 
     public void PartDown(ArrayList<ArrayList<Integer>> Tablero){
         int Residual;
@@ -265,15 +275,9 @@ public class Logica {
         return Return;
     }
 
-    /*public ArrayList<ArrayList<Integer>> UpdateTablero(){
-        return Tablero;
-    }*/
-
-    public static ArrayList<ArrayList<Integer>> CompFTablero = new ArrayList<>() {{
-        add(new ArrayList<>() {{
-            for (int i = 0; i < 15; i++) {
-                add(0);
-            }
-        }});
+    public static ArrayList<Integer> CompFTablero = new ArrayList<>() {{
+        for (int i = 0; i < 15; i++) {
+            add(0);
+        }
     }};
 }

@@ -13,6 +13,7 @@ public class Tetris extends JFrame{
     int Velocidad = 500;        // +5
     int C = 0;
     int C_Time = 0;
+    boolean Ex = true;
 
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
@@ -157,7 +158,10 @@ public class Tetris extends JFrame{
         Tetris_Principal.schedule(new TimerTask() {
             @Override
             public void run() {
-                NewPart();
+                if (Ex){
+                    Ex = false;
+                    NewPart();
+                }
             }
         }, 0, Velocidad + 5);
     }
@@ -218,6 +222,8 @@ public class Tetris extends JFrame{
                     logica.PartDown(Tablero_);
                 }else C_Time--;
             }
+
+            Ex = true;
 
         }else {
             Tablero_ = new ArrayList<>(){{
