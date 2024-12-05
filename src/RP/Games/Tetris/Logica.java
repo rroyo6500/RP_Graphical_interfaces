@@ -80,9 +80,11 @@ public class Logica {
             for (int i = (Tablero.size() - 1); i >= 0; i--) {
                 for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
                     if ((Tablero.get(i).get(j) % 2) == 1) {
-                        Residual = Tablero.get(i).get(j);
-                        Tablero.get(i).set(j, 0);
-                        Tablero.get((i + 1)).set(j, Residual);
+                        if (Tablero.get((i+1)).get(j) == 0){
+                            Residual = Tablero.get(i).get(j);
+                            Tablero.get(i).set(j, 0);
+                            Tablero.get((i + 1)).set(j, Residual);
+                        }
                     }
                 }
             }
