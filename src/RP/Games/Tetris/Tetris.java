@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 0;        // +5
+    int Velocidad = 500;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
@@ -87,6 +87,12 @@ public class Tetris extends JFrame{
         Left.setText("Left");
         Left.addActionListener(_ -> logica.PartLeft(Tablero_));
         Tetoris.add(Left);
+
+        JButton Rotate = new JButton();
+        Rotate.setBounds(200, 150, 100, 50);
+        Rotate.setText("Rotate");
+        Rotate.addActionListener(_ -> NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion));
+        Tetoris.add(Rotate);
 
         new Thread(() -> TableroJuego(TableroJuego)).start();
         TableroJuego.setVisible(true);
@@ -171,10 +177,6 @@ public class Tetris extends JFrame{
                 NoPieza = 6;
             }*/
 
-            NoPieza = (int) (Math.random() * piezas.CantPiezas());
-            NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
-            int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
-
             int CountMParts = 0;
 
             for (int i = (Tablero_.size() - 1); i >= 0; i--) {
@@ -186,6 +188,9 @@ public class Tetris extends JFrame{
             }
 
             if (CountMParts == 0) {
+                NoPieza = (int) (Math.random() * piezas.CantPiezas());
+                NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
+                int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 C_Time+=1;
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
                     PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());

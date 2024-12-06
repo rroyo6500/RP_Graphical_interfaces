@@ -15,9 +15,81 @@ public class Logica {
             Idea:
                 Localizar las partes de las piezas que se pueden mover y comparar con la pieza para conseguir la esquena superior izquierda.
                 Una vez conseguida se eliminan las partes le pa pieza en movimiento y se reescriben con la nueva rotacion.
-    */
-    public void RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
+            IMPORTANTE:
+                Compobar si la posicion es un bloque estatico o no (unicamente si el bloque ovservado en la nueva rotacion != 0)
 
+                        if (NoRotacion == piezas.CantRPieza(NoPieza)) NoPieza = 0;
+
+                        ArrayList<ArrayList<Integer>> NewPartRotation = piezas.getPart(NoPieza, NoRotacion);
+    */
+    public int RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
+        boolean Pass = true;
+
+        int RotacionRes;
+
+        int[] PosPart = new int[2]; // 0 -> Y | 1 -> X
+        int SFFB = 0; //SpacesForFirstBlock
+
+        for (int i = 0; i < Tablero.size(); i++) {
+            for (int j = 0; j < Tablero.getFirst().size(); j++) {
+                if ((Tablero.get(i).get(j) % 2) == 1){
+                    PosPart[0] = i;
+                    PosPart[1] = j;
+                    i = Tablero.size();
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
+            for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
+                if (piezas.getPart(NoPieza, NoRotacion).get(i).get(j) == 0) SFFB++;
+                else {
+                    i = piezas.getPart(NoPieza, NoRotacion).size();
+                    break;
+                }
+            }
+        }PosPart[1] -= SFFB;
+
+        RotacionRes = NoRotacion;
+        if (NoRotacion >= (piezas.CantRPieza(NoPieza) - 1)) NoRotacion = 0;
+        else NoRotacion++;
+
+        for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
+            for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
+                try {
+                    if ((Tablero.get((i + PosPart[0])).get((j + PosPart[1])) % 2) == 0 && Tablero.get((i + PosPart[0])).get((j + PosPart[1])) != 0) {
+                        Pass = false;
+                        i = piezas.getPart(NoPieza, NoRotacion).size();
+                        NoRotacion = RotacionRes;
+                        break;
+                    }
+                } catch (Exception e) {
+                    Pass = false;
+                    i = piezas.getPart(NoPieza, NoRotacion).size();
+                    NoRotacion = RotacionRes;
+                    break;
+                }
+            }
+        }
+
+        if (Pass){
+            for (int i = (Tablero.size() - 1); i >= 0; i--) {
+                for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
+                    if ((Tablero.get(i).get(j) % 2) == 1) {
+                        Tablero.get(i).set(j, 0);
+                    }
+                }
+            }
+            for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
+                for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
+                    if (piezas.getPart(NoPieza, NoRotacion).get(i).get(j) != 0){
+                        Tablero.get((i+PosPart[0])).set((j+PosPart[1]), piezas.getPart(NoPieza, NoRotacion).get(i).get(j));
+                    }
+                }
+            }
+        }
+
+        return NoRotacion;
     }
 
     public boolean NewPart(ArrayList<ArrayList<Integer>> Tablero, int x, ArrayList<ArrayList<Integer>> Pieza){
