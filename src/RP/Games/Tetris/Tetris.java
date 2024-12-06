@@ -20,6 +20,9 @@ public class Tetris extends JFrame{
     int NoPieza;
     int NoRotacion;
 
+    int IPuntuacion = 15;
+    int PuntuacionFinal = 0;
+
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
     Var var = new Var();
@@ -33,6 +36,7 @@ public class Tetris extends JFrame{
     }};
 
     public static JPanel Tablero;
+    public static JPanel Panel_ProxPieza;
 
     public Tetris(JPanel GamePanel, JPanel GamesMenu) {
         this.Tetoris = GamePanel;
@@ -40,8 +44,6 @@ public class Tetris extends JFrame{
     }
 
     public void TetrisControler(){
-        Tetoris.setFocusable(true);
-        Tetoris.requestFocusInWindow();
         /* Title & Return to Main Menu */
         {
             JPanel Tetoris_Title = new JPanel();
@@ -66,6 +68,7 @@ public class Tetris extends JFrame{
                 logica.Tablero_Restart(Tablero_);
                 if (Tetris_Principal != null){
                     Tetris_Principal.cancel();
+                    Tetris_Draw.cancel();
                 }
                 Tetoris.setVisible(false);
                 GamesMenu.setVisible(true);
@@ -75,44 +78,89 @@ public class Tetris extends JFrame{
         }
 
         JButton Down = new JButton();
-        Down.setBounds(200, 200, 100, 50);
+        Down.setBounds(200, 350, 100, 50);
         Down.setText("↓");
         Down.addActionListener(_ -> logica.PartDown(Tablero_));
         Tetoris.add(Down);
 
         JButton Right = new JButton();
-        Right.setBounds(300, 200, 100, 50);
+        Right.setBounds(300, 350, 100, 50);
         Right.setText("→");
         Right.addActionListener(_ -> logica.PartRight(Tablero_));
         Tetoris.add(Right);
 
         JButton Left = new JButton();
-        Left.setBounds(100, 200, 100, 50);
+        Left.setBounds(100, 350, 100, 50);
         Left.setText("←");
         Left.addActionListener(_ -> logica.PartLeft(Tablero_));
         Tetoris.add(Left);
 
         JButton Rotate = new JButton();
-        Rotate.setBounds(200, 150, 100, 50);
+        Rotate.setBounds(200, 300, 100, 50);
         Rotate.setText("↻");
         Rotate.addActionListener(_ -> NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion));
         Tetoris.add(Rotate);
 
+        JLabel Puntuacion = new JLabel();
+        Puntuacion.setBounds(175, 400, 300, 50);
+        Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
+        new Thread(() -> {
+            while (true){
+                Puntuacion.setText("Puntuacion: " + (PuntuacionFinal + (IPuntuacion * logica.getLineasCompletas())));
+                if (logica.getLineasSeguidas() == 4) {
+                    PuntuacionFinal += 40;
+                    logica.resetLineasSeguidas();
+                }
+            }
+        }).start();
+        Tetoris.add(Puntuacion);
+
+        Panel_ProxPieza = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                int x = 125, y = 60;
+
+                try {
+                    for (ArrayList<Integer> Filas : piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion())) {
+                        for (Integer Col : Filas) {
+                            if (Col == 0) g.setColor(Color.BLACK);
+                            if (Col == 1 || Col == 2) g.setColor(Color.RED);
+                            if (Col == 3 || Col == 4) g.setColor(Color.BLUE);
+                            if (Col == 5 || Col == 6) g.setColor(Color.GREEN);
+                            if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
+                            if (Col == 9 || Col == 10) g.setColor(Color.YELLOW);
+                            if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
+                            if (Col == 13 || Col == 14) g.setColor(Color.WHITE);
+                            if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
+                            if (Col == 17 || Col == 18) g.setColor(Color.GRAY);
+
+                            g.fillRect(x, y, 25, 25);
+                            g.setColor(Color.GRAY);
+
+
+                            x += 25;
+                        }
+                        x = 125;
+                        y += 25;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error-Tablero");
+                }
+                Panel_ProxPieza.repaint();
+            }
+        };
+        Panel_ProxPieza.setBackground(Color.BLACK);
+        Panel_ProxPieza.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5));
+        Panel_ProxPieza.setBounds(100, 75, 300, 200);
+        Tetoris.add(Panel_ProxPieza);
+
+        Panel_ProxPieza.repaint();
+
         new Thread(() -> TableroJuego(TableroJuego)).start();
         TableroJuego.setVisible(true);
 
-        Tetoris.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-
-                if (e.getKeyCode() == 38) NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion);
-                else if (e.getKeyCode() == 37) logica.PartLeft(Tablero_);
-                else if (e.getKeyCode() == 40) logica.PartDown(Tablero_);
-                else if (e.getKeyCode() == 39) logica.PartRight(Tablero_);
-
-            }
-        });
     }
 
     public void TableroJuego(JFrame TableroJuego){
@@ -144,6 +192,13 @@ public class Tetris extends JFrame{
                             if (Col == 17 || Col == 18) g.setColor(Color.GRAY);
 
                             g.fillRect(x, y, 32, 32);
+                            g.setColor(Color.GRAY);
+
+                            /* *
+                            g.drawRect(x, 10, 1, 960);
+                            g.drawRect(10, y, 480, 1);
+                            / */
+
                             x += 32;
                         }
                         x = 10;
@@ -204,11 +259,6 @@ public class Tetris extends JFrame{
     public void NewPart(){
         if (!Tablero_.isEmpty()){
 
-            /*int NoPieza = (int) (Math.random()*2);
-            if (NoPieza == 1) {
-                NoPieza = 6;
-            }*/
-
             int CountMParts = 0;
 
             for (int i = (Tablero_.size() - 1); i >= 0; i--) {
@@ -220,8 +270,9 @@ public class Tetris extends JFrame{
             }
 
             if (CountMParts == 0) {
-                NoPieza = (int) (Math.random() * piezas.CantPiezas());
-                NoRotacion = (int) (Math.random() * piezas.CantRPieza(NoPieza));
+                NoPieza = logica.getNoProxPieza();
+                NoRotacion = logica.getNoProxRotacion();
+
                 int PosAparicion = (int) (Math.random() * Tablero_.getFirst().size());
                 C_Time+=1;
                 while (logica.NewPart(Tablero_, PosAparicion, piezas.getPart(NoPieza, NoRotacion))) {
@@ -232,6 +283,13 @@ public class Tetris extends JFrame{
             if (C_Time == 0){
                 logica.PartDown(Tablero_);
             }else C_Time--;
+
+            if (logica.getLineasSeguidas_10() == 10){
+                Velocidad -= 10;
+                Tetris_Principal.cancel();
+                IniciarJuego();
+                logica.resetLineasSeguidas_10();
+            }
 
             Ex = true;
 

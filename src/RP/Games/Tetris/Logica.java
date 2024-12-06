@@ -8,7 +8,12 @@ public class Logica {
 
     public Logica(){}
 
+    int NoProxPieza, NoProxRotacion;
+
     int Repeticiones = 0;
+    int LineasCompletas = 0;
+    int LineasSeguidas = 0;
+    int LineasSeguidas_10 = 0;
 
     public int RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
         boolean Pass = true;
@@ -107,6 +112,7 @@ public class Logica {
                             Tablero.get(i).set((j + x), Pieza.get(i).get(j));
                         }
                     }
+                    nextPart();
                 }
             }
         }
@@ -132,6 +138,9 @@ public class Logica {
                         }
                     }
                 }
+                LineasSeguidas_10++;
+                LineasSeguidas++;
+                LineasCompletas++;
                 i++;
                 Return = false;
             }
@@ -345,6 +354,34 @@ public class Logica {
         }
 
         return Return;
+    }
+
+    public int getLineasCompletas(){
+        return LineasCompletas;
+    }
+    public int getLineasSeguidas(){
+        return LineasSeguidas;
+    }
+    public void resetLineasSeguidas(){
+        LineasSeguidas = 0;
+    }
+    public int getLineasSeguidas_10(){
+        return LineasSeguidas_10;
+    }
+    public void resetLineasSeguidas_10(){
+        LineasSeguidas_10 = 0;
+    }
+
+    public void nextPart(){
+        NoProxPieza = (int) (Math.random() * piezas.CantPiezas());
+        NoProxRotacion = (int) (Math.random() * piezas.CantRPieza(NoProxPieza));
+    }
+
+    public int getNoProxPieza(){
+        return NoProxPieza;
+    }
+    public int getNoProxRotacion(){
+        return NoProxRotacion;
     }
 
     public static ArrayList<Integer> CompFTablero = new ArrayList<>() {{
