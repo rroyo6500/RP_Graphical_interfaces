@@ -359,6 +359,9 @@ public class Logica {
     public int getLineasCompletas(){
         return LineasCompletas;
     }
+    public void reserLineasCompletas(){
+        LineasCompletas = 0;
+    }
     public int getLineasSeguidas(){
         return LineasSeguidas;
     }

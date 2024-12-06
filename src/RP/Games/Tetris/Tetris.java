@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 0;        // +5
+    int Velocidad = 500;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
@@ -31,6 +31,8 @@ public class Tetris extends JFrame{
 
     Timer Tetris_Principal;
     Timer Tetris_Draw;
+
+    JLabel Puntuacion;
 
     JPanel Tetoris, GamesMenu;
     JFrame TableroJuego = new JFrame() {{
@@ -112,7 +114,7 @@ public class Tetris extends JFrame{
         Rotate.addActionListener(_ -> NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion));
         Tetoris.add(Rotate);
 
-        JLabel Puntuacion = new JLabel();
+        Puntuacion = new JLabel();
         Puntuacion.setBounds(175, 400, 300, 50);
         Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
         new Thread(() -> {
@@ -124,6 +126,9 @@ public class Tetris extends JFrame{
                     logica.resetLineasSeguidas();
                 }
             }
+            PuntuacionFinal = 0;
+            logica.reserLineasCompletas();
+            Puntuacion.setText("");
         }).start();
         Tetoris.add(Puntuacion);
 
@@ -211,11 +216,11 @@ public class Tetris extends JFrame{
                             if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
 
                             g.fillRect(x, y, 32, 32);
-                            g.setColor(Color.GRAY);
 
                             /* *
-                            g.drawRect(x, 10, 1, 960);
-                            g.drawRect(10, y, 480, 1);
+                            g.setColor(Color.DARK_GRAY);
+                            g.drawRect(x, y, 1, 32);
+                            g.drawRect(x, y, 32, 1);
                             / */
 
                             x += 32;
