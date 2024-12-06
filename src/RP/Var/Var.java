@@ -20,7 +20,7 @@ public class Var extends JFrame{
     public static JPanel Games_ = new JPanel();
 
     public static ArrayList<JPanel> GamesPanel = new ArrayList<>(){{
-        add(new JPanel()); //0 -> Tic Tac Toe
+        add(new JPanel()); //0 -> Tetris
     }};
 
     // Window Size

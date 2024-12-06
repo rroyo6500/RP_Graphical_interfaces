@@ -10,18 +10,6 @@ public class Logica {
 
     int Repeticiones = 0;
 
-    /*
-        Rotar Piezas:
-            Idea:
-                Localizar las partes de las piezas que se pueden mover y comparar con la pieza para conseguir la esquena superior izquierda.
-                Una vez conseguida se eliminan las partes le pa pieza en movimiento y se reescriben con la nueva rotacion.
-            IMPORTANTE:
-                Compobar si la posicion es un bloque estatico o no (unicamente si el bloque ovservado en la nueva rotacion != 0)
-
-                        if (NoRotacion == piezas.CantRPieza(NoPieza)) NoPieza = 0;
-
-                        ArrayList<ArrayList<Integer>> NewPartRotation = piezas.getPart(NoPieza, NoRotacion);
-    */
     public int RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
         boolean Pass = true;
 

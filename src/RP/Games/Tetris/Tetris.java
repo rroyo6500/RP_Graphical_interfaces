@@ -4,13 +4,15 @@ import RP.Var.Var;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 500;        // +5
+    int Velocidad = 0;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
@@ -38,6 +40,8 @@ public class Tetris extends JFrame{
     }
 
     public void TetrisControler(){
+        Tetoris.setFocusable(true);
+        Tetoris.requestFocusInWindow();
         /* Title & Return to Main Menu */
         {
             JPanel Tetoris_Title = new JPanel();
@@ -59,7 +63,7 @@ public class Tetris extends JFrame{
             MMenu.setBackground(new Color(255, 255, 255));
             MMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
             MMenu.addActionListener(_ -> {
-                Tablero_.clear();
+                logica.Tablero_Restart(Tablero_);
                 if (Tetris_Principal != null){
                     Tetris_Principal.cancel();
                 }
@@ -71,31 +75,44 @@ public class Tetris extends JFrame{
         }
 
         JButton Down = new JButton();
-        Down.setBounds(100, 100, 100, 50);
-        Down.setText("Down");
+        Down.setBounds(200, 200, 100, 50);
+        Down.setText("↓");
         Down.addActionListener(_ -> logica.PartDown(Tablero_));
         Tetoris.add(Down);
 
         JButton Right = new JButton();
-        Right.setBounds(200, 100, 100, 50);
-        Right.setText("Right");
+        Right.setBounds(300, 200, 100, 50);
+        Right.setText("→");
         Right.addActionListener(_ -> logica.PartRight(Tablero_));
         Tetoris.add(Right);
 
         JButton Left = new JButton();
-        Left.setBounds(300, 100, 100, 50);
-        Left.setText("Left");
+        Left.setBounds(100, 200, 100, 50);
+        Left.setText("←");
         Left.addActionListener(_ -> logica.PartLeft(Tablero_));
         Tetoris.add(Left);
 
         JButton Rotate = new JButton();
         Rotate.setBounds(200, 150, 100, 50);
-        Rotate.setText("Rotate");
+        Rotate.setText("↻");
         Rotate.addActionListener(_ -> NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion));
         Tetoris.add(Rotate);
 
         new Thread(() -> TableroJuego(TableroJuego)).start();
         TableroJuego.setVisible(true);
+
+        Tetoris.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+
+                if (e.getKeyCode() == 38) NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion);
+                else if (e.getKeyCode() == 37) logica.PartLeft(Tablero_);
+                else if (e.getKeyCode() == 40) logica.PartDown(Tablero_);
+                else if (e.getKeyCode() == 39) logica.PartRight(Tablero_);
+
+            }
+        });
     }
 
     public void TableroJuego(JFrame TableroJuego){
@@ -135,8 +152,23 @@ public class Tetris extends JFrame{
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
                 }
+                //Tablero.repaint();
             }
         };
+        Tablero.setFocusable(true);
+        Tablero.requestFocusInWindow();
+        Tablero.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+
+                if (e.getKeyCode() == 38) NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion);
+                else if (e.getKeyCode() == 37) logica.PartLeft(Tablero_);
+                else if (e.getKeyCode() == 40) logica.PartDown(Tablero_);
+                else if (e.getKeyCode() == 39) logica.PartRight(Tablero_);
+
+            }
+        });
 
         IniciarTablero();
         IniciarJuego();
@@ -197,11 +229,9 @@ public class Tetris extends JFrame{
                 }
             }
 
-            if (CountMParts > 0){
-                if (C_Time == 0){
-                    logica.PartDown(Tablero_);
-                }else C_Time--;
-            }
+            if (C_Time == 0){
+                logica.PartDown(Tablero_);
+            }else C_Time--;
 
             Ex = true;
 
