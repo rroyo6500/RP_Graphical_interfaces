@@ -375,6 +375,7 @@ public class Logica {
     public void nextPart(){
         NoProxPieza = (int) (Math.random() * piezas.CantPiezas());
         NoProxRotacion = (int) (Math.random() * piezas.CantRPieza(NoProxPieza));
+        if (NoProxRotacion > (piezas.CantRPieza(NoProxPieza) - 1)) NoProxRotacion = 0;
     }
 
     public int getNoProxPieza(){

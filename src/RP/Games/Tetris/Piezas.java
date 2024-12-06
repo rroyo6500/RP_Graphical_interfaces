@@ -7,7 +7,11 @@ public class Piezas {
     public Piezas(){}
 
     public ArrayList<ArrayList<Integer>> getPart(int NoPieza, int NoRotacion){
-        return Piezas_.get(NoPieza).get(NoRotacion);
+        try {
+            return Piezas_.get(NoPieza).get(NoRotacion);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Integer CantPiezas(){

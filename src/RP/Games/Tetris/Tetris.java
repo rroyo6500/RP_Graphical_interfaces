@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 500;        // +5
+    int Velocidad = 0;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
@@ -22,6 +22,8 @@ public class Tetris extends JFrame{
 
     int IPuntuacion = 15;
     int PuntuacionFinal = 0;
+
+    boolean ExPuntuacion = true;
 
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
@@ -70,6 +72,7 @@ public class Tetris extends JFrame{
                     Tetris_Principal.cancel();
                     Tetris_Draw.cancel();
                 }
+                ExPuntuacion = false;
                 Tetoris.setVisible(false);
                 GamesMenu.setVisible(true);
                 TableroJuego.setVisible(false);
@@ -80,24 +83,32 @@ public class Tetris extends JFrame{
         JButton Down = new JButton();
         Down.setBounds(200, 350, 100, 50);
         Down.setText("↓");
+        Down.setBackground(new Color(255,255,255));
+        Down.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Down.addActionListener(_ -> logica.PartDown(Tablero_));
         Tetoris.add(Down);
 
         JButton Right = new JButton();
         Right.setBounds(300, 350, 100, 50);
         Right.setText("→");
+        Right.setBackground(new Color(255,255,255));
+        Right.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Right.addActionListener(_ -> logica.PartRight(Tablero_));
         Tetoris.add(Right);
 
         JButton Left = new JButton();
         Left.setBounds(100, 350, 100, 50);
         Left.setText("←");
+        Left.setBackground(new Color(255,255,255));
+        Left.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Left.addActionListener(_ -> logica.PartLeft(Tablero_));
         Tetoris.add(Left);
 
         JButton Rotate = new JButton();
         Rotate.setBounds(200, 300, 100, 50);
         Rotate.setText("↻");
+        Rotate.setBackground(new Color(255,255,255));
+        Rotate.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
         Rotate.addActionListener(_ -> NoRotacion = logica.RotatePart(Tablero_, NoPieza, NoRotacion));
         Tetoris.add(Rotate);
 
@@ -105,7 +116,8 @@ public class Tetris extends JFrame{
         Puntuacion.setBounds(175, 400, 300, 50);
         Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
         new Thread(() -> {
-            while (true){
+            ExPuntuacion = true;
+            while (ExPuntuacion){
                 Puntuacion.setText("Puntuacion: " + (PuntuacionFinal + (IPuntuacion * logica.getLineasCompletas())));
                 if (logica.getLineasSeguidas() == 4) {
                     PuntuacionFinal += 40;
@@ -120,30 +132,39 @@ public class Tetris extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                int x = 125, y = 60;
+                int x = 0;
+                if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 1) x = 140;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 2) x = 130;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 3) x = 120;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 4) x = 110;
+                int x_res = x;
+
+                int y = 0;
+                if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 1) y = 90;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 2) y = 80;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 3) y = 70;
+                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 4) y = 60;
 
                 try {
                     for (ArrayList<Integer> Filas : piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion())) {
                         for (Integer Col : Filas) {
                             if (Col == 0) g.setColor(Color.BLACK);
-                            if (Col == 1 || Col == 2) g.setColor(Color.RED);
-                            if (Col == 3 || Col == 4) g.setColor(Color.BLUE);
-                            if (Col == 5 || Col == 6) g.setColor(Color.GREEN);
+                            if (Col == 1 || Col == 2) g.setColor(Color.YELLOW);
+                            if (Col == 3 || Col == 4) g.setColor(Color.GREEN);
+                            if (Col == 5 || Col == 6) g.setColor(Color.RED);
                             if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
-                            if (Col == 9 || Col == 10) g.setColor(Color.YELLOW);
-                            if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
-                            if (Col == 13 || Col == 14) g.setColor(Color.WHITE);
-                            if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
-                            if (Col == 17 || Col == 18) g.setColor(Color.GRAY);
+                            if (Col == 9 || Col == 10) g.setColor(Color.ORANGE);
+                            if (Col == 11 || Col == 12) g.setColor(Color.BLUE);
+                            if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
 
-                            g.fillRect(x, y, 25, 25);
+                            g.fillRect(x, y, 20, 20);
                             g.setColor(Color.GRAY);
 
 
-                            x += 25;
+                            x += 20;
                         }
-                        x = 125;
-                        y += 25;
+                        x = x_res;
+                        y += 20;
                     }
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
@@ -181,15 +202,13 @@ public class Tetris extends JFrame{
                     for (ArrayList<Integer> Filas : Tablero_) {
                         for (Integer Col : Filas) {
                             if (Col == 0) g.setColor(Color.BLACK);
-                            if (Col == 1 || Col == 2) g.setColor(Color.RED);
-                            if (Col == 3 || Col == 4) g.setColor(Color.BLUE);
-                            if (Col == 5 || Col == 6) g.setColor(Color.GREEN);
+                            if (Col == 1 || Col == 2) g.setColor(Color.YELLOW);
+                            if (Col == 3 || Col == 4) g.setColor(Color.GREEN);
+                            if (Col == 5 || Col == 6) g.setColor(Color.RED);
                             if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
-                            if (Col == 9 || Col == 10) g.setColor(Color.YELLOW);
-                            if (Col == 11 || Col == 12) g.setColor(Color.CYAN);
-                            if (Col == 13 || Col == 14) g.setColor(Color.WHITE);
-                            if (Col == 15 || Col == 16) g.setColor(Color.ORANGE);
-                            if (Col == 17 || Col == 18) g.setColor(Color.GRAY);
+                            if (Col == 9 || Col == 10) g.setColor(Color.ORANGE);
+                            if (Col == 11 || Col == 12) g.setColor(Color.BLUE);
+                            if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
 
                             g.fillRect(x, y, 32, 32);
                             g.setColor(Color.GRAY);
@@ -210,6 +229,7 @@ public class Tetris extends JFrame{
                 //Tablero.repaint();
             }
         };
+        Tablero.setBackground(Color.GRAY);
         Tablero.setFocusable(true);
         Tablero.requestFocusInWindow();
         Tablero.addKeyListener(new KeyAdapter() {
