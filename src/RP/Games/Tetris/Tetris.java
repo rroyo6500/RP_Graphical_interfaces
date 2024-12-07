@@ -50,7 +50,7 @@ public class Tetris extends JFrame{
     int IPuntuacion = 15;
     int PuntuacionFinal = 0;
 
-    boolean Ex_ = true;
+    boolean Ex_ = true, Ex__ = true;
 
     Timer Tetris_Principal;
     Timer Tetris_Draw;
@@ -98,6 +98,7 @@ public class Tetris extends JFrame{
                     Tetris_Draw.cancel();
                 }
                 Ex_ = false;
+                Ex__ = false;
                 Tetoris.setVisible(false);
                 GamesMenu.setVisible(true);
                 TableroJuego.setVisible(false);
@@ -150,17 +151,19 @@ public class Tetris extends JFrame{
         Puntuacion.setBounds(175, 400, 300, 50);
         Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
         new Thread(() -> {
-            Ex_ = true;
-            while (Ex_){
-                Puntuacion.setText("Puntuacion: " + (PuntuacionFinal + (IPuntuacion * logica.getLineasCompletas())));
-                if (logica.getLineasSeguidas() >= 4) {
-                    PuntuacionFinal += (10 * logica.getLineasSeguidas());
-                    logica.resetLineasSeguidas();
+            while (Ex__){
+                Ex_ = true;
+                while (Ex_) {
+                    Puntuacion.setText("Puntuacion: " + (PuntuacionFinal + (IPuntuacion * logica.getLineasCompletas())));
+                    if (logica.getLineasSeguidas() >= 4) {
+                        PuntuacionFinal += (10 * logica.getLineasSeguidas());
+                        logica.resetLineasSeguidas();
+                    }
                 }
+                PuntuacionFinal = 0;
+                logica.resetLineasCompletas();
+                Puntuacion.setText("");
             }
-            PuntuacionFinal = 0;
-            logica.resetLineasCompletas();
-            Puntuacion.setText("");
         }).start();
         Tetoris.add(Puntuacion);
 
@@ -271,8 +274,13 @@ public class Tetris extends JFrame{
                     g.drawRect(9, 9, 482, 962);
                     g.drawRect(7, 7, 486, 966);
                     g.drawRect(6, 6, 488, 968);
+                    g.drawRect(3, 3, 494, 974);
                     g.setColor(Color.BLACK);
                     g.drawRect(8, 8, 484, 964);
+                    g.drawRect(5, 5, 490, 970);
+                    g.drawRect(4, 4, 492, 972);
+                    g.drawRect(2, 2, 496, 976);
+                    g.drawRect(1, 1, 498, 978);
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
                 }
