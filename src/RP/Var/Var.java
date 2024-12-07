@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
-//import java.util.Scanner;
+import java.util.Scanner;
 
 public class Var extends JFrame{
 
-    //public static Scanner in = new Scanner(System.in);
+    public static Scanner in = new Scanner(System.in);
 
     static Path currentDirectoryPath = FileSystems.getDefault().getPath("");
     public static String path = currentDirectoryPath.toAbsolutePath().toString();
@@ -40,6 +40,10 @@ public class Var extends JFrame{
     }
     public int Height(int Height){
         return Height;
+    }
+
+    public Scanner in(){
+        return in;
     }
 
 }

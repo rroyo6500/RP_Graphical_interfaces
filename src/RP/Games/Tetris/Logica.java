@@ -381,6 +381,13 @@ public class Logica {
         if (NoProxRotacion > (piezas.CantRPieza(NoProxPieza) - 1)) NoProxRotacion = 0;
     }
 
+    public void setNoProxPieza(int ProxPart){
+        NoProxPieza = ProxPart;
+    }
+    public void setNoProxRotacion(int ProxRotacion){
+        NoProxRotacion = ProxRotacion;
+    }
+
     public int getNoProxPieza(){
         return NoProxPieza;
     }

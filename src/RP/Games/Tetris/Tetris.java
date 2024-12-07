@@ -12,18 +12,20 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 500;        // +5
+    int Velocidad = 0;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
 
     int NoPieza;
     int NoRotacion;
+    int NoProxPieza;
+    int NoProxRotacion;
 
     int IPuntuacion = 15;
     int PuntuacionFinal = 0;
 
-    boolean ExPuntuacion = true;
+    boolean Ex_ = true;
 
     Piezas piezas = new Piezas();
     Logica logica = new Logica();
@@ -74,12 +76,21 @@ public class Tetris extends JFrame{
                     Tetris_Principal.cancel();
                     Tetris_Draw.cancel();
                 }
-                ExPuntuacion = false;
+                Ex_ = false;
                 Tetoris.setVisible(false);
                 GamesMenu.setVisible(true);
                 TableroJuego.setVisible(false);
             });
             Tetoris_Title.add(MMenu);
+
+            JButton BCommandPrompt = new JButton();
+            BCommandPrompt.setBounds(290, 10, 100, 20);
+            BCommandPrompt.setFont(new Font("Arial", Font.BOLD, 10));
+            BCommandPrompt.setText("Command Prompt");
+            BCommandPrompt.setBackground(new Color(255, 255, 255));
+            BCommandPrompt.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+            BCommandPrompt.addActionListener(_ -> new Thread(this::CommandPrompt).start());
+            Tetoris_Title.add(BCommandPrompt);
         }
 
         JButton Down = new JButton();
@@ -118,11 +129,11 @@ public class Tetris extends JFrame{
         Puntuacion.setBounds(175, 400, 300, 50);
         Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
         new Thread(() -> {
-            ExPuntuacion = true;
-            while (ExPuntuacion){
+            Ex_ = true;
+            while (Ex_){
                 Puntuacion.setText("Puntuacion: " + (PuntuacionFinal + (IPuntuacion * logica.getLineasCompletas())));
-                if (logica.getLineasSeguidas() == 4) {
-                    PuntuacionFinal += 40;
+                if (logica.getLineasSeguidas() >= 4) {
+                    PuntuacionFinal += (10 * logica.getLineasSeguidas());
                     logica.resetLineasSeguidas();
                 }
             }
@@ -137,21 +148,26 @@ public class Tetris extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
+                NoProxPieza = logica.getNoProxPieza();
+                NoProxRotacion = logica.getNoProxRotacion();
+
+                if (NoProxRotacion > (piezas.CantRPieza(NoProxPieza) - 1)) NoProxRotacion = 0;
+
                 int x = 0;
-                if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 1) x = 140;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 2) x = 130;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 3) x = 120;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).getFirst().size() == 4) x = 110;
+                if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 1) x = 140;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 2) x = 130;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 3) x = 120;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 4) x = 110;
                 int x_res = x;
 
                 int y = 0;
-                if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 1) y = 90;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 2) y = 80;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 3) y = 70;
-                else if (piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion()).size() == 4) y = 60;
+                if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 1) y = 90;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 2) y = 80;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 3) y = 70;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 4) y = 60;
 
                 try {
-                    for (ArrayList<Integer> Filas : piezas.getPart(logica.getNoProxPieza(), logica.getNoProxRotacion())) {
+                    for (ArrayList<Integer> Filas : piezas.getPart(NoProxPieza, NoProxRotacion)) {
                         for (Integer Col : Filas) {
                             if (Col == 0) g.setColor(Color.BLACK);
                             if (Col == 1 || Col == 2) g.setColor(Color.YELLOW);
@@ -214,6 +230,7 @@ public class Tetris extends JFrame{
                             if (Col == 9 || Col == 10) g.setColor(Color.ORANGE);
                             if (Col == 11 || Col == 12) g.setColor(Color.BLUE);
                             if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
+                            if (Col == 100) g.setColor(Color.WHITE);
 
                             g.fillRect(x, y, 32, 32);
 
@@ -346,4 +363,58 @@ public class Tetris extends JFrame{
 
     // Arrays [Tablero_, CompFTablero]
     public static ArrayList<ArrayList<Integer>> Tablero_;
+
+    public void CommandPrompt(){
+        String Command;
+        String[] Command_S;
+        while (Ex_){
+            System.out.print("    - ");
+            Command = var.in().nextLine();
+
+            if (Command.matches("^¡v = .*")){
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                Velocidad = Integer.parseInt(Command_S[1]);
+                Tetris_Principal.cancel();
+                IniciarJuego();
+            } else if (Command.matches("^¡p = .*")) {
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                logica.setNoProxPieza(Integer.parseInt(Command_S[1]));
+            } else if (Command.matches("^¡r = .*")) {
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                logica.setNoProxRotacion(Integer.parseInt(Command_S[1]));
+            } else if (Command.matches("^¡compf = .*")) {
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                for (int i = 0; i < Tablero_.getFirst().size(); i++) {
+                    Tablero_.get(Integer.parseInt(Command_S[1])).set(i, 100);
+                }
+            } else if (Command.matches("^¡compaf = .*")) {
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                for (int i = (Tablero_.size() - 1); i >= Integer.parseInt(Command_S[1]); i--) {
+                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+                        Tablero_.get(i).set(j, 100);
+                    }
+                }
+            } else if (Command.matches("^¡score = .*")) {
+                Command = Command.replaceAll(" = ", " ");
+                Command_S = Command.split(" ");
+                PuntuacionFinal = Integer.parseInt(Command_S[1]);
+            } else if (Command.matches("^¡freze.*")) {
+                for (int i = (Tablero_.size() - 1); i >= 0; i--) {
+                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
+                        if ((Tablero_.get(i).get(j) % 2) == 1) {
+                            Tablero_.get(i).set(j, (Tablero_.get(i).get(j) + 1));
+                        }
+                    }
+                }
+            } else if (Command.matches("^¡clear.*")) {
+                logica.Tablero_Restart(Tablero_);
+            } else if (Command.matches("^¡exit")) Ex_ = false;
+        }
+        Ex_ = true;
+    }
 }
