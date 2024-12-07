@@ -107,10 +107,10 @@ public class Tetris extends JFrame{
             JButton BCommandPrompt = new JButton();
             BCommandPrompt.setBounds(290, 10, 100, 20);
             BCommandPrompt.setFont(new Font("Arial", Font.BOLD, 10));
-            BCommandPrompt.setText("Command Prompt");
+            BCommandPrompt.setText("Consola");
             BCommandPrompt.setBackground(new Color(255, 255, 255));
             BCommandPrompt.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
-            BCommandPrompt.addActionListener(_ -> new Thread(this::CommandPrompt).start());
+            BCommandPrompt.addActionListener(_ -> new Thread(this::Console).start());
             Tetoris_Title.add(BCommandPrompt);
         }
 
@@ -385,7 +385,7 @@ public class Tetris extends JFrame{
     // Arrays [Tablero_, CompFTablero]
     public static ArrayList<ArrayList<Integer>> Tablero_;
 
-    public void CommandPrompt(){
+    public void Console(){
         String Command;
         String[] Command_S;
         while (Ex_){
