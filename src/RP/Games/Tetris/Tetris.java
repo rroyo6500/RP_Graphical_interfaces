@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 public class Tetris extends JFrame{
 
-    int Velocidad = 0;        // +5
+    int Velocidad = 500;        // +5
     int C = 0;
     int C_Time = 0;
     boolean Ex = true;
