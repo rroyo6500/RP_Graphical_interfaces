@@ -246,16 +246,16 @@ public class Tetris extends JFrame{
                             if (Col == 0) {
                                 g.setColor(Color.BLACK);
                                 g.fillRect(x, y, 32, 32);
-                                g.drawImage( BlackBlock, x, y, 32, 32, null);
+                                g.drawImage(BlackBlock, x, y, 32, 32, null);
                             }
-                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 32, 32, null);
-                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 32, 32, null);
-                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 32, 32, null);
-                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 32, 32, null);
-                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 32, 32, null);
-                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 32, 32, null);
-                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 32, 32, null);
-                            if (Col == 100) {
+                            if (Col == 1 || Col == 2) g.drawImage(YellowBlock, x, y, 32, 32, null);
+                            else if (Col == 3 || Col == 4) g.drawImage(GreenBlock, x, y, 32, 32, null);
+                            else if (Col == 5 || Col == 6) g.drawImage(RedBlock, x, y, 32, 32, null);
+                            else if (Col == 7 || Col == 8) g.drawImage(PurpleBlock, x, y, 32, 32, null);
+                            else if (Col == 9 || Col == 10) g.drawImage(OrangeBlock, x, y, 32, 32, null);
+                            else if (Col == 11 || Col == 12) g.drawImage(BlueBlock, x, y, 32, 32, null);
+                            else if (Col == 13 || Col == 14) g.drawImage(CyanBLock, x, y, 32, 32, null);
+                            else if (Col == 100) {
                                 g.setColor(Color.WHITE);
                                 g.fillRect(x, y, 32, 32);
                                 g.drawImage( BlackBlock, x, y, 32, 32, null);
@@ -303,7 +303,7 @@ public class Tetris extends JFrame{
             public void run() {
                 Tablero.repaint();
             }
-        }, 0, 10);
+        }, 0, 5);
     }
 
     public void IniciarJuego(){

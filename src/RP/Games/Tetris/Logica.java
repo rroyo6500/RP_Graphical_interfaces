@@ -10,9 +10,9 @@ public class Logica {
 
     public String getPath(String path){
         if (path.matches("^[a-zA-Z]:")){
-            return path + "\\Resources\\Tetris\\Blocks\\";
+            return path + "\\src\\Resources\\Tetris\\Blocks\\";
         }else {
-            return path + "/Resources/Tetris/Blocks/";
+            return path + "/src/Resources/Tetris/Blocks/";
         }
     }
 
