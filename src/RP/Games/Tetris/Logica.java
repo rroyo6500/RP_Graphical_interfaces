@@ -8,6 +8,14 @@ public class Logica {
 
     public Logica(){}
 
+    public String getPath(String path){
+        if (path.matches("^[a-zA-Z]:")){
+            return path + "\\Resources\\Tetris\\Blocks\\";
+        }else {
+            return path + "/Resources/Tetris/Blocks/";
+        }
+    }
+
     private int NoProxPieza, NoProxRotacion;
 
     private int Repeticiones = 0;

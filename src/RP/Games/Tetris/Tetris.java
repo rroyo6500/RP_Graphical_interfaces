@@ -2,15 +2,40 @@ package RP.Games.Tetris;
 
 import RP.Var.Var;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Tetris extends JFrame{
+
+    Piezas piezas = new Piezas();
+    Logica logica = new Logica();
+    Var var = new Var();
+
+    final BufferedImage YellowBlock, BlueBlock, CyanBLock, GreenBlock, OrangeBlock, PurpleBlock, RedBlock, BlackBlock;
+
+    {
+        try {
+            YellowBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisYellow.png"));
+            BlueBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisBlue.png"));
+            CyanBLock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisCyan.png"));
+            GreenBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisGreen.png"));
+            OrangeBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisOrange.png"));
+            PurpleBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisPurple.png"));
+            RedBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisRed.png"));
+            BlackBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisGhost.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     int Velocidad = 500;        // +5
     int C = 0;
@@ -26,10 +51,6 @@ public class Tetris extends JFrame{
     int PuntuacionFinal = 0;
 
     boolean Ex_ = true;
-
-    Piezas piezas = new Piezas();
-    Logica logica = new Logica();
-    Var var = new Var();
 
     Timer Tetris_Principal;
     Timer Tetris_Draw;
@@ -169,18 +190,17 @@ public class Tetris extends JFrame{
                 try {
                     for (ArrayList<Integer> Filas : piezas.getPart(NoProxPieza, NoProxRotacion)) {
                         for (Integer Col : Filas) {
-                            if (Col == 0) g.setColor(Color.BLACK);
-                            if (Col == 1 || Col == 2) g.setColor(Color.YELLOW);
-                            if (Col == 3 || Col == 4) g.setColor(Color.GREEN);
-                            if (Col == 5 || Col == 6) g.setColor(Color.RED);
-                            if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
-                            if (Col == 9 || Col == 10) g.setColor(Color.ORANGE);
-                            if (Col == 11 || Col == 12) g.setColor(Color.BLUE);
-                            if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
-
-                            g.fillRect(x, y, 20, 20);
-                            g.setColor(Color.GRAY);
-
+                            if (Col == 0) {
+                                g.setColor(Color.BLACK);
+                                g.fillRect(x, y, 20, 20);
+                            }
+                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 20, 20, null);
+                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 20, 20, null);
+                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 20, 20, null);
+                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 20, 20, null);
+                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 20, 20, null);
+                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 20, 20, null);
+                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 20, 20, null);
 
                             x += 20;
                         }
@@ -222,23 +242,24 @@ public class Tetris extends JFrame{
                 try {
                     for (ArrayList<Integer> Filas : Tablero_) {
                         for (Integer Col : Filas) {
-                            if (Col == 0) g.setColor(Color.BLACK);
-                            if (Col == 1 || Col == 2) g.setColor(Color.YELLOW);
-                            if (Col == 3 || Col == 4) g.setColor(Color.GREEN);
-                            if (Col == 5 || Col == 6) g.setColor(Color.RED);
-                            if (Col == 7 || Col == 8) g.setColor(Color.MAGENTA);
-                            if (Col == 9 || Col == 10) g.setColor(Color.ORANGE);
-                            if (Col == 11 || Col == 12) g.setColor(Color.BLUE);
-                            if (Col == 13 || Col == 14) g.setColor(Color.CYAN);
-                            if (Col == 100) g.setColor(Color.WHITE);
 
-                            g.fillRect(x, y, 32, 32);
-
-                            /* *
-                            g.setColor(Color.DARK_GRAY);
-                            g.drawRect(x, y, 1, 32);
-                            g.drawRect(x, y, 32, 1);
-                            / */
+                            if (Col == 0) {
+                                g.setColor(Color.BLACK);
+                                g.fillRect(x, y, 32, 32);
+                                g.drawImage( BlackBlock, x, y, 32, 32, null);
+                            }
+                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 32, 32, null);
+                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 32, 32, null);
+                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 32, 32, null);
+                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 32, 32, null);
+                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 32, 32, null);
+                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 32, 32, null);
+                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 32, 32, null);
+                            if (Col == 100) {
+                                g.setColor(Color.WHITE);
+                                g.fillRect(x, y, 32, 32);
+                                g.drawImage( BlackBlock, x, y, 32, 32, null);
+                            }
 
                             x += 32;
                         }
