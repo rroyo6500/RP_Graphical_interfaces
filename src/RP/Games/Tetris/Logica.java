@@ -8,12 +8,12 @@ public class Logica {
 
     public Logica(){}
 
-    int NoProxPieza, NoProxRotacion;
+    private int NoProxPieza, NoProxRotacion;
 
-    int Repeticiones = 0;
-    int LineasCompletas = 0;
-    int LineasSeguidas = 0;
-    int LineasSeguidas_10 = 0;
+    private int Repeticiones = 0;
+    private int LineasCompletas = 0;
+    private int LineasSeguidas = 0;
+    private int LineasSeguidas_10 = 0;
 
     public int RotatePart(ArrayList<ArrayList<Integer>> Tablero, int NoPieza, int NoRotacion){
         boolean Pass = true;
@@ -66,13 +66,7 @@ public class Logica {
         }
 
         if (Pass){
-            for (int i = (Tablero.size() - 1); i >= 0; i--) {
-                for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
-                    if ((Tablero.get(i).get(j) % 2) == 1) {
-                        Tablero.get(i).set(j, 0);
-                    }
-                }
-            }
+            RecorrerTablero(Tablero, (Tablero.size() - 1), 0, (Tablero.getFirst().size() - 1), 0, true, 0, "N");
             for (int i = 0; i < piezas.getPart(NoPieza, NoRotacion).size(); i++) {
                 for (int j = 0; j < piezas.getPart(NoPieza, NoRotacion).getFirst().size(); j++) {
                     if (piezas.getPart(NoPieza, NoRotacion).get(i).get(j) != 0){
@@ -150,23 +144,13 @@ public class Logica {
     }
 
     public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
-        for (int i = 0; i < Tablero.size(); i++) {
-            for (int j = 0; j < Tablero.getFirst().size(); j++) {
-                Tablero.get(i).set(j, 0);
-            }
-        }
+        RecorrerTablero(Tablero, (Tablero.size() - 1), 0, (Tablero.getFirst().size() - 1), 0, false, 0, "N");
     }
 
     public void PartDown(ArrayList<ArrayList<Integer>> Tablero){
         int Residual;
         if (CompDownR(Tablero) || CompDownL(Tablero)) {
-            for (int i = (Tablero.size() - 1); i >= 0; i--) {
-                for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
-                    if ((Tablero.get(i).get(j) % 2) == 1) {
-                        Tablero.get(i).set(j, (Tablero.get(i).get(j) + 1));
-                    }
-                }
-            }
+            RecorrerTablero(Tablero, (Tablero.size() - 1), 0, (Tablero.getFirst().size() - 1), 0, true, 1, "A");
         } else {
             for (int i = (Tablero.size() - 1); i >= 0; i--) {
                 for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
@@ -333,8 +317,8 @@ public class Logica {
     public boolean CompRightD(ArrayList<ArrayList<Integer>> Tablero){
         boolean Return = false;
 
-        for (int i = (Tablero.size() - 1); i >= 0 ; i--) {
-            for (int j = (Tablero.getFirst().size() - 1); j >= 0 ; j--) {
+        for (int i = (Tablero.size() - 1); i >= 0; i--) {
+            for (int j = (Tablero.getFirst().size() - 1); j >= 0; j--) {
                 if ((Tablero.get(i).get(j) % 2) == 1){
                     try {
                         if ((Tablero.get(i).get((j+1)) % 2) == 0 && Tablero.get(i).get((j+1)) != 0){
@@ -354,6 +338,25 @@ public class Logica {
         }
 
         return Return;
+    }
+
+    public void RecorrerTablero(ArrayList<ArrayList<Integer>> Tablero, int Inicio_i, int Limite_i, int Inicio_j, int Limite_j, boolean Condicion, int Replace, String TypeOfReplace){
+        for (int i = Inicio_i; i >= Limite_i; i--) {
+            for (int j = Inicio_j; j >= Limite_j; j--) {
+                if ((Tablero.get(i).get(j) % 2) == 1 || !Condicion) {
+                    switch (TypeOfReplace) {
+                        case "A": {
+                            Tablero.get(i).set(j, (Tablero.get(i).get(j) + Replace));
+                            break;
+                        }
+                        case "N": {
+                            Tablero.get(i).set(j, Replace);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public int getLineasCompletas(){

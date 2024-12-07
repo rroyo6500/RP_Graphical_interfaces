@@ -381,6 +381,7 @@ public class Tetris extends JFrame{
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
                 logica.setNoProxPieza(Integer.parseInt(Command_S[1]));
+                logica.setNoProxRotacion(0);
             } else if (Command.matches("^¡r = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
@@ -394,23 +395,13 @@ public class Tetris extends JFrame{
             } else if (Command.matches("^¡compaf = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
-                for (int i = (Tablero_.size() - 1); i >= Integer.parseInt(Command_S[1]); i--) {
-                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-                        Tablero_.get(i).set(j, 100);
-                    }
-                }
+                logica.RecorrerTablero(Tablero_, (Tablero_.size() - 1),Integer.parseInt(Command_S[1]), (Tablero_.getFirst().size() - 1), 0, false, 100, "N");
             } else if (Command.matches("^¡score = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
                 PuntuacionFinal = Integer.parseInt(Command_S[1]);
             } else if (Command.matches("^¡freze.*")) {
-                for (int i = (Tablero_.size() - 1); i >= 0; i--) {
-                    for (int j = (Tablero_.getFirst().size() - 1); j >= 0; j--) {
-                        if ((Tablero_.get(i).get(j) % 2) == 1) {
-                            Tablero_.get(i).set(j, (Tablero_.get(i).get(j) + 1));
-                        }
-                    }
-                }
+                logica.RecorrerTablero(Tablero_, (Tablero_.size() - 1), 0, (Tablero_.getFirst().size() - 1), 0, true, 1, "A");
             } else if (Command.matches("^¡clear.*")) {
                 logica.Tablero_Restart(Tablero_);
             } else if (Command.matches("^¡exit")) Ex_ = false;
