@@ -159,7 +159,7 @@ public class Tetris extends JFrame{
                 }
             }
             PuntuacionFinal = 0;
-            logica.reserLineasCompletas();
+            logica.resetLineasCompletas();
             Puntuacion.setText("");
         }).start();
         Tetoris.add(Puntuacion);
@@ -175,17 +175,17 @@ public class Tetris extends JFrame{
                 if (NoProxRotacion > (piezas.CantRPieza(NoProxPieza) - 1)) NoProxRotacion = 0;
 
                 int x = 0;
-                if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 1) x = 140;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 2) x = 130;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 3) x = 120;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 4) x = 110;
+                if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 1) x = 130;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 2) x = 110;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 3) x = 90;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).getFirst().size() == 4) x = 70;
                 int x_res = x;
 
                 int y = 0;
-                if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 1) y = 90;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 2) y = 80;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 3) y = 70;
-                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 4) y = 60;
+                if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 1) y = 80;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 2) y = 60;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 3) y = 40;
+                else if (piezas.getPart(NoProxPieza, NoProxRotacion).size() == 4) y = 20;
 
                 try {
                     for (ArrayList<Integer> Filas : piezas.getPart(NoProxPieza, NoProxRotacion)) {
@@ -194,18 +194,18 @@ public class Tetris extends JFrame{
                                 g.setColor(Color.BLACK);
                                 g.fillRect(x, y, 20, 20);
                             }
-                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 20, 20, null);
-                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 20, 20, null);
-                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 20, 20, null);
-                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 20, 20, null);
-                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 20, 20, null);
-                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 20, 20, null);
-                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 20, 20, null);
+                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 40, 40, null);
+                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 40, 40, null);
+                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 40, 40, null);
+                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 40, 40, null);
+                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 40, 40, null);
+                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 40, 40, null);
+                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 40, 40, null);
 
-                            x += 20;
+                            x += 40;
                         }
                         x = x_res;
-                        y += 20;
+                        y += 40;
                     }
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
@@ -266,6 +266,13 @@ public class Tetris extends JFrame{
                         x = 10;
                         y += 32;
                     }
+                    g.setColor(Color.LIGHT_GRAY);
+                    g.drawRect(10, 10, 480, 960);
+                    g.drawRect(9, 9, 482, 962);
+                    g.drawRect(7, 7, 486, 966);
+                    g.drawRect(6, 6, 488, 968);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(8, 8, 484, 964);
                 } catch (Exception e) {
                     System.out.println("Error-Tablero");
                 }
@@ -348,7 +355,8 @@ public class Tetris extends JFrame{
             }else C_Time--;
 
             if (logica.getLineasSeguidas_10() == 10){
-                Velocidad -= 10;
+                if (Velocidad <= 0) Velocidad = -4;
+                else Velocidad -= 10;
                 Tetris_Principal.cancel();
                 IniciarJuego();
                 logica.resetLineasSeguidas_10();
@@ -398,7 +406,7 @@ public class Tetris extends JFrame{
                 Velocidad = Integer.parseInt(Command_S[1]);
                 Tetris_Principal.cancel();
                 IniciarJuego();
-            } else if (Command.matches("^¡p = .*")) {
+            } else if (Command.matches("^¡part = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
                 logica.setNoProxPieza(Integer.parseInt(Command_S[1]));
@@ -416,7 +424,7 @@ public class Tetris extends JFrame{
             } else if (Command.matches("^¡compaf = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");
-                logica.RecorrerTablero(Tablero_, (Tablero_.size() - 1),Integer.parseInt(Command_S[1]), (Tablero_.getFirst().size() - 1), 0, false, 100, "N");
+                logica.RecorrerTablero(Tablero_, (Tablero_.size() - 1), (30 - Integer.parseInt(Command_S[1])), (Tablero_.getFirst().size() - 1), 0, false, 100, "N");
             } else if (Command.matches("^¡score = .*")) {
                 Command = Command.replaceAll(" = ", " ");
                 Command_S = Command.split(" ");

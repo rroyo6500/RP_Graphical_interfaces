@@ -152,6 +152,7 @@ public class Logica {
     }
 
     public void Tablero_Restart(ArrayList<ArrayList<Integer>> Tablero){
+        resetLineasCompletas();
         RecorrerTablero(Tablero, (Tablero.size() - 1), 0, (Tablero.getFirst().size() - 1), 0, false, 0, "N");
     }
 
@@ -370,7 +371,7 @@ public class Logica {
     public int getLineasCompletas(){
         return LineasCompletas;
     }
-    public void reserLineasCompletas(){
+    public void resetLineasCompletas(){
         LineasCompletas = 0;
     }
     public int getLineasSeguidas(){
