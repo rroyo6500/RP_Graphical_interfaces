@@ -151,6 +151,7 @@ public class Tetris extends JFrame{
         Puntuacion.setBounds(175, 400, 300, 50);
         Puntuacion.setFont(new Font("Arial", Font.BOLD, 25));
         new Thread(() -> {
+            Ex__ = true;
             while (Ex__){
                 Ex_ = true;
                 while (Ex_) {
