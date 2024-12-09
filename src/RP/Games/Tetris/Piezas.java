@@ -148,5 +148,37 @@ public class Piezas {
                 add(new ArrayList<>() {{add(13);add(13);add(13);add(13);}});
             }});
         }});
+        // F
+        /*
+        add(new ArrayList<>() {{
+            //Rotacion 0
+            add(new ArrayList<>() {{
+                add(new ArrayList<>() {{add(15);add(15);add(15);}});
+                add(new ArrayList<>() {{add(15);add(0);add(0);}});
+                add(new ArrayList<>() {{add(15);add(15);add(0);}});
+                add(new ArrayList<>() {{add(15);add(0);add(0);}});
+                add(new ArrayList<>() {{add(15);add(0);add(0);}});
+            }});
+            //Rotacion 1
+            add(new ArrayList<>() {{
+                add(new ArrayList<>() {{add(15);add(15);add(15);add(15);add(15);}});
+                add(new ArrayList<>() {{add(0);add(0);add(15);add(0);add(15);}});
+                add(new ArrayList<>() {{add(0);add(0);add(0);add(0);add(15);}});
+            }});
+            //Rotacion 2
+            add(new ArrayList<>() {{
+                add(new ArrayList<>() {{add(0);add(0);add(15);}});
+                add(new ArrayList<>() {{add(0);add(0);add(15);}});
+                add(new ArrayList<>() {{add(0);add(15);add(15);}});
+                add(new ArrayList<>() {{add(0);add(0);add(15);}});
+                add(new ArrayList<>() {{add(15);add(15);add(15);}});
+            }});
+            //Rotacion 3
+            add(new ArrayList<>() {{
+                add(new ArrayList<>() {{add(15);add(0);add(0);add(0);add(0);}});
+                add(new ArrayList<>() {{add(15);add(0);add(15);add(0);add(0);}});
+                add(new ArrayList<>() {{add(15);add(15);add(15);add(15);add(15);}});
+            }});
+        }});*/
     }};
 }

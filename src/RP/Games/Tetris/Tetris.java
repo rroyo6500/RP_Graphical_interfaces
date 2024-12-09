@@ -20,7 +20,7 @@ public class Tetris extends JFrame{
     Logica logica = new Logica();
     Var var = new Var();
 
-    final BufferedImage YellowBlock, BlueBlock, CyanBLock, GreenBlock, OrangeBlock, PurpleBlock, RedBlock, BlackBlock;
+    final BufferedImage YellowBlock, BlueBlock, CyanBLock, GreenBlock, OrangeBlock, PurpleBlock, RedBlock, BlackBlock, PinkBlock;
 
     {
         try {
@@ -32,6 +32,7 @@ public class Tetris extends JFrame{
             PurpleBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisPurple.png"));
             RedBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisRed.png"));
             BlackBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisGhost.png"));
+            PinkBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisPink.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -198,13 +199,14 @@ public class Tetris extends JFrame{
                                 g.setColor(Color.BLACK);
                                 g.fillRect(x, y, 20, 20);
                             }
-                            if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 40, 40, null);
-                            if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 40, 40, null);
-                            if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 40, 40, null);
-                            if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 40, 40, null);
-                            if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 40, 40, null);
-                            if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 40, 40, null);
-                            if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 40, 40, null);
+                            else if (Col == 1 || Col == 2) g.drawImage( YellowBlock, x, y, 40, 40, null);
+                            else if (Col == 3 || Col == 4) g.drawImage( GreenBlock, x, y, 40, 40, null);
+                            else if (Col == 5 || Col == 6) g.drawImage( RedBlock, x, y, 40, 40, null);
+                            else if (Col == 7 || Col == 8) g.drawImage( PurpleBlock, x, y, 40, 40, null);
+                            else if (Col == 9 || Col == 10) g.drawImage( OrangeBlock, x, y, 40, 40, null);
+                            else if (Col == 11 || Col == 12) g.drawImage( BlueBlock, x, y, 40, 40, null);
+                            else if (Col == 13 || Col == 14) g.drawImage( CyanBLock, x, y, 40, 40, null);
+                            // else if (Col == 15 || Col == 16) g.drawImage( PinkBlock, x, y, 40, 40, null);
 
                             x += 40;
                         }
@@ -259,6 +261,7 @@ public class Tetris extends JFrame{
                             else if (Col == 9 || Col == 10) g.drawImage(OrangeBlock, x, y, 32, 32, null);
                             else if (Col == 11 || Col == 12) g.drawImage(BlueBlock, x, y, 32, 32, null);
                             else if (Col == 13 || Col == 14) g.drawImage(CyanBLock, x, y, 32, 32, null);
+                            //else if (Col == 15 || Col == 16) g.drawImage(PinkBlock, x, y, 32, 32, null);
                             else if (Col == 100) {
                                 g.setColor(Color.WHITE);
                                 g.fillRect(x, y, 32, 32);
