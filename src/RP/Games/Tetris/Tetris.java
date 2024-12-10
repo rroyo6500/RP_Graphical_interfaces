@@ -235,6 +235,7 @@ public class Tetris extends JFrame{
     public void TableroJuego(JFrame TableroJuego){
         TableroJuego.setLayout(null);
         TableroJuego.setLocationRelativeTo(null);
+        TableroJuego.setDefaultCloseOperation(EXIT_ON_CLOSE);
         TableroJuego.setResizable(false);
 
         Tablero = new JPanel() {

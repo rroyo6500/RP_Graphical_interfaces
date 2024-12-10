@@ -145,6 +145,7 @@ public class MainIG extends JFrame {
 
         this.setTitle("RP-Main");
         this.setBounds(0,0, var.Width(500), var.Height(500));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
