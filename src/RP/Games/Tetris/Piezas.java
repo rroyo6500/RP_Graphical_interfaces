@@ -149,6 +149,7 @@ public class Piezas {
             }});
         }});
         // +
+        /*
         add(new ArrayList<>() {{
             //Rotacion 0
             add(new ArrayList<>() {{
