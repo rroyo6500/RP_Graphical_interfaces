@@ -24,6 +24,7 @@ public class Tetris extends JFrame{
 
     {
         try {
+
             YellowBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisYellow.png"));
             BlueBlock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisBlue.png"));
             CyanBLock = ImageIO.read(new File(logica.getPath(var.getPath()) + "TetrisCyan.png"));

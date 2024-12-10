@@ -1,5 +1,6 @@
 package RP.Games.Tetris;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Logica {
@@ -8,12 +9,8 @@ public class Logica {
 
     public Logica(){}
 
-    public String getPath(String path){
-        if (path.matches("^[a-zA-Z]:")){
-            return path + "\\src\\Resources\\Tetris\\Blocks\\";
-        }else {
-            return path + "/src/Resources/Tetris/Blocks/";
-        }
+    public String getPath(String Path){
+        return  Path + File.separator + "src" + File.separator + "Resources" + File.separator + "Tetris" + File.separator + "Blocks" + File.separator;
     }
 
     private int NoProxPieza, NoProxRotacion;
